@@ -43,5 +43,8 @@ yarn-error.log*
 # design tool extract (kept locally for reference)
 .design-extract
 
-# claude code local config
-.claude
+# claude code local config (track only custom user-authored skills)
+.claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/ux-writing/
