@@ -1,0 +1,22 @@
+import { Container } from "@/components/ui/container";
+import { CaseMetaGrid, type CaseMetaItem } from "@/components/case-study/case-meta-grid";
+
+interface CaseHeroProps {
+  meta: CaseMetaItem[];
+  title: React.ReactNode;
+  lede: React.ReactNode;
+}
+
+export function CaseHero({ meta, title, lede }: CaseHeroProps) {
+  return (
+    <Container as="section" className="pt-20 pb-15">
+      <CaseMetaGrid items={meta} />
+      <h1 className="max-w-[14ch] font-serif text-[clamp(48px,7.5vw,128px)] font-normal leading-[0.95] tracking-[-0.03em]">
+        {title}
+      </h1>
+      <p className="mt-10 max-w-[56ch] font-serif text-[clamp(20px,2.2vw,28px)] leading-[1.4] text-ink-dim">
+        {lede}
+      </p>
+    </Container>
+  );
+}
