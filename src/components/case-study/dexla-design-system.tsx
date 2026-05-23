@@ -1,4 +1,3 @@
-import { CaseCover } from "@/components/case-study/case-cover";
 import { CaseFigure } from "@/components/case-study/case-figure";
 import { CaseHero } from "@/components/case-study/case-hero";
 import { CaseImageBlock } from "@/components/case-study/case-image-block";
@@ -28,7 +27,9 @@ const PROBLEMS = [
  * Drafted from the project's existing Notion writeup. Source did not include
  * verifiable metrics, attributed quotes, or rejected-alternative process
  * artefacts, so the case study omits CaseStats and CasePullQuote and keeps
- * the outcome section grounded in what was visibly delivered.
+ * the outcome section grounded in what was visibly delivered. Figures are
+ * the Notion-rendered composites pulled from the source documentation under
+ * /public/work/dexla-design-system/.
  */
 export function DexlaDesignSystemCase() {
   return (
@@ -62,7 +63,20 @@ export function DexlaDesignSystemCase() {
         }}
       />
 
-      <CaseCover glyph="D" caption="Dexla design system · Cover" />
+      <CaseFigure
+        priority
+        surface="tile"
+        images={[
+          {
+            src: "/work/dexla-design-system/04-style-guide.png",
+            alt: "Style guide composite showing type ramp, colour palette, button overview, and outline icons",
+            width: 5352,
+            height: 4386,
+          },
+        ]}
+        caption="Style guide · Type, colour, buttons, icons"
+        kicker="DELIVERABLE 01"
+      />
 
       <CaseSection
         step="01 / Context"
@@ -86,6 +100,20 @@ export function DexlaDesignSystemCase() {
           thinner each release.
         </p>
       </CaseSection>
+
+      <CaseFigure
+        surface="tile"
+        images={[
+          {
+            src: "/work/dexla-design-system/02-problem.png",
+            alt: "Brand assets at day one: icon, wordmark, and combination mark variants of the Dexla logo",
+            width: 1107,
+            height: 568,
+          },
+        ]}
+        caption="Brand assets at day one · Logo lockup only"
+        kicker="STARTING POINT"
+      />
 
       <CaseSection
         step="02 / Problem"
@@ -166,14 +194,48 @@ export function DexlaDesignSystemCase() {
         surface="tile"
         images={[
           {
-            src: "/work/dexla-design-system.png",
-            alt: "Dexla design system documentation cover",
-            width: 1600,
-            height: 1000,
+            src: "/work/dexla-design-system/05-atomic-design.png",
+            alt: "Atomic Design map showing atoms, molecules, organisms, and template surfaces built from Dexla components",
+            width: 5352,
+            height: 5097,
           },
         ]}
-        caption="Documentation cover · Dexla design system in Notion"
-        kicker="DELIVERABLE"
+        caption="Atomic Design map · Atoms, molecules, organisms, templates"
+        kicker="STRUCTURE"
+      />
+
+      <CaseFigure
+        surface="tile"
+        images={[
+          {
+            src: "/work/dexla-design-system/07-no-code-editor.png",
+            alt: "No-code editor surfaces: action modifiers, alignment controls, language switcher, and component drawer",
+            width: 1919,
+            height: 1079,
+          },
+        ]}
+        caption="No-code editor · Modifier panels, alignment, component drawer"
+        kicker="BUILDER"
+      />
+
+      <CaseFigure
+        surface="tile"
+        images={[
+          {
+            src: "/work/dexla-design-system/06-core-components.png",
+            alt: "Component library documentation: avatar variants, search field, input field, accordion, and modal pages",
+            width: 4944,
+            height: 4356,
+          },
+          {
+            src: "/work/dexla-design-system/09-documentation.png",
+            alt: "Alert component documentation page covering usage guidelines, placement, and content rules",
+            width: 734,
+            height: 774,
+          },
+        ]}
+        caption="Component pages · Primitives on the left, documentation rules on the right"
+        kicker="DOCUMENTATION"
       />
 
       <CaseSection
