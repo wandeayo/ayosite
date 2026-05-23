@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 
 import { ArcticEdgeCase } from "@/components/case-study/arctic-edge";
 import { CarmenAICase } from "@/components/case-study/carmen-ai";
+import { DexlaDesignSystemCase } from "@/components/case-study/dexla-design-system";
 
 /**
  * Slug → case-study component. Anything not in this map renders the
@@ -25,4 +26,5 @@ import { CarmenAICase } from "@/components/case-study/carmen-ai";
 export const CASE_STUDIES: Record<string, ComponentType> = {
   "carmen-ai": CarmenAICase,
   "arctic-edge": ArcticEdgeCase,
+  "dexla-design-system": DexlaDesignSystemCase,
 };
