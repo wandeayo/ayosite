@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
@@ -103,8 +104,20 @@ function CursorPreview({ state, items }: { state: PreviewState; items: Project[]
       )}
       style={{ left: state.x, top: state.y, background: item.cardGradient }}
     >
-      <div className="stripes-overlay" />
-      <div className="absolute bottom-4 left-5 font-mono text-[11px] uppercase tracking-[0.1em] text-white/60">
+      {item.cardImage ? (
+        <Image
+          src={item.cardImage}
+          alt=""
+          fill
+          sizes="380px"
+          className="object-cover"
+          priority={state.index === 0}
+        />
+      ) : (
+        <div className="stripes-overlay" />
+      )}
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
+      <div className="absolute bottom-4 left-5 font-mono text-[11px] uppercase tracking-[0.1em] text-white/80">
         {item.title} · Preview
       </div>
     </div>
