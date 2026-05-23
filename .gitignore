@@ -48,3 +48,4 @@ yarn-error.log*
 !.claude/skills/
 .claude/skills/*
 !.claude/skills/ux-writing/
+!.claude/skills/case-study/
