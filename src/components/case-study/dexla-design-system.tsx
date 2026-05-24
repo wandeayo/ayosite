@@ -1,5 +1,6 @@
 import { CaseFigure } from "@/components/case-study/case-figure";
 import { CaseHero } from "@/components/case-study/case-hero";
+import { CaseImageBlock } from "@/components/case-study/case-image-block";
 import { CaseSection } from "@/components/case-study/case-section";
 
 const PROBLEMS = [
@@ -143,17 +144,9 @@ export function DexlaDesignSystemCase() {
         </ul>
       </CaseSection>
 
-      <CaseFigure
-        surface="tile"
-        images={[
-          {
-            src: "/work/dexla-design-system/05-atomic-design.png",
-            alt: "Atomic Design breakdown for Dexla: atoms (icons, buttons, inputs), molecules (alerts, search, inputs, accordions), organisms, and templates",
-            width: 2048,
-            height: 1950,
-          },
-        ]}
+      <CaseImageBlock
         caption="Process · Style guide, primitives, components, patterns"
+        display={<>Atomic Design</>}
         kicker="METHODOLOGY"
       />
 

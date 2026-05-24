@@ -4,7 +4,6 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { CaseMetaGrid } from "@/components/case-study/case-meta-grid";
 import { CaseCover } from "@/components/case-study/case-cover";
 import type { Project } from "@/lib/projects";
-import { SITE } from "@/lib/site";
 
 /**
  * Honest fallback for projects without a written case study yet.
@@ -44,7 +43,7 @@ export function CaseInProgress({ project }: { project: Project }) {
           <span className="accent-it">Reach out for the deep version.</span>
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <Button variant="primary" href={`mailto:${SITE.email}`} trailingArrow>
+          <Button variant="primary" href="mailto:hello@waande.com" trailingArrow>
             Email me
           </Button>
           <Button href="/work">Browse work</Button>

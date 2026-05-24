@@ -42,61 +42,15 @@ export type PhotoSpan = "tall" | "wide" | "square";
 export interface Photo {
   label: string;
   span: PhotoSpan;
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
 }
 
 export const PHOTOS: Photo[] = [
-  {
-    label: "Studio · 01",
-    span: "tall",
-    src: "/about/photo-1.jpg",
-    alt: "Ayowande working on a laptop at an outdoor cafe",
-    width: 2968,
-    height: 2860,
-  },
-  {
-    label: "Crew · 02",
-    span: "wide",
-    src: "/about/photo-3.jpeg",
-    alt: "Working session with the team around a dining table, laptops open",
-    width: 4032,
-    height: 3024,
-  },
-  {
-    label: "Saxophone · 03",
-    span: "square",
-    src: "/about/photo-7.jpg",
-    alt: "Close-up of a saxophone held in performance",
-    width: 3024,
-    height: 4032,
-  },
-  {
-    label: "Portrait · 04",
-    span: "tall",
-    src: "/about/photo-4.jpg",
-    alt: "Portrait of Ayowande in a brown shirt, mango tree behind",
-    width: 3024,
-    height: 4032,
-  },
-  {
-    label: "Chess · 05",
-    span: "square",
-    src: "/about/photo-5.jpg",
-    alt: "Chess king piece in focus, terminal glowing behind",
-    width: 3024,
-    height: 4032,
-  },
-  {
-    label: "Desk · 06",
-    span: "wide",
-    src: "/about/photo-2.jpg",
-    alt: "Home desk with monitor, laptop, and notes",
-    width: 3024,
-    height: 4032,
-  },
+  { label: "Studio · 01", span: "tall" },
+  { label: "On set · 02", span: "wide" },
+  { label: "Field · 03", span: "square" },
+  { label: "Portrait · 04", span: "tall" },
+  { label: "Travel · 05", span: "square" },
+  { label: "Crew · 06", span: "wide" },
 ];
 
 export const TOOLKIT: string[] = [

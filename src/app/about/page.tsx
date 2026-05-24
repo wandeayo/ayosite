@@ -27,7 +27,7 @@ export default function AboutPage() {
         lead={<>Let&apos;s build</>}
         emphasis="something good."
         description="Got a project? Or just want to talk design, chess, or debate FPL transfers? I'm always open to a conversation."
-        primary={{ label: "Book a call", href: "https://calendly.com/ayowandeolubo" }}
+        primary={{ label: "Book a call", href: "https://cal.com/ayowande" }}
       />
     </div>
   );

@@ -5,8 +5,8 @@ import { NAV_LINKS, SITE } from "@/lib/site";
 
 const DIRECT_LINKS = [
   { label: SITE.email, href: `mailto:${SITE.email}` },
-  { label: "Book a call", href: "https://calendly.com/ayowandeolubo" },
-  { label: "Resume (PDF)", href: "https://drive.google.com/file/d/1eKx9Ip4GIbps8MWfdX-IsLJWEUvp1n2l/view?usp=sharing" },
+  { label: "Book a call", href: "https://cal.com/ayowande" },
+  { label: "Resume (PDF)", href: "/resume.pdf" },
 ] as const;
 
 export function Footer() {
