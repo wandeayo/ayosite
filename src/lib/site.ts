@@ -7,8 +7,6 @@ export const SITE = {
   url: "https://waande.com",
   email: "ayowandeolubo@gmail.com",
   location: "Lagos · Remote · UTC+1",
-  edition: "Edition 05 / 2026",
-  availability: "Available Q3 2026",
   socials: [
     { label: "X / Twitter", href: "https://x.com/ayowandde" },
     { label: "LinkedIn", href: "https://linkedin.com/in/ayowandeolubo" },

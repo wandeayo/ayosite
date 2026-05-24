@@ -1,13 +1,12 @@
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { MarginNote } from "@/components/ui/margin-note";
-import { SITE } from "@/lib/site";
 
 export function Hero() {
   return (
     <Container as="section" className="relative overflow-hidden pt-[120px] pb-20">
       <div className="mb-[60px] flex flex-wrap items-center justify-between gap-3">
-        <Eyebrow>Portfolio · {SITE.edition}</Eyebrow>
+        <Eyebrow>Portfolio</Eyebrow>
         <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
           UTC+1
         </div>

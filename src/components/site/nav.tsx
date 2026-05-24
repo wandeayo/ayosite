@@ -60,10 +60,7 @@ export function Nav() {
         })}
       </div>
 
-      <div className="flex items-center gap-[10px] font-mono text-[12px] tracking-[0.04em] text-ink-dim">
-        <span className="pulse-dot pulse-dot--sm" aria-hidden />
-        <span>{SITE.availability}</span>
-      </div>
+      <div aria-hidden />
     </nav>
   );
 }
