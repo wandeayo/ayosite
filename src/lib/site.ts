@@ -10,8 +10,9 @@ export const SITE = {
   edition: "Edition 05 / 2026",
   availability: "Available Q3 2026",
   socials: [
+    { label: "X / Twitter", href: "https://x.com/ayowandde" },
     { label: "LinkedIn", href: "https://linkedin.com/in/ayowandeolubo" },
-    { label: "Twitter / X", href: "https://x.com/ayowandeolubo" },
+    { label: "Instagram", href: "https://instagram.com/ayowandde" },
     { label: "Dribbble", href: "https://dribbble.com/ayowande" },
   ],
 } as const;
@@ -20,4 +21,5 @@ export const NAV_LINKS = [
   { href: "/", label: "Index", match: (p: string) => p === "/" },
   { href: "/work", label: "Work", match: (p: string) => p.startsWith("/work") },
   { href: "/about", label: "About", match: (p: string) => p === "/about" },
+  { href: "/contact", label: "Contact", match: (p: string) => p === "/contact" },
 ] as const;

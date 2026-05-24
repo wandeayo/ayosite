@@ -147,6 +147,22 @@
     pointer-events: none;
   }
 
+  /* Starfield-style dot pattern, used on /contact ------------- */
+  .contact-dots {
+    background-image:
+      radial-gradient(circle at 25% 32%, rgba(255, 255, 255, 0.18) 0.7px, transparent 1.2px),
+      radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.14) 0.7px, transparent 1.2px),
+      radial-gradient(circle at 12% 78%, rgba(255, 255, 255, 0.12) 0.7px, transparent 1.2px),
+      radial-gradient(circle at 88% 86%, rgba(255, 255, 255, 0.16) 0.7px, transparent 1.2px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.06) 0.6px, transparent 1px);
+    background-size:
+      280px 240px,
+      320px 280px,
+      260px 300px,
+      300px 260px,
+      40px 40px;
+  }
+
   /* Hero numeral italic accent -------------------------------- */
   .accent-it {
     font-style: italic;
