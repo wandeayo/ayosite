@@ -398,9 +398,9 @@ export function ArcticEdgeCase() {
         step="08 / Reflection"
         title={
           <>
-            What I&rsquo;d
+            The seams I&rsquo;d
             <br />
-            revisit.
+            tighten.
           </>
         }
       >

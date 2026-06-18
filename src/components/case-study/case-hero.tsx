@@ -20,10 +20,10 @@ export function CaseHero({ meta, title, lede, cta }: CaseHeroProps) {
   return (
     <Container as="section" className="pt-20 pb-15">
       <CaseMetaGrid items={meta} />
-      <h1 className="max-w-[14ch] font-serif text-[clamp(48px,7.5vw,128px)] font-normal leading-[0.95] tracking-[-0.03em]">
+      <h1 className="max-w-[14ch] font-serif text-[clamp(48px,7.5vw,72px)] font-normal leading-[0.95] tracking-[-0.03em]">
         {title}
       </h1>
-      <p className="mt-10 max-w-[56ch] font-serif text-[clamp(20px,2.2vw,28px)] leading-[1.4] text-ink-dim">
+      <p className="mt-10 max-w-[56ch] font-serif text-[clamp(20px,2.2vw,24px)] leading-[1.4] text-ink-dim">
         {lede}
       </p>
       {cta && (

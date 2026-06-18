@@ -23,11 +23,11 @@ export function CaseInProgress({ project }: { project: Project }) {
           ]}
         />
         <Eyebrow className="mb-8">Case study · Coming soon</Eyebrow>
-        <h1 className="font-serif text-[clamp(48px,7.5vw,128px)] font-normal leading-[0.95] tracking-[-0.03em]">
+        <h1 className="font-serif text-[clamp(48px,7.5vw,72px)] font-normal leading-[0.95] tracking-[-0.03em]">
           {project.title}
           <span className="accent-it">.</span>
         </h1>
-        <p className="mt-10 max-w-[56ch] font-serif text-[clamp(20px,2.2vw,28px)] leading-[1.4] text-ink-dim">
+        <p className="mt-10 max-w-[56ch] font-serif text-[clamp(20px,2.2vw,24px)] leading-[1.4] text-ink-dim">
           {project.description}
         </p>
       </Container>

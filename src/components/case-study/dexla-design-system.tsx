@@ -265,9 +265,9 @@ export function DexlaDesignSystemCase() {
         step="05 / Reflection"
         title={
           <>
-            What I would
+            Where the deadline
             <br />
-            revisit.
+            showed.
           </>
         }
       >

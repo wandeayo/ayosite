@@ -424,7 +424,7 @@ export function CarmenAICase() {
             </aside>
             <div className="csx-body">
               <h2>
-                What I&rsquo;d do <span className="it">differently.</span>
+                What I&rsquo;d let <span className="it">recede.</span>
               </h2>
               <p>
                 The legibility surfaces are the most polished part of the product, and the part heavy users touch least
