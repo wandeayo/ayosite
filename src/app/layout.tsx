@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, Geist, Instrument_Serif, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 
 import { CursorDot } from "@/components/site/cursor-dot";
 import { Footer } from "@/components/site/footer";
@@ -27,6 +27,21 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-jetbrains",
+  display: "swap",
+});
+
+// Product-UI typefaces used only inside the Carmen case-study demos.
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-dm",
+  display: "swap",
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -59,7 +74,7 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const fontVariables = `${geist.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`;
+  const fontVariables = `${geist.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${dmSans.variable} ${plusJakarta.variable}`;
 
   return (
     <html lang="en" className={fontVariables}>

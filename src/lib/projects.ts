@@ -23,7 +23,7 @@ export const PROJECTS: Project[] = [
     description:
       "AI partner acquisition agent. Trust-first interface for autonomous outreach.",
     year: "2025",
-    role: "Lead Designer",
+    role: "Product Designer",
     tags: ["AI Agent", "B2B SaaS"],
     featured: true,
     cardGradient: "linear-gradient(135deg, #1a2a1f 0%, #0f1612 100%)",

@@ -19,7 +19,8 @@ import { DexlaDesignSystemCase } from "@/components/case-study/dexla-design-syst
  *  - **UX template** — for problem-led product stories. Sections:
  *    Context → Problem → Process → Outcome → Reflection. Uses CaseImageBlock
  *    typographic separators, CasePullQuote (real quotes only), and CaseStats
- *    (real metrics only). Reference: CarmenAICase.
+ *    (real metrics only). CarmenAICase started from this template, then grew
+ *    into a bespoke study with live product demos (see ./carmen/).
  *
  * Every CaseHero accepts an optional `cta` — point it at the live project URL.
  */
