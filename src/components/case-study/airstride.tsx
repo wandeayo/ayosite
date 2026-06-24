@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -40,6 +40,55 @@ const MODULES = [
   { id: "content-library", label: "Content Library" },
   { id: "engagement", label: "Engagement" },
 ];
+
+function DealsDemoEmbed() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.65);
+
+  useEffect(() => {
+    const update = () => {
+      if (wrapRef.current) {
+        setScale(wrapRef.current.offsetWidth / 1440);
+      }
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    if (wrapRef.current) ro.observe(wrapRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const DEMO_H = 760;
+
+  return (
+    <Reveal>
+      <Container as="figure" className="my-20">
+        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
+          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
+            <iframe
+              src="/work/airstride/deals-demo/index.html"
+              title="Deals Management interactive demo"
+              style={{
+                width: "1440px",
+                height: `${DEMO_H}px`,
+                border: "none",
+                transform: `scale(${scale})`,
+                transformOrigin: "top left",
+              }}
+            />
+          </div>
+        </div>
+        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
+            Deals Management
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
+            Interactive prototype · auto-playing demo
+          </span>
+        </figcaption>
+      </Container>
+    </Reveal>
+  );
+}
 
 function ModuleNav() {
   const [active, setActive] = useState<string>(MODULES[0].id);
@@ -216,19 +265,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <CaseFigure
-          surface="tile"
-          kicker="Deals Management"
-          caption="Deal list with state indicators, filter and partner detail overlay"
-          images={[
-            {
-              src: "/work/airstride/deals-management.png",
-              alt: "Deals management screen showing deal states, filter with warning indicator, and partner detail overlay",
-              width: 1440,
-              height: 900,
-            },
-          ]}
-        />
+        <DealsDemoEmbed />
       </section>
 
       {/* ===== MODULE 02: ACCOUNT MAPPING ===== */}

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700&family=Fragment+Mono&display=swap">
+<style>
+/* ── Airstride color tokens ── */
+:root {
+  --as-blue: #2367f1;
+  --as-blue-50: #eef3ff;
+  --as-gradient-brand: linear-gradient(90deg, #2367f1, #f124b3);
+}
+/* ── Airstride typography tokens ── */
+:root {
+  --font-heading: "Plus Jakarta Sans", "DM Sans", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "Fragment Mono", "IBM Plex Mono", monospace;
+  --fw-bold: 700;
+  --fw-semibold: 600;
+  --fw-medium: 500;
+  --fw-regular: 400;
+}
+</style>
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  .app *{font-family:'DM Sans',system-ui,sans-serif;}
+  .app h1,.app h2,.app h3,.app .jakarta{font-family:'Plus Jakarta Sans','DM Sans',sans-serif;}
+  .nav-item:hover{background:#f4f4f5 !important;}
+  .nav-item:hover .nav-ic{color:#141414 !important;}
+  .focus-pill:hover{border-color:#171717 !important;}
+  .btn-blue:hover{background:#1f5cd8 !important;}
+  .btn-ghost:hover{background:#f4f4f5 !important;}
+  .deal-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08) !important;border-color:#cfcfd2 !important;}
+  .seg:hover{color:#141414 !important;}
+  .review-btn:hover{border-color:#171717 !important;}
+  ::placeholder{color:#9ca3af;}
+  .as-input:focus{outline:none;border-color:#2367f1 !important;box-shadow:0 0 0 3px rgba(35,103,241,.12);}
+  .row-hover:hover{background:#fafafa !important;}
+  @keyframes autopulse{0%{box-shadow:0 0 0 0 rgba(200,241,35,.6);}70%{box-shadow:0 0 0 7px rgba(200,241,35,0);}100%{box-shadow:0 0 0 0 rgba(200,241,35,0);}}
+</style>
+</helmet>
+<div class="app" ref="{{ rootRef }}" onMouseEnter="{{ pauseAuto }}" onMouseLeave="{{ resumeAuto }}" style="display:flex;height:100vh;width:100%;background:#fff;color:#141414;overflow:hidden;font-size:14px;position:relative;">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside style="width:248px;flex:none;border-right:1px solid #ececec;display:flex;flex-direction:column;height:100%;background:#fff;">
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #f2f2f2;">
+      <div style="width:28px;height:28px;background:#141414;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.5px;">NS</div>
+      <span style="font-weight:600;font-size:14px;">Nextron Solu...</span>
+      <svg style="margin-left:2px;color:#9ca3af;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+      <svg style="margin-left:auto;color:#9ca3af;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="border:1px solid #e6e6e6;border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+        <svg style="color:#6b7280;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+        <div>
+          <div style="font-size:9px;letter-spacing:.7px;color:#9ca3af;font-weight:500;">SWITCH PRODUCT</div>
+          <div style="font-weight:600;font-size:13px;">Management</div>
+        </div>
+        <svg style="margin-left:auto;color:#9ca3af;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+      </div>
+    </div>
+    <div style="padding:0 14px 8px;">
+      <div style="display:flex;align-items:center;gap:8px;color:#2367f1;font-weight:500;font-size:13px;padding:7px 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Getting started
+      </div>
+    </div>
+
+    <nav style="flex:1;overflow-y:auto;padding:4px 14px 16px;">
+      <sc-for list="{{ navGroups }}" as="group" hint-placeholder-count="4">
+        <div style="margin-top:14px;">
+          <div style="font-size:10px;letter-spacing:.7px;color:#b0b0b3;font-weight:600;padding:0 8px 6px;">{{ group.title }}</div>
+          <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="3">
+            <div class="nav-item" style="display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:13.5px;margin-bottom:1px;background:{{ it.bg }};color:{{ it.fg }};font-weight:{{ it.weight }};">
+              <span class="nav-ic" style="color:{{ it.icColor }};display:flex;" dangerouslySetInnerHTML="{{ it.icon }}"></span>
+              {{ it.label }}
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </nav>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main style="flex:1;display:flex;flex-direction:column;height:100%;overflow:hidden;">
+    <!-- topbar -->
+    <header style="height:60px;flex:none;border-bottom:1px solid #ececec;display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 28px;">
+      <div style="display:flex;align-items:center;gap:6px;color:#6b7280;font-size:13.5px;cursor:pointer;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/></svg> Tasks
+      </div>
+      <svg style="color:#6b7280;cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <svg style="color:#6b7280;cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <div style="width:30px;height:30px;border-radius:50%;background:#8b5e3c;background-image:linear-gradient(135deg,#a16b45,#5b3a22);"></div>
+    </header>
+
+    <!-- scroll area -->
+    <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;padding:28px 32px 60px;position:relative;">
+
+      <!-- ===== DEALS PAGE ===== -->
+      <sc-if value="{{ showDeals }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;">
+          <div>
+            <h1 style="font-size:24px;font-weight:700;margin:0 0 4px;letter-spacing:-.4px;">Deals Management</h1>
+            <p style="margin:0;color:#6b7280;font-size:14px;">Manage and track all submitted partner sales opportunities</p>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-ghost" style="display:flex;align-items:center;gap:7px;border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 16px;height:42px;font-size:13.5px;font-weight:500;cursor:pointer;color:#141414;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Export
+            </button>
+            <button class="btn-blue" data-auto="register" onClick="{{ openWizard }}" style="display:flex;align-items:center;gap:7px;background:#2367f1;color:#fff;border:none;border-radius:9px;padding:0 18px;height:42px;font-size:13.5px;font-weight:600;cursor:pointer;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg> Register Deal
+            </button>
+          </div>
+        </div>
+
+        <!-- toolbar -->
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;">
+          <div style="display:flex;background:#f4f4f5;border-radius:10px;padding:4px;">
+            <button data-auto="view-board" onClick="{{ setBoard }}" class="seg" style="display:flex;align-items:center;gap:7px;border:none;border-radius:7px;padding:8px 16px;font-size:13.5px;font-weight:600;cursor:pointer;background:{{ boardBg }};color:{{ boardFg }};box-shadow:{{ boardSh }};">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="6" height="16" rx="1"/><rect x="14" y="4" width="6" height="10" rx="1"/></svg> Board
+            </button>
+            <button data-auto="view-forecast" onClick="{{ setForecast }}" class="seg" style="display:flex;align-items:center;gap:7px;border:none;border-radius:7px;padding:8px 16px;font-size:13.5px;font-weight:600;cursor:pointer;background:{{ foreBg }};color:{{ foreFg }};box-shadow:{{ foreSh }};">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 3 6-7"/><path d="M3 21h18"/></svg> Forecast
+            </button>
+            <button data-auto="view-list" onClick="{{ setList }}" class="seg" style="display:flex;align-items:center;gap:7px;border:none;border-radius:7px;padding:8px 16px;font-size:13.5px;font-weight:600;cursor:pointer;background:{{ listBg }};color:{{ listFg }};box-shadow:{{ listSh }};">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> List
+            </button>
+          </div>
+          <button class="btn-ghost" style="display:flex;align-items:center;gap:7px;border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 14px;height:44px;font-size:13.5px;font-weight:500;cursor:pointer;color:#141414;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg> Filters
+          </button>
+          <button class="btn-ghost" style="display:flex;align-items:center;gap:7px;border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 14px;height:44px;font-size:13.5px;font-weight:500;cursor:pointer;color:#141414;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9z"/></svg> Settings
+          </button>
+          <button class="btn-ghost" style="display:flex;align-items:center;gap:8px;border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 14px;height:44px;font-size:13.5px;font-weight:500;cursor:pointer;color:#141414;">
+            All owners <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div style="margin-left:auto;position:relative;width:300px;">
+            <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input class="as-input" placeholder="Search deals..." style="width:100%;height:44px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px 0 40px;font-size:13.5px;background:#fff;">
+          </div>
+        </div>
+
+        <!-- ===== BOARD VIEW ===== -->
+        <sc-if value="{{ isBoard }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <!-- weighted pipeline + funnel -->
+          <div style="display:flex;gap:0;border:1px solid #ececec;border-radius:12px;overflow:hidden;margin-bottom:18px;">
+            <div style="width:340px;flex:none;padding:18px 22px;border-right:1px solid #ececec;">
+              <div style="color:#6b7280;font-size:12.5px;margin-bottom:10px;">Weighted pipeline • Q2</div>
+              <div style="display:flex;align-items:center;gap:6px;color:#16a34a;font-weight:700;font-size:15px;margin-bottom:10px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg> 18.2% <span style="color:#9ca3af;font-weight:400;font-size:12.5px;">vs Q1</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12.5px;color:#6b7280;margin-bottom:6px;">Target <strong style="color:#141414;">(78%)</strong> <span style="color:#141414;font-weight:600;">$5.00M</span></div>
+              <div style="height:8px;border-radius:5px;background:#eafbe7;overflow:hidden;"><div style="width:78%;height:100%;background:#22c55e;border-radius:5px;"></div></div>
+            </div>
+            <div style="flex:1;padding:18px 22px;">
+              <div style="color:#6b7280;font-size:12.5px;margin-bottom:12px;">Funnel • all stages</div>
+              <div style="display:flex;gap:6px;">
+                <div style="flex:1;background:#fdeccd;border-radius:7px;padding:10px 12px;"><div style="font-size:11.5px;color:#92722e;">Prospect</div><div style="font-weight:700;font-size:14px;">$1.2M</div></div>
+                <div style="flex:1;background:#dbeafe;border-radius:7px;padding:10px 12px;"><div style="font-size:11.5px;color:#1e4fa3;">Discovery</div><div style="font-weight:700;font-size:14px;">$1.2M</div></div>
+                <div style="flex:1;background:#2367f1;border-radius:7px;padding:10px 12px;color:#fff;"><div style="font-size:11.5px;opacity:.85;">Demo</div><div style="font-weight:700;font-size:14px;">$767K</div></div>
+                <div style="flex:1;background:#ede9fe;border-radius:7px;padding:10px 12px;"><div style="font-size:11.5px;color:#6d4ea3;">Negotiation</div><div style="font-weight:700;font-size:14px;">$1.7M</div></div>
+                <div style="flex:1;background:#dcfce7;border-radius:7px;padding:10px 12px;"><div style="font-size:11.5px;color:#246b3f;">Closing</div><div style="font-weight:700;font-size:14px;">$2.1M</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- focus pills -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+            <span style="font-size:10px;letter-spacing:.7px;color:#b0b0b3;font-weight:600;">FOCUS</span>
+            <sc-for list="{{ focusPills }}" as="p" hint-placeholder-count="5">
+              <button onClick="{{ p.onClick }}" data-auto="{{ p.autoId }}" class="focus-pill" style="display:flex;align-items:center;gap:8px;border:1px solid {{ p.border }};background:{{ p.bg }};color:{{ p.fg }};border-radius:9px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;">
+                <span style="width:7px;height:7px;border-radius:50%;background:{{ p.dot }};display:inline-block;"></span>
+                {{ p.label }} <span style="background:{{ p.cntBg }};color:{{ p.cntFg }};border-radius:20px;padding:1px 8px;font-size:11.5px;font-weight:600;">{{ p.count }}</span>
+                <sc-if value="{{ p.value }}" hint-placeholder-val="x"><span style="color:{{ p.valFg }};">• {{ p.value }}</span></sc-if>
+              </button>
+            </sc-for>
+          </div>
+
+          <!-- columns -->
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <sc-for list="{{ columns }}" as="col" hint-placeholder-count="5">
+              <div style="flex:1;min-width:0;background:#fafafa;border:1px solid #efefef;border-radius:12px;padding:10px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 6px 8px;">
+                  <div style="display:flex;align-items:center;gap:7px;font-weight:700;font-size:14px;">{{ col.stage }} <span style="background:#ececec;color:#6b7280;border-radius:20px;padding:0 7px;font-size:11px;font-weight:600;">{{ col.count }}</span></div>
+                  <svg style="color:#9ca3af;cursor:pointer;" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:0 6px 10px;font-size:12px;"><strong style="font-size:14px;">{{ col.value }}</strong><span style="color:#9ca3af;">Awaiting approval</span></div>
+                <button class="btn-ghost" style="width:100%;border:1px solid #e2e2e2;background:#fff;border-radius:8px;padding:8px;font-size:12.5px;font-weight:500;color:#374151;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Add deal
+                </button>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <sc-for list="{{ col.deals }}" as="d" hint-placeholder-count="2">
+                    <div class="deal-card" onClick="{{ openDetail }}" style="background:#fff;border:1px solid #ececec;border-radius:10px;padding:12px;cursor:pointer;transition:.15s;">
+                      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <div style="display:flex;align-items:center;gap:8px;"><span style="width:22px;height:22px;border-radius:6px;background:{{ d.bg }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ d.letter }}</span><strong style="font-size:13.5px;">{{ d.co }}</strong></div>
+                        <svg style="color:#c4c4c7;" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+                      </div>
+                      <span style="display:inline-block;background:{{ d.prBg }};color:{{ d.prFg }};border-radius:6px;padding:2px 8px;font-size:10.5px;font-weight:600;margin-bottom:10px;">{{ d.pr }}</span>
+                      <div style="font-size:18px;font-weight:700;margin-bottom:10px;letter-spacing:-.3px;">{{ d.val }}</div>
+                      <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:#6b7280;">
+                        <div style="display:flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 21V9h6v12"/></svg> {{ d.acct }}</div>
+                        <div style="display:flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3-6 7-6s7 2.7 7 6"/></svg> {{ d.owner }}</div>
+                        <div style="display:flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> {{ d.date }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ===== FORECAST VIEW ===== -->
+        <sc-if value="{{ isForecast }}" hint-placeholder-val="x">
+        <div style="display:flex;gap:22px;align-items:flex-start;">
+          <div style="flex:1;min-width:0;">
+            <div style="border:1px solid #fde4b8;background:#fffaf0;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+              <span style="width:18px;height:18px;border-radius:50%;background:#2367f1;flex:none;display:inline-block;margin-top:2px;"></span>
+              <div style="flex:1;">
+                <div style="font-weight:700;font-size:14.5px;margin-bottom:3px;">Your top of funnel is light. Q3 is at risk.</div>
+                <div style="color:#6b7280;font-size:13px;">0 prospects and 1 discovery deal won't cover your $5M target. Carmen can source 25 ICP partners this week.</div>
+              </div>
+              <button style="display:flex;align-items:center;gap:7px;background:#141414;color:#fff;border:none;border-radius:9px;padding:0 16px;height:42px;font-size:13px;font-weight:600;cursor:pointer;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg> Open Carmen plan
+              </button>
+              <svg style="color:#b0935a;cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </div>
+
+            <sc-for list="{{ forecastSections }}" as="sec" hint-placeholder-count="3">
+              <div style="margin-bottom:26px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                  <div style="display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;">{{ sec.title }} <span style="background:#ececec;color:#6b7280;border-radius:20px;padding:1px 8px;font-size:11.5px;font-weight:600;">{{ sec.count }}</span></div>
+                  <span style="color:#2367f1;font-size:13px;font-weight:500;cursor:pointer;">See all</span>
+                </div>
+                <div style="border:1px solid #ececec;border-radius:12px;overflow:hidden;">
+                  <sc-for list="{{ sec.rows }}" as="r" hint-placeholder-count="2">
+                    <div class="row-hover" style="display:flex;align-items:center;gap:14px;padding:15px 18px;border-bottom:1px solid #f2f2f2;">
+                      <span style="width:34px;height:34px;border-radius:8px;background:{{ r.bg }};color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;">{{ r.letter }}</span>
+                      <div style="flex:1;min-width:0;">
+                        <div style="font-weight:600;font-size:14px;">{{ r.co }}</div>
+                        <div style="color:#9ca3af;font-size:12.5px;">{{ r.meta }}</div>
+                      </div>
+                      <div style="font-weight:700;font-size:15px;">{{ r.val }}</div>
+                      <button onClick="{{ openDetail }}" class="review-btn" style="display:flex;align-items:center;gap:5px;border:1px solid #e2e2e2;background:#fff;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:500;cursor:pointer;color:#141414;">{{ sec.action }} <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- forecast sidebar -->
+          <div style="width:340px;flex:none;display:flex;flex-direction:column;gap:18px;">
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px;">
+              <div style="font-weight:600;font-size:14px;margin-bottom:14px;">Forecast</div>
+              <div style="font-size:30px;font-weight:700;letter-spacing:-.6px;">$3.32M</div>
+              <div style="color:#6b7280;font-size:12.5px;margin-bottom:10px;">78% of $5M target</div>
+              <div style="height:8px;border-radius:5px;background:#eafbe7;overflow:hidden;margin-bottom:6px;"><div style="width:78%;height:100%;background:#22c55e;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#9ca3af;margin-bottom:16px;"><span>$0</span><span>$5M</span></div>
+              <sc-for list="{{ forecastBreakdown }}" as="b" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid #f4f4f4;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:{{ b.dot }};"></span>
+                  <span style="flex:1;font-size:13px;color:#374151;">{{ b.label }}</span>
+                  <span style="color:#9ca3af;font-size:12.5px;">{{ b.count }}</span>
+                  <span style="font-weight:600;font-size:13px;min-width:54px;text-align:right;">{{ b.val }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><span style="font-weight:600;font-size:14px;">Top partners <span style="color:#9ca3af;font-weight:400;">• closed</span></span><span style="color:#6b7280;font-size:12.5px;cursor:pointer;">Q2 ▾</span></div>
+              <sc-for list="{{ topPartners }}" as="t" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-top:1px solid #f4f4f4;">
+                  <span style="width:30px;height:30px;border-radius:7px;background:{{ t.bg }};color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ t.letter }}</span>
+                  <div style="flex:1;"><div style="font-weight:600;font-size:13.5px;">{{ t.co }}</div><div style="color:#9ca3af;font-size:12px;">{{ t.deals }}</div></div>
+                  <span style="font-weight:700;font-size:14px;">{{ t.val }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ===== LIST VIEW ===== -->
+        <sc-if value="{{ isList }}" hint-placeholder-val="x">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+            <span style="font-size:10px;letter-spacing:.7px;color:#b0b0b3;font-weight:600;">FOCUS</span>
+            <sc-for list="{{ focusPills }}" as="p" hint-placeholder-count="5">
+              <button onClick="{{ p.onClick }}" data-auto="{{ p.autoId }}" class="focus-pill" style="display:flex;align-items:center;gap:8px;border:1px solid {{ p.border }};background:{{ p.bg }};color:{{ p.fg }};border-radius:9px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;">
+                <span style="width:7px;height:7px;border-radius:50%;background:{{ p.dot }};display:inline-block;"></span>
+                {{ p.label }} <span style="background:{{ p.cntBg }};color:{{ p.cntFg }};border-radius:20px;padding:1px 8px;font-size:11.5px;font-weight:600;">{{ p.count }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <sc-for list="{{ listGroups }}" as="g" hint-placeholder-count="3">
+            <div style="margin-bottom:14px;border:1px solid #ececec;border-radius:12px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;">
+                <svg style="color:#9ca3af;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                <span style="background:{{ g.tagBg }};color:{{ g.tagFg }};border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:.4px;">{{ g.stage }}</span>
+                <span style="background:#ececec;color:#6b7280;border-radius:20px;padding:0 8px;font-size:11.5px;font-weight:600;">{{ g.count }}</span>
+                <span style="margin-left:auto;font-weight:700;font-size:14px;">{{ g.total }}</span>
+              </div>
+              <div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 1.2fr 40px;padding:8px 16px;background:#fafafa;border-top:1px solid #f2f2f2;font-size:10.5px;letter-spacing:.5px;color:#9ca3af;font-weight:600;">
+                <span>DEAL</span><span>OWNER</span><span>CLOSE DATE</span><span>VALUE</span><span>LAST ACTIVITY</span><span></span>
+              </div>
+              <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="2">
+                <div class="row-hover" data-auto="{{ r.autoId }}" onClick="{{ openDetail }}" style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 1.2fr 40px;align-items:center;padding:13px 16px;border-top:1px solid #f4f4f4;cursor:pointer;font-size:13px;">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="width:28px;height:28px;border-radius:7px;background:{{ r.bg }};color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;">{{ r.letter }}</span>
+                    <strong style="font-size:13.5px;">{{ r.co }}</strong>
+                    <span style="display:flex;align-items:center;gap:4px;background:#f4f4f5;color:#6b7280;border-radius:6px;padding:2px 8px;font-size:11.5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>{{ r.acct }}</span>
+                    <span style="background:{{ r.stBg }};color:{{ r.stFg }};border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;">{{ r.status }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:7px;"><span style="width:22px;height:22px;border-radius:50%;background:{{ r.ownBg }};color:#fff;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ r.ownIn }}</span>{{ r.owner }}</div>
+                  <span style="color:{{ r.dateFg }};font-weight:{{ r.dateW }};">{{ r.close }}</span>
+                  <span style="font-weight:600;">{{ r.val }}</span>
+                  <span style="color:#6b7280;">{{ r.last }}</span>
+                  <svg style="color:#c4c4c7;" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+                </div>
+              </sc-for>
+              <div style="padding:12px 16px;border-top:1px solid #f4f4f4;color:#6b7280;font-size:13px;display:flex;align-items:center;gap:7px;cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Add new deal</div>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ===== DETAIL PAGE (Stripe) ===== -->
+      <sc-if value="{{ showDetail }}" hint-placeholder-val="x">
+      <div>
+        <div data-auto="back-detail" style="display:flex;align-items:center;gap:9px;color:#9ca3af;font-size:13px;margin-bottom:18px;cursor:pointer;" onClick="{{ backToDeals }}">
+          <span>Management</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg><span style="color:#141414;font-weight:600;">Stripe</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
+          <span style="width:42px;height:42px;border-radius:10px;background:#141414;color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;">S</span>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:10px;"><h1 style="font-size:22px;font-weight:700;margin:0;">Stripe</h1><span style="background:#fdeccd;color:#92722e;border-radius:7px;padding:3px 10px;font-size:11.5px;font-weight:600;">↗ Pending review</span></div>
+            <div style="color:#9ca3af;font-size:12.5px;margin-top:3px;">stripe.com ↗ • Submitted Oct 31, 2025</div>
+          </div>
+          <svg style="color:#9ca3af;border:1px solid #e2e2e2;border-radius:8px;padding:8px;cursor:pointer;" width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+        </div>
+
+        <div style="display:flex;gap:22px;align-items:flex-start;">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:18px;">
+            <!-- pipeline stage -->
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px 20px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><span style="font-weight:600;font-size:14px;">Pipeline stage</span><button style="display:flex;align-items:center;gap:6px;background:#5a9bf6;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;">Advance stage <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></div>
+              <div style="display:flex;align-items:center;gap:30px;">
+                <div><div style="font-size:26px;font-weight:700;letter-spacing:-.5px;">$480,000</div><div style="color:#9ca3af;font-size:12px;">Annual contract value • US Dollars</div></div>
+                <div style="flex:1;">
+                  <div style="display:flex;gap:6px;margin-bottom:8px;"><div style="flex:1;height:5px;border-radius:3px;background:#2367f1;"></div><div style="flex:1;height:5px;border-radius:3px;background:#ececec;"></div><div style="flex:1;height:5px;border-radius:3px;background:#ececec;"></div><div style="flex:1;height:5px;border-radius:3px;background:#ececec;"></div><div style="flex:1;height:5px;border-radius:3px;background:#ececec;"></div></div>
+                  <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#9ca3af;"><span style="color:#2367f1;font-weight:600;">● ↗ Prospect</span><span>↗ Discovery</span><span>↗ Demo</span><span>↗ Negotiation</span><span>↗ Closing</span></div>
+                </div>
+              </div>
+            </div>
+            <!-- prospect -->
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px 20px;">
+              <div style="font-weight:600;font-size:15px;margin-bottom:14px;">Prospect</div>
+              <sc-for list="{{ prospectRows }}" as="p" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid #f4f4f4;">
+                  <span style="display:flex;align-items:center;gap:9px;color:#6b7280;font-size:13.5px;"><span style="color:#b0b0b3;display:flex;" dangerouslySetInnerHTML="{{ p.icon }}"></span>{{ p.label }}</span>
+                  <span style="font-weight:600;font-size:13.5px;">{{ p.value }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <!-- BANT -->
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px 20px;">
+              <div style="font-weight:600;font-size:15px;margin-bottom:14px;">BANT Qualification</div>
+              <sc-for list="{{ bantRows }}" as="b" hint-placeholder-count="4">
+                <div style="display:flex;gap:12px;padding:14px 0;border-top:1px solid #f4f4f4;">
+                  <span style="width:30px;height:30px;border-radius:8px;background:#f4f4f5;color:#6b7280;display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ b.icon }}"></span>
+                  <div><div style="font-size:10.5px;letter-spacing:.5px;color:#9ca3af;font-weight:600;margin-bottom:3px;">{{ b.label }}</div><div style="font-size:13.5px;color:#374151;">{{ b.value }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+            <!-- timeline -->
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px 20px;">
+              <div style="font-weight:600;font-size:15px;margin-bottom:16px;">Activity Timeline</div>
+              <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="3">
+                <div style="display:flex;gap:12px;">
+                  <div style="display:flex;flex-direction:column;align-items:center;"><span style="width:20px;height:20px;border-radius:50%;background:#dcfce7;color:#16a34a;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><span style="flex:1;width:1.5px;background:#ececec;"></span></div>
+                  <div style="padding-bottom:18px;"><div style="font-size:13.5px;"><strong>{{ t.title }}</strong> <span style="color:#9ca3af;">• {{ t.note }}</span></div><div style="color:#9ca3af;font-size:12px;margin-top:2px;">{{ t.time }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- detail sidebar -->
+          <div style="width:330px;flex:none;display:flex;flex-direction:column;gap:18px;">
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px;">
+              <div style="font-weight:600;font-size:14px;margin-bottom:14px;">Overview</div>
+              <div style="font-size:10px;letter-spacing:.6px;color:#b0b0b3;font-weight:600;margin-bottom:12px;">DEAL DETAILS</div>
+              <sc-for list="{{ overviewRows }}" as="o" hint-placeholder-count="5">
+                <div style="margin-bottom:14px;"><div style="display:flex;align-items:center;gap:7px;color:#9ca3af;font-size:12px;margin-bottom:3px;"><span dangerouslySetInnerHTML="{{ o.icon }}"></span>{{ o.label }}</div><div style="font-weight:600;font-size:13.5px;">{{ o.value }}</div></div>
+              </sc-for>
+              <div style="font-size:10px;letter-spacing:.6px;color:#b0b0b3;font-weight:600;margin:18px 0 12px;">CRM SYNC</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="display:flex;align-items:center;gap:7px;font-size:13px;color:#374151;">Hubspot</span><span style="background:#dcfce7;color:#16a34a;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:600;">↗ Synched 2hrs ago</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:7px;font-size:13px;color:#374151;">Salesforce</span><span style="background:#f4f4f5;color:#9ca3af;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:600;">↗ Not connected</span></div>
+            </div>
+            <div style="border:1px solid #ececec;border-radius:12px;padding:18px;">
+              <div style="font-weight:600;font-size:14px;margin-bottom:14px;">Actions</div>
+              <div style="background:#fffaf0;border:1px solid #fde4b8;border-radius:9px;padding:10px 12px;font-size:12.5px;color:#92722e;display:flex;align-items:center;gap:7px;margin-bottom:14px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Expires in 21 days (June 15, 2026)</div>
+              <button style="width:100%;background:#16a34a;color:#fff;border:none;border-radius:9px;padding:11px;font-size:13.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:9px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg> Approve deal</button>
+              <button style="width:100%;background:#fff;color:#dc2626;border:1px solid #f3c0c0;border-radius:9px;padding:11px;font-size:13.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:9px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Reject deal</button>
+              <button class="btn-ghost" style="width:100%;background:#fff;color:#374151;border:1px solid #e2e2e2;border-radius:9px;padding:11px;font-size:13.5px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg> Request more info</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+    </div>
+  </main>
+
+  <!-- ===== WIZARD MODAL ===== -->
+  <sc-if value="{{ wizardOpen }}" hint-placeholder-val="">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;">
+    <div style="background:#fff;border-radius:16px;width:760px;max-width:100%;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.25);">
+
+      <!-- success -->
+      <sc-if value="{{ isSuccess }}" hint-placeholder-val="">
+      <div style="padding:40px 40px 0;text-align:center;overflow-y:auto;">
+        <div style="width:74px;height:74px;margin:0 auto 18px;background:#16a34a;border-radius:18px;display:flex;align-items:center;justify-content:center;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <h2 style="font-size:22px;font-weight:700;margin:0 0 8px;">Deal registered!</h2>
+        <p style="color:#6b7280;font-size:14px;margin:0 auto 24px;max-width:340px;">Pending review by your team. You'll be notified when it's approved.</p>
+        <div style="border:1px solid #ececec;border-radius:12px;padding:18px 20px;text-align:left;background:#fafafa;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #ececec;">
+            <div style="display:flex;align-items:center;gap:12px;"><span style="width:42px;height:42px;border-radius:10px;background:#141414;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;">S</span><div><div style="font-weight:700;font-size:16px;">Stripe</div><div style="color:#9ca3af;font-size:12.5px;">Alex Turner • Head of BD</div></div></div>
+            <div style="text-align:right;"><div style="font-weight:700;font-size:18px;">$480,000</div><div style="color:#9ca3af;font-size:12px;">Opportunity value</div></div>
+          </div>
+          <sc-for list="{{ successRows }}" as="s" hint-placeholder-count="5">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #f0f0f0;"><span style="color:#6b7280;font-size:13px;">{{ s.label }}</span><span style="font-weight:600;font-size:13px;" dangerouslySetInnerHTML="{{ s.value }}"></span></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding:18px 40px 28px;display:flex;justify-content:center;gap:12px;">
+        <button data-auto="success-back" onClick="{{ closeWizard }}" class="btn-ghost" style="border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 22px;height:44px;font-size:13.5px;font-weight:500;cursor:pointer;">Back to deals</button>
+        <button onClick="{{ viewDeal }}" class="btn-blue" style="background:#2367f1;color:#fff;border:none;border-radius:9px;padding:0 26px;height:44px;font-size:13.5px;font-weight:600;cursor:pointer;">View Deal</button>
+      </div>
+      </sc-if>
+
+      <!-- form steps -->
+      <sc-if value="{{ isForm }}" hint-placeholder-val="x">
+      <div style="padding:26px 32px 0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;"><h2 style="font-size:19px;font-weight:700;margin:0;">Register New Deal</h2><svg onClick="{{ closeWizard }}" style="color:#9ca3af;cursor:pointer;" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></div>
+        <!-- stepper -->
+        <div style="display:flex;align-items:flex-start;margin-bottom:28px;">
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+            <div style="display:flex;align-items:flex-start;flex:{{ st.flex }};">
+              <div style="text-align:center;flex:none;width:120px;">
+                <div style="width:34px;height:34px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;background:{{ st.circleBg }};color:{{ st.circleFg }};" dangerouslySetInnerHTML="{{ st.circleInner }}"></div>
+                <div style="font-weight:700;font-size:13.5px;color:{{ st.titleFg }};">{{ st.title }}</div>
+                <div style="color:#9ca3af;font-size:11.5px;">{{ st.sub }}</div>
+              </div>
+              <sc-if value="{{ st.hasLine }}" hint-placeholder-val="x"><div style="flex:1;height:1.5px;background:#e2e2e2;margin-top:17px;"></div></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding:0 32px;overflow-y:auto;flex:1;">
+        <!-- STEP 1 -->
+        <sc-if value="{{ isStep1 }}" hint-placeholder-val="x">
+        <div>
+          <div style="border-radius:12px;padding:18px;margin-bottom:22px;background:linear-gradient(100deg,#e9f0ff,#ffeef7);">
+            <div style="display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px;margin-bottom:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"><circle cx="12" cy="12" r="9"/></svg> Start faster</div>
+            <div style="display:flex;gap:10px;">
+              <div style="flex:1;position:relative;"><svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9ca3af;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><input class="as-input" value="{{ crmUrl }}" placeholder="salesforce.com/op/0067..." style="width:100%;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px 0 38px;font-size:13.5px;background:#fff;"></div>
+              <button data-auto="autofill" onClick="{{ autofill }}" style="display:flex;align-items:center;gap:7px;background:#141414;color:#fff;border:none;border-radius:9px;padding:0 18px;height:46px;font-size:13.5px;font-weight:600;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg> Auto-fill</button>
+            </div>
+            <div style="text-align:center;color:#6b7280;font-size:12.5px;margin-top:12px;">Paste your Salesforce/ Hubspot link and our AI will pre-fill the prospect.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;padding-bottom:8px;">
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Company name <span style="color:#dc2626;">*</span></label><input class="as-input" value="{{ f_company }}" placeholder="e.g. Nimbus Robotics" style="width:100%;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div>
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Company website <span style="color:#dc2626;">*</span></label><input class="as-input" value="{{ f_website }}" placeholder="nimbus.ai" style="width:100%;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div>
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Contact name <span style="color:#dc2626;">*</span></label><input class="as-input" value="{{ f_contact }}" placeholder="Full name" style="width:100%;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div>
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Job title <span style="color:#dc2626;">*</span></label><input class="as-input" value="{{ f_title }}" placeholder="Head of BD" style="width:100%;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div>
+            <div style="grid-column:1 / -1;"><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Contact email <span style="color:#dc2626;">*</span></label><input class="as-input" value="{{ f_email }}" placeholder="name@company.com" style="width:100%;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div>
+          </div>
+        </div>
+        </sc-if>
+        <!-- STEP 2 -->
+        <sc-if value="{{ isStep2 }}" hint-placeholder-val="x">
+        <div style="padding-bottom:8px;">
+          <label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Opportunity value <span style="color:#dc2626;">*</span></label>
+          <div style="display:flex;gap:10px;margin-bottom:20px;"><div style="display:flex;align-items:center;gap:6px;border:1px solid #e2e2e2;border-radius:9px;padding:0 12px;height:46px;font-size:13.5px;">🇬🇧 £ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><input class="as-input" placeholder="50,000" style="flex:1;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;">
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Partner <span style="color:#dc2626;">*</span></label><div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;height:46px;color:#9ca3af;font-size:13.5px;">Search partner <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Partner contact <span style="color:#dc2626;">*</span></label><div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;height:46px;color:#9ca3af;font-size:13.5px;">Select a partner first <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Expected close</label><div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;height:46px;color:#9ca3af;font-size:13.5px;">dd/mm/yyyy <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div></div>
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Opportunity stage</label><div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;height:46px;font-size:13.5px;">Prospect <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+          </div>
+        </div>
+        </sc-if>
+        <!-- STEP 3 -->
+        <sc-if value="{{ isStep3 }}" hint-placeholder-val="x">
+        <div style="padding-bottom:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;margin-bottom:20px;">
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Budget</label><div style="display:flex;gap:10px;"><div style="display:flex;align-items:center;gap:6px;border:1px solid #e2e2e2;border-radius:9px;padding:0 12px;height:46px;font-size:13.5px;">🇬🇧 £ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><input class="as-input" placeholder="50,000" style="flex:1;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div></div>
+            <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Authority</label><input class="as-input" placeholder="Enter decision maker" style="width:100%;height:46px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;font-size:13.5px;"></div>
+          </div>
+          <div style="margin-bottom:20px;"><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Timeline</label><div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px;height:46px;color:#9ca3af;font-size:13.5px;">Select timeline <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div></div>
+          <div><label style="font-weight:600;font-size:13.5px;display:block;margin-bottom:7px;">Need</label><textarea class="as-input" placeholder="Describe partner's need" style="width:100%;height:96px;border:1px solid #e2e2e2;border-radius:9px;padding:12px 14px;font-size:13.5px;resize:none;font-family:inherit;"></textarea></div>
+        </div>
+        </sc-if>
+      </div>
+      <!-- footer -->
+      <div style="padding:18px 32px;background:#fafafa;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;gap:12px;">
+        <button onClick="{{ backStep }}" class="btn-ghost" style="border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 22px;height:44px;font-size:13.5px;font-weight:500;cursor:pointer;">{{ backLabel }}</button>
+        <button data-auto="next" onClick="{{ nextStep }}" class="btn-blue" style="background:#2367f1;color:#fff;border:none;border-radius:9px;padding:0 26px;height:44px;font-size:13.5px;font-weight:600;cursor:pointer;">{{ nextLabel }}</button>
+      </div>
+      </sc-if>
+
+    </div>
+  </div>
+  </sc-if>
+
+
+  <!-- ===== AUTOPILOT CURSOR ===== -->
+  <div ref="{{ rippleRef }}" style="position:fixed;left:0;top:0;width:0;height:0;border-radius:50%;border:2px solid #2367f1;pointer-events:none;z-index:998;opacity:0;will-change:transform,width,height,opacity;"></div>
+  <div ref="{{ cursorRef }}" style="position:fixed;left:0;top:0;width:24px;height:24px;pointer-events:none;z-index:999;transform:translate(-100px,-100px);will-change:transform;transition:opacity .25s;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#141414" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,.4));"><path d="M5 3l14.5 8.2-6.1 1.5-2.9 6z"/></svg>
+  </div>
+  <div style="position:fixed;right:18px;bottom:18px;z-index:997;display:flex;align-items:center;gap:8px;background:#141414;color:#fff;border-radius:30px;padding:8px 14px;font-size:11px;font-weight:600;letter-spacing:.6px;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.22);">
+    <span style="width:7px;height:7px;border-radius:50%;background:#c8f123;box-shadow:0 0 0 0 rgba(200,241,35,.6);animation:autopulse 1.6s ease-out infinite;"></span> AUTO DEMO
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { page:'deals', view:'board', focus:'all', wizardOpen:false, step:1, crmUrl:'', filled:false };
+
+  ic(svg){ return { __html: svg }; }
+
+  setView(v){ this.setState({ view:v }); }
+
+  componentDidMount(){
+    this.cx = window.innerWidth*0.52; this.cy = window.innerHeight*0.38;
+    if(this.cursorEl) this.cursorEl.style.transform='translate('+this.cx+'px,'+this.cy+'px)';
+    this.playing = true; this.paused = false;
+    this.script = [
+      { auto:'view-board',    act:()=>this.setState({page:'deals',view:'board',focus:'all'}), wait:1300 },
+      { auto:'focus-review',  act:()=>this.setState({focus:'review'}),                         wait:1500 },
+      { auto:'view-list',     act:()=>this.setView('list'),                                    wait:1600 },
+      { auto:'open-detail',   act:()=>this.setState({page:'detail'}),                          wait:2000 },
+      { auto:'back-detail',   act:()=>this.setState({page:'deals'}),                           wait:1000 },
+      { auto:'view-forecast', act:()=>this.setView('forecast'),                                wait:1900 },
+      { auto:'view-board',    act:()=>this.setView('board'),                                   wait:1000 },
+      { auto:'register',      act:()=>this.setState({wizardOpen:true,step:1,filled:false,crmUrl:''}), wait:1300 },
+      { auto:'autofill',      act:()=>this.setState({filled:true,crmUrl:'salesforce.com/op/0067Qx'}), wait:1500 },
+      { auto:'next',          act:()=>this.setState({step:2}),                                 wait:1200 },
+      { auto:'next',          act:()=>this.setState({step:3}),                                 wait:1200 },
+      { auto:'next',          act:()=>this.setState({step:4}),                                 wait:1900 },
+      { auto:'success-back',  act:()=>this.setState({wizardOpen:false,step:1,page:'deals',view:'board',focus:'all'}), wait:1600 }
+    ];
+    this.runLoop();
+  }
+  componentWillUnmount(){ this.playing=false; clearTimeout(this._t); clearInterval(this._iv); }
+
+  sleep(ms){ return new Promise(r=>{ this._t=setTimeout(r,ms); }); }
+
+  tween(x,y,dur){
+    const sx=this.cx, sy=this.cy, t0=Date.now();
+    return new Promise(res=>{
+      clearInterval(this._iv);
+      this._iv=setInterval(()=>{
+        let t=Math.min(1,(Date.now()-t0)/dur);
+        const e = t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+        this.cx=sx+(x-sx)*e; this.cy=sy+(y-sy)*e;
+        if(this.cursorEl) this.cursorEl.style.transform='translate('+this.cx+'px,'+this.cy+'px)';
+        if(t>=1 || !this.playing){ clearInterval(this._iv); res(); }
+      },16);
+    });
+  }
+
+  async moveTo(auto){
+    const root=this.rootEl||document;
+    const el=root.querySelector('[data-auto="'+auto+'"]');
+    if(!el) return false;
+    const b=el.getBoundingClientRect();
+    if(b.width===0 && b.height===0) return false;
+    await this.tween(b.left+b.width/2, b.top+b.height*0.55, 780);
+    return true;
+  }
+
+  clickFx(){
+    const c=this.cursorEl;
+    if(c){ c.animate([{filter:'drop-shadow(0 2px 5px rgba(0,0,0,.4)) brightness(1)'},{filter:'drop-shadow(0 1px 2px rgba(0,0,0,.4)) brightness(1.6)'},{filter:'drop-shadow(0 2px 5px rgba(0,0,0,.4)) brightness(1)'}],{duration:260}); }
+    const r=this.rippleEl;
+    if(r){
+      r.style.transition='none'; r.style.opacity='0.85';
+      r.style.width='10px'; r.style.height='10px';
+      r.style.transform='translate('+(this.cx-5)+'px,'+(this.cy-5)+'px)';
+      requestAnimationFrame(()=>{
+        r.style.transition='width .5s ease-out, height .5s ease-out, opacity .5s ease-out, transform .5s ease-out';
+        r.style.opacity='0'; r.style.width='46px'; r.style.height='46px';
+        r.style.transform='translate('+(this.cx-23)+'px,'+(this.cy-23)+'px)';
+      });
+    }
+  }
+
+  async runLoop(){
+    await this.sleep(900);
+    let i=0;
+    while(this.playing){
+      while(this.paused && this.playing){ await this.sleep(150); }
+      if(!this.playing) break;
+      const s=this.script[i];
+      if(this.scrollEl) this.scrollEl.scrollTop=0;
+      await this.sleep(60);
+      const ok=await this.moveTo(s.auto);
+      if(!this.playing) break;
+      if(ok){ this.clickFx(); await this.sleep(200); s.act(); }
+      await this.sleep(s.wait||1000);
+      i=(i+1)%this.script.length;
+    }
+  }
+
+  renderVals(){
+    const s = this.state;
+    const navIc = {
+      deals:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>',
+      analytics:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18l5-6 4 3 6-8"/></svg>',
+      partners:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.2"/><path d="M16 14c2.5.2 4 2 4 4.5"/></svg>',
+      globe:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
+      library:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5M3 18l9 5 9-5"/></svg>',
+      training:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>',
+      engage:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M8 7a1 1 0 100-2 1 1 0 000 2zM17 19a1 1 0 100-2 1 1 0 000 2z"/></svg>',
+      whitespace:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>',
+      source:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>',
+      jv:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>',
+      agent:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M12 7V4M9 13h.01M15 13h.01"/></svg>',
+      market:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1 4H5z"/><path d="M5 11v8h14v-8"/></svg>',
+      lists:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h9M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+      discovery:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>',
+      apps:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>'
+    };
+    const item = (label,icon,active)=>({ label, icon:this.ic(icon),
+      bg: active?'#eef3ff':'transparent', fg: active?'#2367f1':'#374151',
+      icColor: active?'#2367f1':'#8a8a8f', weight: active?'600':'400' });
+    const navGroups = [
+      { title:'HOME', items:[ item('Deals Management',navIc.deals,true), item('Deals management',navIc.deals,false), item('Analytics',navIc.analytics,false) ] },
+      { title:'PARTNERS', items:[ item('Manage partners',navIc.partners,false), item('Account mapping',navIc.globe,false), item('Content library',navIc.library,false), item('Partner training',navIc.training,false), item('Engagement',navIc.engage,false), item('Partner whitespace',navIc.whitespace,false), item('Source attribution',navIc.source,false), item('Prospective partner JV',navIc.jv,false), item('Partner activation agent',navIc.agent,false) ] },
+      { title:'DISCOVER', items:[ item('Marketplace',navIc.market,false), item('Prospect lists',navIc.lists,false), item('Partner discovery',navIc.discovery,false) ] },
+      { title:'WORKSPACE', items:[ item('App integrations',navIc.apps,false) ] }
+    ];
+
+    const seg = (on)=>({ bg:on?'#fff':'transparent', fg:on?'#141414':'#6b7280', sh:on?'0 1px 3px rgba(0,0,0,.12)':'none' });
+    const b=seg(s.view==='board'), f=seg(s.view==='forecast'), l=seg(s.view==='list');
+
+    const focusDef = [
+      {key:'all',label:'All deals',count:'45',dot:'#141414',value:'',autoId:'focus-all'},
+      {key:'review',label:'Needs review',count:'7',dot:'#f59e0b',value:'$776K',autoId:'focus-review'},
+      {key:'closing',label:'Closing this week',count:'7',dot:'#2367f1',value:'$1.2M',autoId:'focus-closing'},
+      {key:'stalled',label:'Stalled',count:'4',dot:'#a855f7',value:'$1.5M',autoId:'focus-stalled'},
+      {key:'won',label:'Won this quarter',count:'2',dot:'#16a34a',value:'$410K',autoId:'focus-won'}
+    ];
+    const focusPills = focusDef.map(p=>{ const on=s.focus===p.key; return {
+      ...p, onClick:()=>this.setState({focus:p.key}),
+      bg:on?'#141414':'#fff', fg:on?'#fff':'#374151', border:on?'#141414':'#e2e2e2',
+      dot:on?p.dot==='#141414'?'#fff':p.dot:p.dot,
+      cntBg:on?'rgba(255,255,255,.2)':'#ececec', cntFg:on?'#fff':'#6b7280',
+      valFg:on?'rgba(255,255,255,.7)':'#9ca3af'
+    };});
+
+    const card=(co,letter,bg,pr,prBg,prFg,val,acct,owner,date)=>({co,letter,bg,pr,prBg,prFg,val,acct,owner,date});
+    const vercel=(bg)=>card('Vercel','V',bg,'High','#fde2e2','#c0392b','$125K','Orbital Solutions','Max Edwards','Mar 26, 2026');
+    const invision=card('InVision','I','#f97316','Urgent','#fde9d3','#b45309','$98K','Design Ventures','Samantha Lee','Apr 12, 2026');
+    const figma=card('Figma','F','#22c55e','High','#e6e6ea','#52525b','$110K','Creative Labs','Jordan Smith','May 5, 2026');
+    const columns = [
+      {stage:'Prospect',count:16,value:'$617K',deals:[vercel('#7c3aed'),figma]},
+      {stage:'Discovery',count:16,value:'$617K',deals:[vercel('#141414'),invision,figma]},
+      {stage:'Demo',count:16,value:'$617K',deals:[vercel('#8a7a5c')]},
+      {stage:'Negotiation',count:16,value:'$617K',deals:[vercel('#2367f1'),invision]},
+      {stage:'Closing',count:16,value:'$617K',deals:[vercel('#7c3aed'),invision,figma]}
+    ];
+
+    const forecastSections = [
+      {title:'Needs your review',count:3,action:'Review',rows:[
+        {co:'InVision',letter:'I',bg:'#f97316',meta:'Submitted Apr 29, 2026 • 2d ago • awaiting your approval',val:'$240K'},
+        {co:'Adobe XD',letter:'A',bg:'#2367f1',meta:'Submitted May 1, 2026 • 1d ago • pending review',val:'$150K'},
+        {co:'Sketch',letter:'S',bg:'#22c55e',meta:'Submitted May 3, 2026 • Just now • approved',val:'$300K'} ]},
+      {title:'Closing this week',count:2,action:'Open',rows:[
+        {co:'Figma',letter:'F',bg:'#ec4899',meta:'Submitted May 3, 2026 • 2d ago • under consideration',val:'$120K'},
+        {co:'Notion',letter:'N',bg:'#3b82f6',meta:'Submitted May 5, 2026 • 3d ago • approved',val:'$90K'} ]},
+      {title:'Won this quarter',count:2,action:'Open',rows:[
+        {co:'Amazon',letter:'A',bg:'#7c3aed',meta:'Submitted May 3, 2026 • 2d ago • under consideration',val:'$120K'},
+        {co:'Dangote',letter:'D',bg:'#141414',meta:'Submitted May 5, 2026 • 3d ago • approved',val:'$90K'} ]}
+    ];
+    const forecastBreakdown = [
+      {dot:'#f59e0b',label:'↗ Prospect',count:'7',val:'$776K'},
+      {dot:'#2367f1',label:'↗ Discovery',count:'15',val:'$1.2M'},
+      {dot:'#14b8a6',label:'↗ Proposal',count:'9',val:'$776K'},
+      {dot:'#a855f7',label:'↗ Negotiation',count:'3',val:'$250K'},
+      {dot:'#16a34a',label:'↗ Closed won',count:'11',val:'$2.1M'}
+    ];
+    const topPartners = [
+      {co:'InVision',letter:'I',bg:'#f97316',deals:'5 deals',val:'$712K'},
+      {co:'Figma',letter:'F',bg:'#3b82f6',deals:'8 deals',val:'$1.2M'},
+      {co:'Sketch',letter:'S',bg:'#ef4444',deals:'4 deals',val:'$560K'},
+      {co:'Adobe XD',letter:'A',bg:'#22c55e',deals:'6 deals',val:'$880K'}
+    ];
+
+    const row=(co,letter,bg,acct,status,stBg,stFg,owner,ownIn,ownBg,close,dateFg,dateW,val,last,autoId)=>({co,letter,bg,acct,status,stBg,stFg,owner,ownIn,ownBg,close,dateFg,dateW:dateW||'400',val,last,autoId:autoId||''});
+    const listGroups = [
+      {stage:'PROSPECT',count:3,total:'$271K',tagBg:'#fdeccd',tagFg:'#92722e',rows:[
+        row('Tesla','T','#ef4444','Orbital Solutions','stalled','#fde2e2','#c0392b','Toba','TO','#3b82f6','Today','#dc2626','600','$56K','Yesterday','open-detail'),
+        row('Apple','A','#8a8a8f','Acme corp','new','#dbeafe','#1e4fa3','Max','ME','#a855f7','Tomorrow','#dc2626','600','$120K','Last Week'),
+        row('Amazon','A','#22c55e','Nasco PLC','closing','#dcfce7','#16a34a','Ayo','AW','#16a34a','Jun 13','#374151','400','$95K','Last Month') ]},
+      {stage:'DISCOVERY',count:2,total:'$107K',tagBg:'#dbeafe',tagFg:'#1e4fa3',rows:[
+        row('eBay','E','#ef4444','Orbital Solutions','stalled','#fde2e2','#c0392b','Toba','TO','#3b82f6','Jun 14','#374151','400','$95K','Yesterday'),
+        row('Dangote','D','#8a7a5c','Acme corp','new','#dbeafe','#1e4fa3','Max','ME','#a855f7','Jul 7','#374151','400','$12K','Today') ]},
+      {stage:'DEMO',count:2,total:'$107K',tagBg:'#1e293b',tagFg:'#fff',rows:[
+        row('MTN NG','M','#ef4444','Orbital Solutions','stalled','#fde2e2','#c0392b','Toba','TO','#3b82f6','Overdue • May 13','#dc2626','600','$95K','May 13'),
+        row('Airtel NG','A','#8a7a5c','Acme corp','new','#dbeafe','#1e4fa3','Max','ME','#a855f7','Jul 7','#374151','400','$12K','Today') ]},
+      {stage:'NEGOTIATION',count:1,total:'$107K',tagBg:'#ede9fe',tagFg:'#6d4ea3',rows:[
+        row('Aramco Oil','A','#f59e0b','Orbital S...','review','#fef3c7','#92722e','Toba','TO','#3b82f6','Jun 14','#374151','400','$95K','May 13') ]},
+      {stage:'CLOSED WON',count:3,total:'$271K',tagBg:'#16a34a',tagFg:'#fff',rows:[
+        row('Oando','O','#ef4444','Orbital Solutions','','transparent','transparent','Toba','TO','#3b82f6','Today','#374151','400','$56K','Yesterday'),
+        row('Exxon mobile','E','#8a7a5c','Acme corp','','transparent','transparent','Max','ME','#a855f7','Yesterday','#374151','400','$120K','Last Week'),
+        row('Amazon','A','#22c55e','Nasco PLC','','transparent','transparent','Ayo','AW','#16a34a','Dec 27, 2025','#374151','400','$95K','Last Month') ]}
+    ];
+
+    // detail
+    const di=(svg)=>this.ic(svg);
+    const prospectRows = [
+      {icon:di(navIc.whitespace),label:'Company',value:'Stripe'},
+      {icon:di(navIc.globe),label:'Website',value:'stripe.com'},
+      {icon:di(navIc.lists),label:'Industry',value:'Industrial automation'},
+      {icon:di('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5-7-11a7 7 0 0114 0c0 6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'),label:'Region',value:'EMEA, Germany'},
+      {icon:di(navIc.partners),label:'Employees',value:'300,000+'}
+    ];
+    const bantRows = [
+      {icon:di('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>'),label:'BUDGET',value:'$220K - $280K confirmed budget'},
+      {icon:di('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3-6 7-6s7 2.7 7 6"/></svg>'),label:'AUTHORITY',value:'Klaus Weber (Head of Strategic Partnerships) + CTO sign-off required'},
+      {icon:di('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M8 7a1 1 0 100-2 1 1 0 000 2z"/></svg>'),label:'NEED',value:'Looking to automate partner onboarding and reduce manual deal registration overhead across 40+ regional partners.'},
+      {icon:di('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'),label:'TIMELINE',value:'3 - 6 months'}
+    ];
+    const timeline = [
+      {title:'Approved deal',note:'moved to discovery',time:'Nov 04, 2025 • 10:24AM'},
+      {title:'Added budget context',note:'$165K from initial scoping call',time:'Nov 02, 2025 • 10:24AM'},
+      {title:'Deal registered',note:'by Max Edwards',time:'Oct 04, 2025 • 10:24AM'}
+    ];
+    const overviewRows = [
+      {icon:di(navIc.whitespace),label:'Partner',value:'Techcorp solutions'},
+      {icon:di(navIc.partners),label:'Partner contact',value:'Max Edwards'},
+      {icon:di('<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>'),label:'Submitted date',value:'Oct 31, 2025'},
+      {icon:di('<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'),label:'Last activity',value:'Nov 04, 2025'}
+    ];
+
+    // wizard
+    const step = s.step;
+    const isSuccess = step===4;
+    const isForm = s.wizardOpen && !isSuccess;
+    const sc=(n)=>{ if(step>n) return {circleBg:'#16a34a',circleFg:'#fff',circleInner:this.ic('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>'),titleFg:'#141414'};
+      if(step===n) return {circleBg:'#2367f1',circleFg:'#fff',circleInner:this.ic(String(n)),titleFg:'#141414'};
+      return {circleBg:'#f4f4f5',circleFg:'#9ca3af',circleInner:this.ic(String(n)),titleFg:'#9ca3af'}; };
+    const steps = [
+      {...sc(1),title:'Prospect',sub:'Who is this deal for?',hasLine:true,flex:1},
+      {...sc(2),title:'Deal Details',sub:'Value & partner info',hasLine:true,flex:1},
+      {...sc(3),title:'Qualification',sub:'BANT assessment',hasLine:false,flex:0}
+    ];
+    const successRows = [
+      {label:'Deal ID',value:this.ic('DEAL - 2848')},
+      {label:'Stage',value:this.ic('<span style="background:#fdeccd;color:#92722e;border-radius:6px;padding:2px 10px;font-size:11.5px;">↗ Prospect</span>')},
+      {label:'Partner',value:this.ic('Pharmadrip')},
+      {label:'Expected close',value:this.ic('Jun 14, 2026')},
+      {label:'Owner',value:this.ic('Max Edwards')},
+      {label:'Source',value:this.ic('Manual entry')}
+    ];
+
+    return {
+      navGroups,
+      rootRef:(el)=>{ this.rootEl=el; },
+      scrollRef:(el)=>{ this.scrollEl=el; },
+      cursorRef:(el)=>{ this.cursorEl=el; },
+      rippleRef:(el)=>{ this.rippleEl=el; },
+      pauseAuto:()=>{ this.paused=true; if(this.cursorEl)this.cursorEl.style.opacity='0'; if(this.rippleEl)this.rippleEl.style.opacity='0'; },
+      resumeAuto:()=>{ this.paused=false; if(this.cursorEl)this.cursorEl.style.opacity='1'; },
+      showDeals: s.page==='deals', showDetail: s.page==='detail',
+      boardBg:b.bg,boardFg:b.fg,boardSh:b.sh, foreBg:f.bg,foreFg:f.fg,foreSh:f.sh, listBg:l.bg,listFg:l.fg,listSh:l.sh,
+      setBoard:()=>this.setView('board'), setForecast:()=>this.setView('forecast'), setList:()=>this.setView('list'),
+      isBoard:s.view==='board', isForecast:s.view==='forecast', isList:s.view==='list',
+      focusPills, columns, forecastSections, forecastBreakdown, topPartners, listGroups,
+      prospectRows, bantRows, timeline, overviewRows,
+      openDetail:()=>this.setState({page:'detail'}), backToDeals:()=>this.setState({page:'deals'}),
+      wizardOpen:s.wizardOpen, isSuccess, isForm, isStep1:step===1, isStep2:step===2, isStep3:step===3,
+      steps, successRows,
+      crmUrl:s.crmUrl,
+      f_company:s.filled?'Stripe':'', f_website:s.filled?'stripe.com':'', f_contact:s.filled?'Alex Turner':'', f_title:s.filled?'Head of BD':'', f_email:s.filled?'alex@stripe.com':'',
+      openWizard:()=>this.setState({wizardOpen:true,step:1,filled:false,crmUrl:''}),
+      closeWizard:()=>this.setState({wizardOpen:false,step:1}),
+      autofill:()=>this.setState({filled:true,crmUrl:'salesforce.com/op/0067Qx'}),
+      nextStep:()=>this.setState(p=>({step:Math.min(p.step+1,4)})),
+      backStep:()=> step===1 ? this.setState({wizardOpen:false}) : this.setState(p=>({step:p.step-1})),
+      backLabel: step===1?'Cancel':'Back',
+      nextLabel: step===3?'Register deal':'Continue',
+      viewDeal:()=>this.setState({wizardOpen:false,step:1,page:'detail'})
+    };
+  }
+}
+</script>
+</body>
+</html>
