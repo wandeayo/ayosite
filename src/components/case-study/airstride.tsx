@@ -41,6 +41,55 @@ const MODULES = [
   { id: "engagement", label: "Engagement" },
 ];
 
+function AccountMappingDemoEmbed() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.65);
+
+  useEffect(() => {
+    const update = () => {
+      if (wrapRef.current) {
+        setScale(wrapRef.current.offsetWidth / 1440);
+      }
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    if (wrapRef.current) ro.observe(wrapRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const DEMO_H = 760;
+
+  return (
+    <Reveal>
+      <Container as="figure" className="my-20">
+        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
+          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
+            <iframe
+              src="/work/airstride/account-mapping-demo/index.html"
+              title="Account Mapping interactive demo"
+              style={{
+                width: "1440px",
+                height: `${DEMO_H}px`,
+                border: "none",
+                transform: `scale(${scale})`,
+                transformOrigin: "top left",
+              }}
+            />
+          </div>
+        </div>
+        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
+            Account Mapping
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
+            Interactive prototype · auto-playing demo
+          </span>
+        </figcaption>
+      </Container>
+    </Reveal>
+  );
+}
+
 function DealsDemoEmbed() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.65);
@@ -296,19 +345,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <CaseFigure
-          surface="tile"
-          kicker="Account Mapping"
-          caption="CRM connection flow with explicit permission scoping, step badges and connection states"
-          images={[
-            {
-              src: "/work/airstride/account-mapping.png",
-              alt: "Account mapping CRM connection flow showing step progress badges and permission scoping copy",
-              width: 1440,
-              height: 900,
-            },
-          ]}
-        />
+        <AccountMappingDemoEmbed />
       </section>
 
       {/* ===== MODULE 03: ANALYTICS ===== */}

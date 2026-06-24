@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700&family=Fragment+Mono&display=swap">
+<style>
+:root {
+  --as-blue: #2367f1;
+  --as-pink: #f124b3;
+  --as-lime: #c8f123;
+  --as-orange: #f15323;
+  --as-blue-50: #eef3ff;
+  --as-tile-blue: #e8effe;
+  --as-tile-green: #eaf6ee;
+  --as-tile-green-fg: #1a8c4a;
+  --as-ink: #141414;
+  --as-text-grey: #666666;
+  --as-border: #d5d3d1;
+  --font-heading: "Plus Jakarta Sans", "DM Sans", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "Fragment Mono", "IBM Plex Mono", monospace;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+}
+</style>
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  .app *{font-family:'DM Sans',system-ui,sans-serif;}
+  .app h1,.app h2,.app h3,.app .jakarta{font-family:'Plus Jakarta Sans','DM Sans',sans-serif;}
+  .nav-item:hover{background:#f4f4f5 !important;}
+  .nav-item:hover .nav-ic{color:#141414 !important;}
+  .btn-blue:hover{background:#1f5cd8 !important;}
+  .btn-ghost:hover{background:#f4f4f5 !important;}
+  .btn-dark:hover{background:#000 !important;}
+  .src-card:hover{border-color:#bcd0fb !important;}
+  .row-hover:hover{background:#fafafa !important;}
+  .sel-box:hover{border-color:#c4c4c7 !important;}
+  .ytlink:hover{color:#1f5cd8 !important;}
+  ::placeholder{color:#9ca3af;}
+  .as-input:focus{outline:none;border-color:#2367f1 !important;box-shadow:0 0 0 3px rgba(35,103,241,.12);}
+  @keyframes autopulse{0%{box-shadow:0 0 0 0 rgba(200,241,35,.6);}70%{box-shadow:0 0 0 7px rgba(200,241,35,0);}100%{box-shadow:0 0 0 0 rgba(200,241,35,0);}}
+  @keyframes procspin{to{transform:rotate(360deg);}}
+  @keyframes dotpulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+</style>
+</helmet>
+<div class="app" ref="{{ rootRef }}" onMouseEnter="{{ pauseAuto }}" onMouseLeave="{{ resumeAuto }}" style="display:flex;height:100vh;width:100%;background:#fff;color:#141414;overflow:hidden;font-size:14px;position:relative;">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside style="width:248px;flex:none;border-right:1px solid #ececec;display:flex;flex-direction:column;height:100%;background:#fff;">
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #f2f2f2;">
+      <div style="width:28px;height:28px;background:#141414;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.5px;">NS</div>
+      <span style="font-weight:600;font-size:14px;">Nextron Solu...</span>
+      <svg style="margin-left:2px;color:#9ca3af;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+      <svg style="margin-left:auto;color:#9ca3af;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="border:1px solid #e6e6e6;border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+        <svg style="color:#6b7280;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+        <div>
+          <div style="font-size:9px;letter-spacing:.7px;color:#9ca3af;font-weight:500;">SWITCH PRODUCT</div>
+          <div style="font-weight:600;font-size:13px;">Management</div>
+        </div>
+        <svg style="margin-left:auto;color:#9ca3af;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+      </div>
+    </div>
+    <div style="padding:0 14px 8px;">
+      <div style="display:flex;align-items:center;gap:8px;color:#2367f1;font-weight:500;font-size:13px;padding:7px 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Getting started
+      </div>
+    </div>
+
+    <nav style="flex:1;overflow-y:auto;padding:4px 14px 16px;">
+      <sc-for list="{{ navGroups }}" as="group" hint-placeholder-count="4">
+        <div style="margin-top:14px;">
+          <div style="font-size:10px;letter-spacing:.7px;color:#b0b0b3;font-weight:600;padding:0 8px 6px;">{{ group.title }}</div>
+          <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="3">
+            <div class="nav-item" style="display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:13.5px;margin-bottom:1px;background:{{ it.bg }};color:{{ it.fg }};font-weight:{{ it.weight }};">
+              <span class="nav-ic" style="color:{{ it.icColor }};display:flex;" dangerouslySetInnerHTML="{{ it.icon }}"></span>
+              {{ it.label }}
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </nav>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main style="flex:1;display:flex;flex-direction:column;height:100%;overflow:hidden;">
+    <header style="height:60px;flex:none;border-bottom:1px solid #ececec;display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 28px;">
+      <div style="display:flex;align-items:center;gap:6px;color:#6b7280;font-size:13.5px;cursor:pointer;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/></svg> Tasks
+      </div>
+      <svg style="color:#6b7280;cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <svg style="color:#6b7280;cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <div style="width:30px;height:30px;border-radius:50%;background:#8b5e3c;background-image:linear-gradient(135deg,#a16b45,#5b3a22);"></div>
+    </header>
+
+    <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;padding:28px 32px 60px;position:relative;">
+
+      <!-- ===== INTRO ===== -->
+      <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+      <div style="max-width:720px;margin:8px auto 0;text-align:center;">
+        <div style="width:84px;height:84px;border-radius:18px;background:#e8effe;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;">
+          <svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="#2367f1" stroke-width="2.2"><circle cx="19" cy="20" r="11"/><circle cx="29" cy="20" r="11"/><circle cx="24" cy="29" r="11"/></svg>
+        </div>
+        <h1 style="font-size:30px;font-weight:700;margin:0 0 14px;letter-spacing:-.6px;">Map accounts with a partner</h1>
+        <p style="margin:0 auto 30px;color:#6b7280;font-size:16px;line-height:1.55;max-width:560px;">Discover overlaps, shared prospects, and new ICP opportunities through CSV upload or CRM connection.</p>
+
+        <div style="border:1px solid #ececec;border-radius:14px;padding:20px;text-align:left;box-shadow:0 10px 24px rgba(0,0,0,.04);">
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2367f1" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>
+            <span style="font-weight:700;font-size:16px;">Learn about account mapping in 2 minutes</span>
+          </div>
+          <div style="position:relative;border-radius:12px;overflow:hidden;height:320px;background:radial-gradient(120% 120% at 20% 10%,#3a3f4a,#1c1f26 60%,#10131a);">
+            <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:14px 14px;"></div>
+            <div style="position:absolute;top:14px;left:16px;display:flex;align-items:center;gap:7px;color:#dfe2e8;font-size:12px;font-weight:600;letter-spacing:.3px;">
+              <span style="width:14px;height:14px;border-radius:50%;border:1.5px solid #c8f123;display:inline-block;"></span> Airstride
+            </div>
+            <div style="position:absolute;left:9%;top:38%;display:flex;flex-direction:column;align-items:center;gap:7px;">
+              <span style="width:38px;height:38px;border-radius:50%;background:#1e2540;border:2px solid #38406a;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8ea0d8" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
+              <span style="color:#9aa1ad;font-size:10.5px;">Your accounts</span>
+            </div>
+            <div style="position:absolute;left:34%;top:38%;display:flex;flex-direction:column;align-items:center;gap:7px;">
+              <span style="width:38px;height:38px;border-radius:50%;background:#2a2148;border:2px solid #4a3a72;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b69ad8" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
+              <span style="color:#9aa1ad;font-size:10.5px;">Partner accounts</span>
+            </div>
+            <div style="position:absolute;left:21%;top:66%;display:flex;flex-direction:column;align-items:center;gap:7px;">
+              <span style="width:38px;height:38px;border-radius:50%;background:#0f5a32;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>
+              <span style="color:#9aa1ad;font-size:10.5px;">Shared matches</span>
+            </div>
+            <div style="position:absolute;right:7%;top:30%;text-align:left;color:#fff;max-width:200px;">
+              <div class="jakarta" style="font-size:26px;font-weight:700;line-height:1.05;margin-bottom:10px;">Account<br>Mapping</div>
+              <div style="font-size:11px;color:#c6cad2;line-height:1.5;margin-bottom:14px;">Discover overlaps, shared prospects, and new ICP opportunities with your partners.</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c8f123" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3z" fill="#c8f123"/></svg> Watch walkthrough <span style="color:#8b909a;font-weight:400;">2 min</span></div>
+            </div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <div style="width:84px;height:60px;border-radius:14px;background:#ff0000;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.4);"><svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div style="position:absolute;bottom:12px;left:16px;color:#8b909a;font-size:10.5px;">Getting started with Account Mapping</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-top:16px;color:#6b7280;font-size:13.5px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+            Watch the walkthrough or click <span class="ytlink" style="color:#2367f1;font-weight:600;cursor:pointer;">here</span> to view on YouTube.
+          </div>
+        </div>
+
+        <button class="btn-blue" data-auto="start-session" onClick="{{ startSession }}" style="margin-top:30px;background:#2367f1;color:#fff;border:none;border-radius:9px;padding:0 30px;height:46px;font-size:14px;font-weight:600;cursor:pointer;">Start session</button>
+      </div>
+      </sc-if>
+
+      <!-- ===== WIZARD ===== -->
+      <sc-if value="{{ isWizard }}" hint-placeholder-val="x">
+      <div>
+        <h1 style="font-size:26px;font-weight:700;margin:0 0 6px;letter-spacing:-.5px;">Initiate mapping request</h1>
+        <p style="margin:0 0 26px;color:#6b7280;font-size:14.5px;">Discover overlaps, shared prospects, and new ICP opportunities through CSV upload or CRM connection.</p>
+
+        <div style="border:1px solid #ececec;border-radius:16px;background:#fff;overflow:hidden;">
+          <!-- stepper -->
+          <div style="display:flex;align-items:center;padding:26px 36px;border-bottom:1px solid #ececec;">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;flex:{{ st.flex }};min-width:0;">
+                <div style="width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;background:{{ st.bg }};border:{{ st.border }};color:{{ st.fg }};">{{ st.num }}</div>
+                <sc-if value="{{ st.hasLine }}" hint-placeholder-val="x"><div style="flex:1;height:2px;background:{{ st.line }};margin:0 6px;"></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="padding:34px 40px;min-height:340px;">
+            <!-- STEP 1 -->
+            <sc-if value="{{ isStep1 }}" hint-placeholder-val="x">
+            <div style="max-width:880px;">
+              <h2 style="font-size:19px;font-weight:700;margin:0 0 6px;">Setup mapping session</h2>
+              <p style="margin:0 0 26px;color:#6b7280;font-size:14px;">Choose the partner organisation and contact for this mapping request.</p>
+              <div data-auto="fill-setup" style="margin-bottom:8px;">
+                <label style="font-weight:600;font-size:14px;display:block;margin-bottom:8px;">Session Name</label>
+                <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 16px;height:50px;font-size:14px;color:{{ sessFg }};">{{ sessVal }} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+                <div style="color:#9ca3af;font-size:13px;margin-top:8px;">Name this mapping session for easy identification later.</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:26px;">
+                <div>
+                  <label style="font-weight:600;font-size:14px;display:block;margin-bottom:8px;">Select Partner</label>
+                  <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 16px;height:50px;font-size:14px;color:{{ partFg }};">{{ partVal }} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+                </div>
+                <div>
+                  <label style="font-weight:600;font-size:14px;display:block;margin-bottom:8px;">Select Contact</label>
+                  <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:9px;padding:0 16px;height:50px;font-size:14px;color:{{ contFg }};">{{ contVal }} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+                </div>
+              </div>
+            </div>
+            </sc-if>
+
+            <!-- STEP 2 -->
+            <sc-if value="{{ isStep2 }}" hint-placeholder-val="x">
+            <div>
+              <h2 style="font-size:19px;font-weight:700;margin:0 0 6px;">Choose data source</h2>
+              <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">Choose how to securely share your account data for mapping with your partner's dataset.</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px;">
+                <div class="src-card" data-auto="src-csv" onClick="{{ pickCsv }}" style="display:flex;align-items:center;gap:14px;border:1.5px solid {{ csvBorder }};background:{{ csvBg }};border-radius:12px;padding:18px 20px;cursor:pointer;">
+                  <span style="width:38px;height:38px;border-radius:9px;background:#fff;border:1px solid #e6e6e6;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M9 15l2 2 4-4"/></svg></span>
+                  <div><div style="font-weight:700;font-size:15px;">CSV upload</div><div style="color:#9ca3af;font-size:13px;">Up to 10mb</div></div>
+                </div>
+                <div class="src-card" data-auto="src-crm" onClick="{{ pickCrm }}" style="display:flex;align-items:center;gap:14px;border:1.5px solid {{ crmBorder }};background:{{ crmBg }};border-radius:12px;padding:18px 20px;cursor:pointer;">
+                  <span style="width:38px;height:38px;border-radius:9px;background:#fff;border:1px solid #e6e6e6;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2"><path d="M18 10a4 4 0 0 0-3-6.9A5 5 0 0 0 6 8a4 4 0 0 0 0 8h12a3.5 3.5 0 0 0 .5-6.9"/><path d="M12 12v6M9 15l3 3 3-3"/></svg></span>
+                  <div><div style="font-weight:700;font-size:15px;">CRM Synchronisation</div><div style="color:#9ca3af;font-size:13px;">Sync your Salesforce or Hubspot account</div></div>
+                </div>
+              </div>
+              <sc-if value="{{ csvSelected }}" hint-placeholder-val="x">
+                <sc-if value="{{ uploaded }}" hint-placeholder-val="x">
+                <div style="border:1px solid #e2e2e2;border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;">
+                  <span style="width:42px;height:42px;border-radius:9px;background:#141414;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/></svg></span>
+                  <div style="flex:1;"><div style="font-weight:600;font-size:14px;">Partner Accounts_Q2_2026.csv</div><div style="color:#9ca3af;font-size:12.5px;">5 MB</div></div>
+                  <span style="width:24px;height:24px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>
+                </div>
+                </sc-if>
+                <sc-if value="{{ notUploaded }}" hint-placeholder-val="x">
+                <div data-auto="dropzone" onClick="{{ doUpload }}" style="border:1.5px dashed #d5d3d1;border-radius:12px;padding:46px 20px;text-align:center;cursor:pointer;">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.6" style="margin-bottom:14px;"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                  <div style="font-size:16px;font-weight:600;margin-bottom:6px;">Click to browse or drag and drop</div>
+                  <div style="color:#9ca3af;font-size:13px;">CSV files up to 10MB</div>
+                </div>
+                </sc-if>
+              </sc-if>
+              <sc-if value="{{ crmSelected }}" hint-placeholder-val="x">
+              <div style="border:1px solid #e2e2e2;border-radius:12px;padding:30px;display:flex;gap:16px;">
+                <div style="flex:1;border:1px solid #e6e6e6;border-radius:10px;padding:18px;display:flex;align-items:center;gap:12px;cursor:pointer;"><span style="width:34px;height:34px;border-radius:8px;background:#e8effe;color:#2367f1;font-weight:700;display:flex;align-items:center;justify-content:center;">SF</span><div><div style="font-weight:600;font-size:14px;">Salesforce</div><div style="color:#9ca3af;font-size:12.5px;">Connect your org</div></div></div>
+                <div style="flex:1;border:1px solid #e6e6e6;border-radius:10px;padding:18px;display:flex;align-items:center;gap:12px;cursor:pointer;"><span style="width:34px;height:34px;border-radius:8px;background:#fff1ec;color:#f15323;font-weight:700;display:flex;align-items:center;justify-content:center;">HS</span><div><div style="font-weight:600;font-size:14px;">HubSpot</div><div style="color:#9ca3af;font-size:12.5px;">Connect your portal</div></div></div>
+              </div>
+              </sc-if>
+            </div>
+            </sc-if>
+
+            <!-- STEP 3 -->
+            <sc-if value="{{ isStep3 }}" hint-placeholder-val="x">
+            <div>
+              <h2 style="font-size:19px;font-weight:700;margin:0 0 6px;">Map fields</h2>
+              <p style="margin:0 0 22px;color:#6b7280;font-size:14px;">Map your CSV columns to Airstride data fields. We have auto-mapped what we could</p>
+
+              <div style="display:flex;align-items:center;gap:7px;font-weight:600;font-size:14px;margin-bottom:12px;">Required Fields <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4 1.8c0 1.5-2 2-2 3M12 17h.01"/></svg></div>
+              <div style="border:1px solid #ececec;border-radius:12px;overflow:hidden;margin-bottom:28px;">
+                <div style="display:grid;grid-template-columns:1.5fr .9fr 1.2fr;background:#f7f7f8;padding:14px 20px;font-size:13px;font-weight:700;">
+                  <span>Airstride Data</span><span>Status</span><span>CSV Data</span>
+                </div>
+                <sc-for list="{{ reqFields }}" as="r" hint-placeholder-count="5">
+                  <div style="display:grid;grid-template-columns:1.5fr .9fr 1.2fr;align-items:center;padding:15px 20px;border-top:1px solid #f2f2f2;font-size:14px;">
+                    <span style="font-weight:500;">{{ r.as }}</span>
+                    <span><span style="display:inline-flex;align-items:center;gap:5px;background:{{ r.stBg }};color:{{ r.stFg }};border-radius:7px;padding:4px 10px;font-size:12px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>{{ r.stLabel }}</span></span>
+                    <span class="sel-box" style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:8px;padding:0 12px;height:42px;font-size:13.5px;cursor:pointer;">{{ r.csv }} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:7px;font-weight:600;font-size:14px;margin-bottom:12px;">Optional Fields <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4 1.8c0 1.5-2 2-2 3M12 17h.01"/></svg></div>
+              <div style="border:1px solid #ececec;border-radius:12px;overflow:hidden;">
+                <div style="display:grid;grid-template-columns:1.5fr .9fr 1.2fr;background:#f7f7f8;padding:14px 20px;font-size:13px;font-weight:700;">
+                  <span>Airstride Data</span><span>Status</span><span>CSV Data</span>
+                </div>
+                <sc-for list="{{ optFields }}" as="o" hint-placeholder-count="4">
+                  <div style="display:grid;grid-template-columns:1.5fr .9fr 1.2fr;align-items:center;padding:15px 20px;border-top:1px solid #f2f2f2;font-size:14px;">
+                    <span style="font-weight:500;">{{ o.as }}</span>
+                    <span><span style="display:inline-flex;align-items:center;gap:5px;background:#f1f1f2;color:#9ca3af;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>Not mapped</span></span>
+                    <span class="sel-box" style="display:flex;align-items:center;justify-content:space-between;border:1px solid #e2e2e2;border-radius:8px;padding:0 12px;height:42px;font-size:13.5px;color:#9ca3af;cursor:pointer;">Select column <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            </sc-if>
+          </div>
+
+          <!-- footer -->
+          <div style="padding:18px 36px;border-top:1px solid #ececec;display:flex;align-items:center;justify-content:space-between;">
+            <sc-if value="{{ showBack }}" hint-placeholder-val="x">
+              <button class="btn-ghost" onClick="{{ backStep }}" style="border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 22px;height:44px;font-size:13.5px;font-weight:500;cursor:pointer;color:#141414;">Go back</button>
+            </sc-if>
+            <sc-if value="{{ hideBack }}" hint-placeholder-val="x"><span></span></sc-if>
+            <button class="btn-blue" data-auto="{{ primaryAuto }}" onClick="{{ primaryAction }}" style="background:{{ primaryBg }};color:#fff;border:none;border-radius:9px;padding:0 26px;height:44px;font-size:13.5px;font-weight:600;cursor:pointer;">{{ primaryLabel }}</button>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== LANDING ===== -->
+      <sc-if value="{{ isLanding }}" hint-placeholder-val="x">
+      <div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;">
+          <div>
+            <h1 style="font-size:26px;font-weight:700;margin:0 0 5px;letter-spacing:-.5px;">Account Mapping</h1>
+            <p style="margin:0;color:#6b7280;font-size:14.5px;">Discover joint opportunities by comparing account lists with your partners</p>
+          </div>
+          <button class="btn-blue" data-auto="initiate" onClick="{{ startSession }}" style="background:#2367f1;color:#fff;border:none;border-radius:9px;padding:0 20px;height:44px;font-size:13.5px;font-weight:600;cursor:pointer;">Initiate mapping</button>
+        </div>
+
+        <div style="border:1.5px solid #cdddff;border-radius:14px;padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+          <span style="width:18px;height:18px;border-radius:50%;border:5px solid #2367f1;flex:none;"></span>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:15px;margin-bottom:2px;">Mapping in progress</div>
+            <div style="color:#6b7280;font-size:13.5px;">You have pending results being processed. Check Pending Results for updates.</div>
+          </div>
+          <button class="btn-dark" data-auto="view-status" onClick="{{ viewStatus }}" style="display:flex;align-items:center;gap:8px;background:#141414;color:#fff;border:none;border-radius:9px;padding:0 18px;height:44px;font-size:13.5px;font-weight:600;cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> View mapping status</button>
+        </div>
+
+        <div style="border:1px solid #ececec;border-radius:14px;padding:20px;margin-bottom:18px;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+            <sc-for list="{{ landingStats }}" as="s" hint-placeholder-count="4">
+              <div style="border:1px solid #ececec;border-radius:12px;padding:16px 18px;background:#fafafa;">
+                <div style="display:flex;align-items:center;gap:8px;color:#6b7280;font-size:13.5px;margin-bottom:14px;"><span style="display:flex;color:{{ s.icColor }};" dangerouslySetInnerHTML="{{ s.icon }}"></span>{{ s.label }}</div>
+                <div style="font-size:30px;font-weight:700;letter-spacing:-.5px;">{{ s.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:26px;border-bottom:1px solid #ececec;margin-top:20px;">
+            <div style="display:flex;align-items:center;gap:8px;padding:14px 0;color:#6b7280;font-weight:600;font-size:14px;cursor:pointer;">Mapping Sessions <span style="background:#ececec;color:#6b7280;border-radius:20px;padding:1px 9px;font-size:12px;">0</span></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:14px 0;color:#141414;font-weight:600;font-size:14px;border-bottom:2px solid #2367f1;cursor:pointer;">Pending Results <span style="background:#e8effe;color:#2367f1;border-radius:20px;padding:1px 9px;font-size:12px;">1</span></div>
+          </div>
+        </div>
+
+        <div style="border:1px solid #ececec;border-radius:14px;padding:22px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+            <h3 style="font-size:18px;font-weight:700;margin:0;">Pending Requests</h3>
+            <div style="position:relative;width:300px;">
+              <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input class="as-input" placeholder="Search partners..." style="width:100%;height:44px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px 0 40px;font-size:13.5px;">
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:32px 2.3fr 1fr 1fr 1.2fr;padding:0 8px 12px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #ececec;align-items:center;">
+            <span style="width:18px;height:18px;border:1.5px solid #d5d3d1;border-radius:5px;"></span>
+            <span style="display:flex;align-items:center;gap:5px;">Session <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#bdbdbd" stroke-width="2"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3"/></svg></span>
+            <span>Request Status</span><span>Partner Contact</span><span>Partner Organisation</span>
+          </div>
+          <div class="row-hover" style="display:grid;grid-template-columns:32px 2.3fr 1fr 1fr 1.2fr;align-items:center;padding:16px 8px;border-bottom:1px solid #f4f4f4;font-size:14px;">
+            <span style="width:18px;height:18px;border:1.5px solid #d5d3d1;border-radius:5px;"></span>
+            <span style="font-weight:500;">{{ sessionName }}</span>
+            <span><span style="display:inline-flex;align-items:center;gap:5px;background:#fdf0e0;color:#b4791e;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>Pending</span></span>
+            <span>John Doe</span><span>TechGlobal Solutions</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:18px;">
+            <div style="display:flex;align-items:center;gap:10px;color:#6b7280;font-size:13.5px;">Rows per page <span style="display:flex;align-items:center;gap:6px;border:1px solid #e2e2e2;border-radius:8px;padding:6px 10px;">5 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg></span></div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="width:34px;height:34px;border:1px solid #e2e2e2;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9ca3af;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span>
+              <sc-for list="{{ pager }}" as="p" hint-placeholder-count="6"><span style="min-width:34px;height:34px;border:1px solid {{ p.bd }};background:{{ p.bg }};color:{{ p.fg }};border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:{{ p.w }};cursor:pointer;padding:0 6px;">{{ p.n }}</span></sc-for>
+              <span style="width:34px;height:34px;border:1px solid #e2e2e2;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9ca3af;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== STATUS ===== -->
+      <sc-if value="{{ isStatus }}" hint-placeholder-val="x">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;color:#9ca3af;font-size:14px;margin-bottom:18px;cursor:pointer;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg><span>Pending Results</span><span style="color:#cbcbcb;">/</span><span style="color:#141414;font-weight:700;">{{ sessionName }}</span>
+        </div>
+
+        <div style="border:1px solid #ececec;border-radius:14px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;"><h1 style="font-size:24px;font-weight:700;margin:0;">{{ sessionName }}</h1><span style="display:inline-flex;align-items:center;gap:5px;background:#e8f7ee;color:#16a34a;border-radius:7px;padding:4px 11px;font-size:12.5px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>Approved</span></div>
+            <div style="display:flex;align-items:center;gap:7px;color:#9ca3af;font-size:13px;margin-top:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Submitted April 7, 2026</div>
+          </div>
+          <button data-auto="view-matches" onClick="{{ viewMatches }}" style="background:{{ vmBg }};color:#fff;border:none;border-radius:9px;padding:0 24px;height:46px;font-size:14px;font-weight:600;cursor:{{ vmCursor }};">View matches</button>
+        </div>
+
+        <div style="display:flex;gap:18px;align-items:flex-start;">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:18px;">
+            <!-- request status -->
+            <div style="border:1px solid #ececec;border-radius:14px;padding:22px 24px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;"><span style="font-weight:700;font-size:16px;">Request Status</span><span style="display:inline-flex;align-items:center;gap:5px;background:#e8f7ee;color:#16a34a;border-radius:7px;padding:4px 11px;font-size:12px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>Approved</span></div>
+
+              <div style="display:flex;gap:14px;">
+                <div style="display:flex;flex-direction:column;align-items:center;"><span style="width:26px;height:26px;border-radius:50%;background:#dcfce7;color:#16a34a;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><span style="flex:1;width:2px;background:#dcfce7;"></span></div>
+                <div style="padding-bottom:22px;flex:1;"><div style="display:flex;justify-content:space-between;"><strong style="font-size:15px;">Request sent</strong><span style="color:#9ca3af;font-size:12.5px;">10 minutes ago</span></div><div style="color:#6b7280;font-size:13.5px;margin-top:3px;">You sent a mapping request to partner contact at TechGlobal Solutions.</div></div>
+              </div>
+              <div style="display:flex;gap:14px;">
+                <div style="display:flex;flex-direction:column;align-items:center;"><span style="width:26px;height:26px;border-radius:50%;background:#dcfce7;color:#16a34a;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><span style="flex:1;width:2px;background:{{ tlLine }};"></span></div>
+                <div style="padding-bottom:22px;flex:1;"><div style="display:flex;justify-content:space-between;"><strong style="font-size:15px;">Partner response</strong><span style="color:#9ca3af;font-size:12.5px;">6 minutes ago</span></div><div style="color:#6b7280;font-size:13.5px;margin-top:3px;">Partner organisation needs to accept the request and provide their data source.</div></div>
+              </div>
+              <div style="display:flex;gap:14px;">
+                <div style="display:flex;flex-direction:column;align-items:center;"><span style="width:26px;height:26px;border-radius:50%;background:{{ tlMapBg }};color:#fff;display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ tlMapInner }}"></span><span style="flex:1;width:2px;background:{{ tlLine }};"></span></div>
+                <div style="padding-bottom:22px;flex:1;">
+                  <div style="display:flex;justify-content:space-between;"><strong style="font-size:15px;">Mapping data</strong><span style="color:#9ca3af;font-size:12.5px;">5 minutes ago</span></div>
+                  <div style="color:#6b7280;font-size:13.5px;margin:3px 0 12px;">System analyses and matches overlapping accounts.</div>
+                  <sc-if value="{{ showProgress }}" hint-placeholder-val="x">
+                  <div style="border:1px solid #ececec;border-radius:10px;padding:14px 16px;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;"><div style="flex:1;height:8px;border-radius:5px;background:#eaf0fd;overflow:hidden;"><div style="width:{{ mappingPctW }};height:100%;background:#2367f1;border-radius:5px;transition:width .2s;"></div></div><span style="color:#2367f1;font-weight:700;font-size:13.5px;">{{ mappingPct }}%</span></div>
+                    <div style="color:#9ca3af;font-size:12.5px;">~ 2-10 mins remaining</div>
+                  </div>
+                  </sc-if>
+                </div>
+              </div>
+              <div style="display:flex;gap:14px;">
+                <div style="display:flex;flex-direction:column;align-items:center;"><span style="width:26px;height:26px;border-radius:50%;background:{{ tlDoneBg }};color:#fff;display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ tlDoneInner }}"></span></div>
+                <div style="flex:1;"><strong style="font-size:15px;color:{{ tlDoneFg }};">Mapping completed</strong><div style="color:#9ca3af;font-size:13.5px;margin-top:3px;">Results are ready to view and action.</div></div>
+              </div>
+            </div>
+
+            <!-- data source -->
+            <div style="border:1px solid #ececec;border-radius:14px;padding:22px 24px;">
+              <div style="font-weight:700;font-size:16px;margin-bottom:16px;">Your Data Source</div>
+              <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+                <span style="width:46px;height:46px;border-radius:10px;background:#141414;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/></svg></span>
+                <div style="flex:1;"><div style="font-weight:600;font-size:15px;">Partner Accounts_Q2_2026.csv</div><div style="color:#9ca3af;font-size:13px;">5 MB</div></div>
+                <span style="width:42px;height:42px;border:1px solid #e2e2e2;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#374151;cursor:pointer;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 20h16"/></svg></span>
+              </div>
+              <div style="font-size:10.5px;letter-spacing:.6px;color:#b0b0b3;font-weight:700;margin-bottom:12px;">META DATA</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+                <div style="border:1px solid #ececec;border-radius:10px;padding:16px;"><div style="font-size:17px;font-weight:700;">April 07, 2026</div><div style="color:#9ca3af;font-size:12.5px;margin-top:3px;">Uploaded at</div></div>
+                <div style="border:1px solid #ececec;border-radius:10px;padding:16px;"><div style="font-size:17px;font-weight:700;">7</div><div style="color:#9ca3af;font-size:12.5px;margin-top:3px;">Mapped data</div></div>
+                <div style="border:1px solid #ececec;border-radius:10px;padding:16px;"><div style="font-size:17px;font-weight:700;">200</div><div style="color:#9ca3af;font-size:12.5px;margin-top:3px;">Total accounts</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- partner org -->
+          <div style="width:340px;flex:none;border:1px solid #ececec;border-radius:14px;padding:22px 24px;">
+            <div style="font-weight:700;font-size:16px;margin-bottom:18px;">Partner Organisation</div>
+            <span style="width:46px;height:46px;border-radius:10px;background:#16a34a;display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <div style="font-weight:700;font-size:16px;margin-bottom:16px;">Techflow Solutions</div>
+            <div style="color:#9ca3af;font-size:12.5px;margin-bottom:4px;">Email address</div>
+            <a style="color:#2367f1;font-size:13.5px;text-decoration:none;display:block;margin-bottom:16px;">Techflow_Solutions@gmail.com</a>
+            <div style="color:#9ca3af;font-size:12.5px;margin-bottom:4px;">Region</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:20px;">MEA</div>
+            <div style="border-top:1px solid #ececec;padding-top:18px;">
+              <div style="font-size:10.5px;letter-spacing:.6px;color:#b0b0b3;font-weight:700;margin-bottom:12px;">RECIPIENT</div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="width:42px;height:42px;border-radius:50%;flex:none;background:#7c3a52;background-image:linear-gradient(135deg,#9b5570,#5a2b3d);"></span>
+                <div><div style="font-weight:600;font-size:14px;">María Elena de la Cruz Hernández</div><div style="color:#9ca3af;font-size:12.5px;">Senior Product Manager</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== MATCHES ===== -->
+      <sc-if value="{{ isMatches }}" hint-placeholder-val="x">
+      <div>
+        <div data-auto="back-mapping" onClick="{{ backToIntro }}" style="display:flex;align-items:center;gap:8px;color:#9ca3af;font-size:14px;margin-bottom:18px;cursor:pointer;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg><span>Pending Results</span><span style="color:#cbcbcb;">/</span><span style="color:#141414;font-weight:700;">{{ sessionName }}</span>
+        </div>
+
+        <div style="border:1px solid #ececec;border-radius:14px;padding:22px 24px;margin-bottom:18px;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;">
+            <div>
+              <div style="display:flex;align-items:center;gap:12px;"><h1 style="font-size:24px;font-weight:700;margin:0;">Account Mapping Sessions</h1><span style="display:inline-flex;align-items:center;gap:5px;background:#e8f7ee;color:#16a34a;border-radius:7px;padding:4px 11px;font-size:12.5px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>Approved</span></div>
+              <div style="display:flex;align-items:center;gap:7px;color:#9ca3af;font-size:13px;margin-top:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Submitted April 7, 2026</div>
+            </div>
+            <svg style="color:#9ca3af;border:1px solid #e2e2e2;border-radius:8px;padding:8px;cursor:pointer;" width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:6px;">
+            <sc-for list="{{ matchStats }}" as="s" hint-placeholder-count="4">
+              <div style="border:1px solid #ececec;border-radius:12px;padding:16px 18px;background:#fafafa;">
+                <div style="display:flex;align-items:center;gap:8px;color:#6b7280;font-size:13.5px;margin-bottom:14px;"><span style="display:flex;color:{{ s.icColor }};" dangerouslySetInnerHTML="{{ s.icon }}"></span>{{ s.label }}</div>
+                <div style="font-size:30px;font-weight:700;letter-spacing:-.5px;">{{ s.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:26px;border-top:1px solid #ececec;margin-top:16px;">
+            <div style="padding:14px 0;color:#141414;font-weight:600;font-size:14px;border-bottom:2px solid #2367f1;cursor:pointer;">Matches</div>
+            <div style="padding:14px 0;color:#6b7280;font-weight:600;font-size:14px;cursor:pointer;">ICP opportunities</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid #ececec;border-radius:14px;padding:22px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+            <h3 style="font-size:18px;font-weight:700;margin:0;">Matches</h3>
+            <div style="display:flex;gap:10px;">
+              <div style="position:relative;width:240px;">
+                <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                <input class="as-input" placeholder="Search account..." style="width:100%;height:42px;border:1px solid #e2e2e2;border-radius:9px;padding:0 14px 0 38px;font-size:13.5px;">
+              </div>
+              <button class="btn-ghost" style="display:flex;align-items:center;gap:7px;border:1px solid #e2e2e2;background:#fff;border-radius:9px;padding:0 14px;height:42px;font-size:13.5px;font-weight:500;cursor:pointer;color:#141414;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg> Filters</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:32px 2fr 1.1fr 1fr 1fr 1fr 1.1fr;padding:0 8px 12px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #ececec;align-items:center;">
+            <span style="width:18px;height:18px;border:1.5px solid #d5d3d1;border-radius:5px;"></span>
+            <span>Partner Organisations</span><span>Match Status</span><span>Vendor filters</span><span>Partner Owner</span><span>Last Updated</span><span>Action</span>
+          </div>
+          <sc-for list="{{ matches }}" as="m" hint-placeholder-count="6">
+            <div class="row-hover" style="display:grid;grid-template-columns:32px 2fr 1.1fr 1fr 1fr 1fr 1.1fr;align-items:center;padding:14px 8px;border-bottom:1px solid #f4f4f4;font-size:13.5px;">
+              <span style="width:18px;height:18px;border:1.5px solid #d5d3d1;border-radius:5px;"></span>
+              <span style="font-weight:500;">{{ m.org }}</span>
+              <span><span style="display:inline-flex;align-items:center;gap:5px;background:{{ m.bg }};color:{{ m.fg }};border-radius:7px;padding:4px 10px;font-size:12px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>{{ m.label }}</span></span>
+              <span style="color:#374151;">John Doe</span>
+              <span style="color:#374151;">{{ m.owner }}</span>
+              <span style="color:#374151;">{{ m.upd }}</span>
+              <span><button class="btn-ghost" style="border:1px solid #e2e2e2;background:#fff;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:500;cursor:pointer;color:#141414;">Register deal</button></span>
+            </div>
+          </sc-for>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:18px;">
+            <div style="display:flex;align-items:center;gap:10px;color:#6b7280;font-size:13.5px;">Rows per page <span style="display:flex;align-items:center;gap:6px;border:1px solid #e2e2e2;border-radius:8px;padding:6px 10px;">10 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg></span></div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="width:34px;height:34px;border:1px solid #e2e2e2;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9ca3af;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span>
+              <sc-for list="{{ pager }}" as="p" hint-placeholder-count="6"><span style="min-width:34px;height:34px;border:1px solid {{ p.bd }};background:{{ p.bg }};color:{{ p.fg }};border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:{{ p.w }};cursor:pointer;padding:0 6px;">{{ p.n }}</span></sc-for>
+              <span style="width:34px;height:34px;border:1px solid #e2e2e2;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9ca3af;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+    </div>
+  </main>
+
+  <!-- ===== PROCESSING / READY MODAL ===== -->
+  <sc-if value="{{ procActive }}" hint-placeholder-val="">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.5);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:520px;max-width:100%;padding:34px 38px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.25);">
+      <sc-if value="{{ procProcessing }}" hint-placeholder-val="x">
+      <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:22px;">
+        <span style="width:14px;height:14px;border-radius:50%;background:#2367f1;"></span>
+        <span style="width:14px;height:14px;border-radius:50%;background:#2367f1;animation:dotpulse 1s infinite;"></span>
+        <span style="width:11px;height:11px;border-radius:50%;background:#cdddff;"></span>
+      </div>
+      <h2 style="font-size:22px;font-weight:700;margin:0 0 10px;">Processing your data</h2>
+      <p style="color:#6b7280;font-size:14px;margin:0 auto 24px;max-width:340px;line-height:1.5;">Validating your field mapping and preparing your account data for comparison.</p>
+      <div style="border:1px solid #f5c97a;background:#fff8ec;border-radius:14px;padding:20px 22px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:11px;padding:8px 0;font-size:14px;font-weight:700;"><span style="width:20px;height:20px;border-radius:50%;border:2.5px solid #f0b955;border-top-color:transparent;display:inline-block;animation:procspin .8s linear infinite;"></span> Uploading your file</div>
+        <div style="display:flex;align-items:center;gap:11px;padding:8px 0;font-size:14px;color:#9ca3af;"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #e2d6b8;"></span> Reading column headers</div>
+        <div style="display:flex;align-items:center;gap:11px;padding:8px 0;font-size:14px;color:#9ca3af;"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #e2d6b8;"></span> Detecting column matches</div>
+        <div style="display:flex;align-items:center;gap:11px;padding:8px 0;font-size:14px;color:#9ca3af;"><span style="width:20px;height:20px;border-radius:50%;border:2px solid #e2d6b8;"></span> Preparing field mapping</div>
+      </div>
+      <div style="color:#9ca3af;font-size:13px;margin:18px 0 14px;">This usually takes 12 - 25 seconds</div>
+      <button style="width:100%;background:#a9c6f9;color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:default;">Review field mapping</button>
+      </sc-if>
+
+      <sc-if value="{{ procReady }}" hint-placeholder-val="x">
+      <div style="width:78px;height:78px;margin:0 auto 18px;position:relative;display:flex;align-items:center;justify-content:center;">
+        <svg width="78" height="78" viewBox="0 0 24 24" fill="#16a34a"><path d="M12 1l2.4 1.8 3-.3 1 2.8 2.6 1.5-.6 2.9 1.6 2.5-2 2.2.2 3-2.9.8-1.3 2.7-2.9-.7L12 23l-2.4-1.5-2.9.7-1.3-2.7-2.9-.8.2-3-2-2.2 1.6-2.5-.6-2.9L2.6 6 3.6 3.3l3 .3z"/></svg>
+        <svg style="position:absolute;" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+      </div>
+      <h2 style="font-size:22px;font-weight:700;margin:0 0 10px;">Your data is ready</h2>
+      <p style="color:#6b7280;font-size:14px;margin:0 auto 24px;max-width:300px;line-height:1.5;">Your columns are auto-matched. Review them on the next step.</p>
+      <div style="border:1px solid #b4e3c4;background:#f4fbf6;border-radius:14px;padding:20px 22px;text-align:left;">
+        <sc-for list="{{ readySteps }}" as="rs" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:11px;padding:8px 0;font-size:14px;font-weight:600;color:#16a34a;"><span style="width:20px;height:20px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> {{ rs }}</div>
+        </sc-for>
+      </div>
+      <div style="color:#9ca3af;font-size:13px;margin:18px 0 14px;">This usually takes 12 - 25 seconds</div>
+      <button class="btn-blue" data-auto="review-mapping" onClick="{{ reviewMapping }}" style="width:100%;background:#2367f1;color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;">Review field mapping</button>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== SEND MODAL ===== -->
+  <sc-if value="{{ sendModal }}" hint-placeholder-val="">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.5);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:500px;max-width:100%;padding:30px 32px;box-shadow:0 24px 60px rgba(0,0,0,.25);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;">
+        <span style="width:48px;height:48px;border-radius:12px;background:#fdebc8;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d18b1e" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></span>
+        <svg onClick="{{ closeSend }}" style="color:#9ca3af;cursor:pointer;" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </div>
+      <h2 style="font-size:21px;font-weight:700;margin:0 0 10px;">Send Mapping Request?</h2>
+      <p style="color:#6b7280;font-size:14px;margin:0 0 20px;line-height:1.5;">This request will be sent to the partner contact asking them to upload their account data for mapping.</p>
+      <div style="border:1px solid #f5c97a;background:#fff8ec;border-radius:12px;padding:18px 20px;margin-bottom:22px;">
+        <div style="font-weight:700;font-size:14.5px;margin-bottom:12px;">What happens next?</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <div style="display:flex;gap:9px;font-size:13.5px;color:#374151;"><span style="color:#d18b1e;">•</span> Partner contact will be notified to upload their data</div>
+          <div style="display:flex;gap:9px;font-size:13.5px;color:#374151;"><span style="color:#d18b1e;">•</span> Airstride matches both datasets automatically.</div>
+          <div style="display:flex;gap:9px;font-size:13.5px;color:#374151;"><span style="color:#d18b1e;">•</span> You will see Exact, Probable, and Possible matches.</div>
+        </div>
+      </div>
+      <button class="btn-blue" data-auto="send-request" onClick="{{ sendRequest }}" style="width:100%;background:#2367f1;color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;">Send request</button>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== AUTOPILOT CURSOR ===== -->
+  <div ref="{{ rippleRef }}" style="position:fixed;left:0;top:0;width:0;height:0;border-radius:50%;border:2px solid #2367f1;pointer-events:none;z-index:998;opacity:0;will-change:transform,width,height,opacity;"></div>
+  <div ref="{{ cursorRef }}" style="position:fixed;left:0;top:0;width:24px;height:24px;pointer-events:none;z-index:999;transform:translate(-100px,-100px);will-change:transform;transition:opacity .25s;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#141414" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,.4));"><path d="M5 3l14.5 8.2-6.1 1.5-2.9 6z"/></svg>
+  </div>
+  <div style="position:fixed;right:18px;bottom:18px;z-index:997;display:flex;align-items:center;gap:8px;background:#141414;color:#fff;border-radius:30px;padding:8px 14px;font-size:11px;font-weight:600;letter-spacing:.6px;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.22);">
+    <span style="width:7px;height:7px;border-radius:50%;background:#c8f123;animation:autopulse 1.6s ease-out infinite;"></span> AUTO DEMO
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { page:'intro', step:1, dataSource:'csv', uploaded:false, proc:'none', sendModal:false, filled:false, mappingPct:64, mappingDone:false };
+
+  ic(svg){ return { __html: svg }; }
+
+  componentDidMount(){
+    this.cx = window.innerWidth*0.52; this.cy = window.innerHeight*0.4;
+    if(this.cursorEl) this.cursorEl.style.transform='translate('+this.cx+'px,'+this.cy+'px)';
+    this.playing = true; this.paused = false;
+    this.sessionName = 'TechGlobal Solutions Q2 2026';
+    this.script = [
+      { auto:'start-session', act:()=>this.setState({page:'wizard',step:1,uploaded:false,proc:'none',sendModal:false,filled:false,dataSource:'csv'}), wait:1500 },
+      { auto:'fill-setup',    act:()=>this.setState({filled:true}),                                  wait:1500 },
+      { auto:'proceed-1',     act:()=>this.setState({step:2}),                                       wait:1400 },
+      { auto:'src-csv',       act:()=>this.setState({dataSource:'csv'}),                              wait:1100 },
+      { auto:'dropzone',      act:()=>this.setState({uploaded:true}),                                 wait:1400 },
+      { auto:'proceed-2',     act:()=>{ this.setState({proc:'processing'}); this._pt=setTimeout(()=>this.setState({proc:'ready'}),2300); }, wait:3300 },
+      { auto:'review-mapping',act:()=>this.setState({step:3,proc:'none'}),                            wait:2400 },
+      { auto:'save-send',     act:()=>this.setState({sendModal:true}),                                wait:1600 },
+      { auto:'send-request',  act:()=>this.setState({sendModal:false,page:'landing'}),                wait:1900 },
+      { auto:'view-status',   act:()=>{ this.setState({page:'status'}); this.startRamp(); },          wait:4400 },
+      { auto:'view-matches',  act:()=>this.setState({page:'matches'}),                                wait:3400 },
+      { auto:'back-mapping',  act:()=>this.setState({page:'intro',mappingPct:64,mappingDone:false}),  wait:1800 }
+    ];
+    this.runLoop();
+  }
+  componentWillUnmount(){ this.playing=false; clearTimeout(this._t); clearInterval(this._iv); clearTimeout(this._pt); clearInterval(this._ramp); }
+
+  startRamp(){
+    clearInterval(this._ramp);
+    this.setState({ mappingPct:64, mappingDone:false });
+    this._ramp = setInterval(()=>{
+      this.setState(p=>{
+        const n = Math.min(100, p.mappingPct + 6);
+        if(n>=100){ clearInterval(this._ramp); return { mappingPct:100, mappingDone:true }; }
+        return { mappingPct:n };
+      });
+    }, 240);
+  }
+
+  sleep(ms){ return new Promise(r=>{ this._t=setTimeout(r,ms); }); }
+
+  tween(x,y,dur){
+    const sx=this.cx, sy=this.cy, t0=Date.now();
+    return new Promise(res=>{
+      clearInterval(this._iv);
+      this._iv=setInterval(()=>{
+        let t=Math.min(1,(Date.now()-t0)/dur);
+        const e = t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+        this.cx=sx+(x-sx)*e; this.cy=sy+(y-sy)*e;
+        if(this.cursorEl) this.cursorEl.style.transform='translate('+this.cx+'px,'+this.cy+'px)';
+        if(t>=1 || !this.playing){ clearInterval(this._iv); res(); }
+      },16);
+    });
+  }
+
+  async moveTo(auto){
+    const root=this.rootEl||document;
+    const el=root.querySelector('[data-auto="'+auto+'"]');
+    if(!el) return false;
+    const b=el.getBoundingClientRect();
+    if(b.width===0 && b.height===0) return false;
+    await this.tween(b.left+b.width/2, b.top+b.height*0.55, 780);
+    return true;
+  }
+
+  clickFx(){
+    const c=this.cursorEl;
+    if(c){ c.animate([{filter:'drop-shadow(0 2px 5px rgba(0,0,0,.4)) brightness(1)'},{filter:'drop-shadow(0 1px 2px rgba(0,0,0,.4)) brightness(1.6)'},{filter:'drop-shadow(0 2px 5px rgba(0,0,0,.4)) brightness(1)'}],{duration:260}); }
+    const r=this.rippleEl;
+    if(r){
+      r.style.transition='none'; r.style.opacity='0.85';
+      r.style.width='10px'; r.style.height='10px';
+      r.style.transform='translate('+(this.cx-5)+'px,'+(this.cy-5)+'px)';
+      requestAnimationFrame(()=>{
+        r.style.transition='width .5s ease-out, height .5s ease-out, opacity .5s ease-out, transform .5s ease-out';
+        r.style.opacity='0'; r.style.width='46px'; r.style.height='46px';
+        r.style.transform='translate('+(this.cx-23)+'px,'+(this.cy-23)+'px)';
+      });
+    }
+  }
+
+  async runLoop(){
+    await this.sleep(900);
+    let i=0;
+    while(this.playing){
+      while(this.paused && this.playing){ await this.sleep(150); }
+      if(!this.playing) break;
+      const s=this.script[i];
+      if(this.scrollEl) this.scrollEl.scrollTop=0;
+      await this.sleep(60);
+      const ok=await this.moveTo(s.auto);
+      if(!this.playing) break;
+      if(ok){ this.clickFx(); await this.sleep(200); s.act(); }
+      await this.sleep(s.wait||1000);
+      i=(i+1)%this.script.length;
+    }
+  }
+
+  renderVals(){
+    const s = this.state;
+    const navIc = {
+      overview:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>',
+      deals:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>',
+      analytics:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18l5-6 4 3 6-8"/></svg>',
+      partners:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.2"/><path d="M16 14c2.5.2 4 2 4 4.5"/></svg>',
+      globe:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
+      library:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5M3 18l9 5 9-5"/></svg>',
+      training:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/></svg>',
+      engage:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M8 7a1 1 0 100-2 1 1 0 000 2zM17 19a1 1 0 100-2 1 1 0 000 2z"/></svg>',
+      whitespace:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>',
+      source:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>',
+      jv:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>',
+      agent:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M12 7V4M9 13h.01M15 13h.01"/></svg>',
+      market:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1 4H5z"/><path d="M5 11v8h14v-8"/></svg>',
+      lists:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h9M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+      discovery:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>',
+      apps:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>'
+    };
+    const item = (label,icon,active)=>({ label, icon:this.ic(icon),
+      bg: active?'#eef3ff':'transparent', fg: active?'#2367f1':'#374151',
+      icColor: active?'#2367f1':'#8a8a8f', weight: active?'600':'400' });
+    const navGroups = [
+      { title:'HOME', items:[ item('Overview',navIc.overview,false), item('Deals management',navIc.deals,false), item('Analytics',navIc.analytics,false) ] },
+      { title:'PARTNERS', items:[ item('Manage partners',navIc.partners,false), item('Account mapping',navIc.globe,true), item('Content library',navIc.library,false), item('Partner training',navIc.training,false), item('Engagement',navIc.engage,false), item('Partner whitespace',navIc.whitespace,false), item('Source attribution',navIc.source,false), item('Prospective partner JV',navIc.jv,false), item('Partner activation agent',navIc.agent,false) ] },
+      { title:'DISCOVER', items:[ item('Marketplace',navIc.market,false), item('Prospect lists',navIc.lists,false), item('Partner discovery',navIc.discovery,false) ] },
+      { title:'WORKSPACE', items:[ item('App integrations',navIc.apps,false) ] }
+    ];
+
+    // stepper (3 steps)
+    const step = s.step;
+    const stepCircle = (n)=>{
+      if(n < step) return { bg:'#2367f1', border:'2px solid #2367f1', fg:'#fff' };
+      if(n === step) return { bg:'#fff', border:'2px solid #2367f1', fg:'#2367f1' };
+      return { bg:'#fff', border:'2px solid #e2e2e2', fg:'#9ca3af' };
+    };
+    const ln = (n)=> n < step ? '#2367f1' : '#e2e2e2';
+    const steps = [
+      { ...stepCircle(1), num:'1', hasLine:true, flex:1, line:ln(1) },
+      { ...stepCircle(2), num:'2', hasLine:true, flex:1, line:ln(2) },
+      { ...stepCircle(3), num:'3', hasLine:false, flex:'none', line:'#e2e2e2' }
+    ];
+
+    // step1 fields
+    const filled = s.filled;
+    const sessVal = filled ? this.sessionName : 'e.g partner name Q1 2026';
+    const partVal = filled ? 'TechGlobal Solutions' : 'Search and select partner';
+    const contVal = filled ? 'John Doe' : 'Search and select contact';
+
+    // data source
+    const csvSel = s.dataSource==='csv';
+    const crmSel = s.dataSource==='crm';
+
+    // primary footer button
+    let primaryLabel='Proceed', primaryAuto='proceed-1', primaryBg='#2367f1', primaryAction=()=>this.setState({step:2});
+    let showBack=false;
+    if(step===1){ primaryLabel='Proceed'; primaryAuto='proceed-1'; primaryBg = filled ? '#2367f1':'#a9c6f9'; primaryAction=()=>this.setState({step:2}); showBack=false; }
+    if(step===2){ primaryLabel='Proceed'; primaryAuto='proceed-2'; primaryBg = (csvSel && s.uploaded)||crmSel ? '#2367f1':'#a9c6f9'; primaryAction=()=>{ this.setState({proc:'processing'}); this._pt=setTimeout(()=>this.setState({proc:'ready'}),2300); }; showBack=true; }
+    if(step===3){ primaryLabel='Save & send request'; primaryAuto='save-send'; primaryBg='#2367f1'; primaryAction=()=>this.setState({sendModal:true}); showBack=true; }
+
+    // map fields
+    const st = { mapped:{stBg:'#e8f7ee',stFg:'#16a34a',stLabel:'Mapped'}, invalid:{stBg:'#fdeaea',stFg:'#dc2626',stLabel:'Invalid data'} };
+    const reqRaw = [
+      ['Account Name','invalid','Account Name'],
+      ['Website Domain','invalid','Match Type'],
+      ['Country','mapped','Owner'],
+      ['Last Activity Date','mapped','Last Activity Date'],
+      ['Open Opportunity Last Update Date','mapped','Open Opportunity Update'],
+      ['Account Last Update Date','mapped','Account Last Update Date'],
+      ['Deal Registration Date','invalid','Deal Registration Date']
+    ];
+    const reqFields = reqRaw.map(r=>({ as:r[0], csv:r[2], ...st[r[1]] }));
+    const optFields = [{as:'Industry'},{as:'Employee Count'},{as:'Revenue'},{as:'Geography'}];
+
+    // landing stats
+    const statIcon = {
+      sessions:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l3 3 5-6M11 15l3 3 6-8"/></svg>',
+      approved:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>',
+      pending:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4 1.8c0 1.5-2 2-2 3M12 17h.01"/></svg>',
+      active:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>'
+    };
+    const landingStats = [
+      { label:'Total Sessions', value:'0', icon:this.ic(statIcon.sessions), icColor:'#6b7280' },
+      { label:'Approved Requests', value:'0', icon:this.ic(statIcon.approved), icColor:'#16a34a' },
+      { label:'Pending Requests', value:'0', icon:this.ic(statIcon.pending), icColor:'#b4791e' },
+      { label:'Active Partners', value:'0', icon:this.ic(statIcon.active), icColor:'#2367f1' }
+    ];
+    const matchStats = [
+      { label:'Exact Match', value:'50', icon:this.ic(statIcon.sessions), icColor:'#16a34a' },
+      { label:'Probable Match', value:'25', icon:this.ic(statIcon.approved), icColor:'#16a34a' },
+      { label:'Possible Match', value:'15', icon:this.ic(statIcon.pending), icColor:'#7c3aed' },
+      { label:'New ICP Opportunities', value:'10', icon:this.ic(statIcon.active), icColor:'#2367f1' }
+    ];
+
+    const pgr = (n,active)=>({ n:String(n), bg:active?'#2367f1':'#fff', fg:active?'#fff':'#374151', bd:active?'#2367f1':'#e2e2e2', w:active?'700':'500' });
+    const pager = [ pgr(1,true), pgr(2,false), pgr(3,false), pgr(4,false), pgr(5,false), {n:'…',bg:'#fff',fg:'#9ca3af',bd:'#fff',w:'500'}, pgr(10,false) ];
+
+    // matches
+    const mb = { exact:{bg:'#e8f7ee',fg:'#16a34a',label:'Exact Match'}, probable:{bg:'#fdf0e0',fg:'#b4791e',label:'Probable Match'}, possible:{bg:'#f0eafc',fg:'#7c3aed',label:'Possible Match'} };
+    const mRaw = [
+      ['Tech Global Solutions','exact','Marcus Webb','05-20-2025'],
+      ['TechCorp Partnership Folder','exact','Marcus Webb','05-20-2025'],
+      ['InnovateX Collaboration Kit','probable','Liam Turner','06-15-2025'],
+      ['GreenTech Alliance Docs','possible','Noah Carter','07-01-2025'],
+      ['BlueOcean Ventures Pack','possible','Ethan Reed','07-20-2025'],
+      ['QuantumLeap Partner Bundle','exact','Mason Lee','08-10-2025'],
+      ['NextGen Integration Files','possible','Lucas Kim','08-30-2025'],
+      ['SynergyWorks Deal Documents','exact','Benjamin Clark','09-15-2025'],
+      ['PioneerTech Contract Set','exact','Henry Scott','09-30-2025']
+    ];
+    const matches = mRaw.map(m=>({ org:m[0], owner:m[2], upd:m[3], ...mb[m[1]] }));
+
+    // status timeline
+    const done = s.mappingDone;
+    const checkSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>';
+    const dotSvg = '<span style="width:9px;height:9px;border-radius:50%;background:#fff;display:inline-block;"></span>';
+    const tlMapBg = done ? '#16a34a' : '#2367f1';
+    const tlMapInner = this.ic(done ? checkSvg : dotSvg);
+    const tlDoneBg = done ? '#16a34a' : '#e5e5e5';
+    const tlDoneInner = this.ic(done ? checkSvg : '<span style="width:9px;height:9px;border-radius:50%;background:#bdbdbd;display:inline-block;"></span>');
+    const tlDoneFg = done ? '#141414' : '#9ca3af';
+    const tlLine = done ? '#dcfce7' : '#ececec';
+
+    return {
+      navGroups, sessionName:this.sessionName,
+      rootRef:(el)=>{ this.rootEl=el; },
+      scrollRef:(el)=>{ this.scrollEl=el; },
+      cursorRef:(el)=>{ this.cursorEl=el; },
+      rippleRef:(el)=>{ this.rippleEl=el; },
+      pauseAuto:()=>{ this.paused=true; if(this.cursorEl)this.cursorEl.style.opacity='0'; if(this.rippleEl)this.rippleEl.style.opacity='0'; },
+      resumeAuto:()=>{ this.paused=false; if(this.cursorEl)this.cursorEl.style.opacity='1'; },
+
+      isIntro: s.page==='intro', isWizard: s.page==='wizard', isLanding: s.page==='landing', isStatus: s.page==='status', isMatches: s.page==='matches',
+      isStep1: step===1, isStep2: step===2, isStep3: step===3,
+
+      steps,
+      sessVal, sessFg: filled?'#141414':'#9ca3af',
+      partVal, partFg: filled?'#141414':'#9ca3af',
+      contVal, contFg: filled?'#141414':'#9ca3af',
+
+      csvSelected: csvSel, crmSelected: crmSel,
+      csvBorder: csvSel?'#2367f1':'#e2e2e2', csvBg: csvSel?'#eef3ff':'#fff',
+      crmBorder: crmSel?'#2367f1':'#e2e2e2', crmBg: crmSel?'#eef3ff':'#fff',
+      uploaded: s.uploaded, notUploaded: !s.uploaded,
+      pickCsv:()=>this.setState({dataSource:'csv'}), pickCrm:()=>this.setState({dataSource:'crm'}),
+      doUpload:()=>this.setState({uploaded:true}),
+
+      reqFields, optFields,
+
+      showBack, hideBack:!showBack,
+      primaryLabel, primaryAuto, primaryBg, primaryAction,
+      backStep:()=> step===1 ? this.setState({page:'intro'}) : this.setState(p=>({step:p.step-1})),
+
+      procActive: s.proc!=='none', procProcessing: s.proc==='processing', procReady: s.proc==='ready',
+      readySteps: ['Uploading your file','Reading column headers','Detecting column matches','Preparing field mapping'],
+      reviewMapping:()=>this.setState({step:3,proc:'none'}),
+
+      sendModal: s.sendModal,
+      closeSend:()=>this.setState({sendModal:false}),
+      sendRequest:()=>this.setState({sendModal:false,page:'landing'}),
+
+      startSession:()=>this.setState({page:'wizard',step:1,uploaded:false,proc:'none',sendModal:false,filled:false,dataSource:'csv'}),
+      viewStatus:()=>{ this.setState({page:'status'}); this.startRamp(); },
+      viewMatches:()=>this.setState({page:'matches'}),
+      backToIntro:()=>this.setState({page:'intro',mappingPct:64,mappingDone:false}),
+
+      landingStats, matchStats, pager, matches,
+
+      mappingPct: s.mappingPct, mappingPctW: s.mappingPct+'%', showProgress: !done,
+      tlMapBg, tlMapInner, tlDoneBg, tlDoneInner, tlDoneFg, tlLine,
+      vmBg: done?'#2367f1':'#a9c6f9', vmCursor: done?'pointer':'default'
+    };
+  }
+}
+</script>
+</body>
+</html>
