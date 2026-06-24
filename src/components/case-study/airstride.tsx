@@ -188,6 +188,9 @@ function DealsDemoEmbed() {
   );
 }
 
+const NAV_H = 72;   // fixed site nav height (matches pt-[72px] on <main>)
+const TAB_H = 48;   // approximate height of this tab bar
+
 function ModuleNav() {
   const [active, setActive] = useState<string>(MODULES[0].id);
 
@@ -200,7 +203,7 @@ function ModuleNav() {
         ([entry]) => {
           if (entry.isIntersecting) setActive(id);
         },
-        { rootMargin: "-30% 0px -60% 0px" }
+        { rootMargin: `-${NAV_H + TAB_H}px 0px -50% 0px` }
       );
       obs.observe(el);
       observers.push(obs);
@@ -208,8 +211,15 @@ function ModuleNav() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - (NAV_H + TAB_H);
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   return (
-    <div className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur-md">
+    <div className="sticky top-[72px] z-20 border-b border-line bg-bg/90 backdrop-blur-md">
       <Container>
         <nav className="flex overflow-x-auto">
           {MODULES.map(({ id, label }) => (
@@ -218,7 +228,7 @@ function ModuleNav() {
               href={`#${id}`}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+                scrollTo(id);
               }}
               className={[
                 "relative shrink-0 px-5 py-4 font-mono text-[12px] uppercase tracking-[0.1em] transition-colors",
