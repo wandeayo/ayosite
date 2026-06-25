@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/site/reveal";
-import { CaseFigure } from "@/components/case-study/case-figure";
 
 const META: [string, string, boolean?][] = [
   ["Client", "Airstride · 2025"],
@@ -33,6 +32,7 @@ const PROBLEMS = [
 ];
 
 const MODULES = [
+  { id: "overview", label: "Overview" },
   { id: "deals-management", label: "Deals" },
   { id: "account-mapping", label: "Account Mapping" },
   { id: "analytics", label: "Analytics" },
@@ -286,6 +286,55 @@ function EngagementDemoEmbed() {
   );
 }
 
+function OverviewDemoEmbed() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.65);
+
+  useEffect(() => {
+    const update = () => {
+      if (wrapRef.current) {
+        setScale(wrapRef.current.offsetWidth / 1440);
+      }
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    if (wrapRef.current) ro.observe(wrapRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const DEMO_H = 760;
+
+  return (
+    <Reveal>
+      <Container as="figure" className="my-20">
+        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
+          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
+            <iframe
+              src="/work/airstride/overview-demo/index.html"
+              title="Overview interactive demo"
+              style={{
+                width: "1440px",
+                height: `${DEMO_H}px`,
+                border: "none",
+                transform: `scale(${scale})`,
+                transformOrigin: "top left",
+              }}
+            />
+          </div>
+        </div>
+        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
+            Overview
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
+            Interactive prototype · auto-playing demo
+          </span>
+        </figcaption>
+      </Container>
+    </Reveal>
+  );
+}
+
 function PartnerTrainingDemoEmbed() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.65);
@@ -491,6 +540,40 @@ export function AirstrideCase() {
 
       {/* ===== STICKY MODULE NAV ===== */}
       <ModuleNav />
+
+      {/* ===== MODULE 00: OVERVIEW ===== */}
+      <section id="overview" className="csx-sec">
+        <Reveal>
+          <Container className="csx-sec-grid">
+            <aside className="csx-sec-aside">
+              <div className="csx-sec-num">Module 00</div>
+              <div className="tick"></div>
+              <div className="aside-note">Overview</div>
+            </aside>
+            <div className="csx-body">
+              <h2>
+                One surface to answer the question every vendor asks on <span className="it">Monday morning.</span>
+              </h2>
+              <p>
+                Before a vendor opens a single module, they need to know whether the program is healthy. The
+                Overview redesign started there: what does a partnership manager actually need to see the moment
+                they log in? The answer was not a dashboard full of charts. It was a short list of decisions
+                that needed making today, and the context to make them.
+              </p>
+              <p className="dim">
+                The getting-started flow is a first-class part of the design, not an afterthought. New vendors
+                see a five-step quickstart with a progress ring, locked previews of the screens they are building
+                toward, and a setup call option that surfaces a named partner success manager rather than a
+                generic support link. Once the program is live, the overview becomes a configurable scorecard,
+                an attention queue for approvals and stalled deals, and an AI briefing that surfaces the three
+                most actionable things in the data that day. The customise panel lets each user choose which
+                four metrics they want on their scorecard, without changing what anyone else sees.
+              </p>
+            </div>
+          </Container>
+        </Reveal>
+        <OverviewDemoEmbed />
+      </section>
 
       {/* ===== MODULE 01: DEALS MANAGEMENT ===== */}
       <section id="deals-management" className="csx-sec">
