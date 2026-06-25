@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700&family=Fragment+Mono&display=swap">
+  <style>/* Airstride color tokens */
+:root {
+  --as-blue: #2367f1;
+  --as-pink: #f124b3;
+  --as-lime: #c8f123;
+  --as-orange: #f15323;
+  --as-blue-50: #eef3ff;
+  --as-blue-100: #d4e1fc;
+  --as-blue-200: #b5cbfa;
+  --as-blue-300: #8caef7;
+  --as-blue-400: #6d97f4;
+  --as-blue-500: #2367f1;
+  --as-blue-600: #1f5cd8;
+  --as-blue-700: #1a4db5;
+  --as-blue-800: #153e91;
+  --as-blue-900: #102f6e;
+  --as-pink-50: #ffedf8;
+  --as-pink-100: #ffd0ec;
+  --as-pink-300: #f87ad0;
+  --as-pink-500: #f124b3;
+  --as-pink-700: #b51a87;
+  --as-pink-900: #6e1053;
+  --as-lime-50: #fbfee8;
+  --as-lime-100: #f3fcc2;
+  --as-lime-300: #ddf75e;
+  --as-lime-500: #c8f123;
+  --as-lime-700: #97b71a;
+  --as-lime-900: #5c6f10;
+  --as-orange-50: #fff1ec;
+  --as-orange-100: #ffd8cb;
+  --as-orange-300: #f99070;
+  --as-orange-500: #f15323;
+  --as-orange-700: #b73e1a;
+  --as-orange-900: #702610;
+  --as-tile-blue: #e8effe;
+  --as-tile-pink: #ffedf8;
+  --as-tile-orange: #fff1ec;
+  --as-tile-green: #eaf6ee;
+  --as-tile-green-fg: #1a8c4a;
+  --as-cream: #f2f0ed;
+  --as-cream-dark: #e8e6e4;
+  --as-bg-dark: #171717;
+  --as-bg-darker: #141414;
+  --as-white: #ffffff;
+  --as-ink: #141414;
+  --as-text-grey: #666666;
+  --as-mid-grey: #ababab;
+  --as-placeholder: #999999;
+  --as-border: #d5d3d1;
+  --as-border-soft: rgba(0,0,0,0.1);
+  --text-primary: var(--as-ink);
+  --text-secondary: var(--as-text-grey);
+  --text-muted: var(--as-placeholder);
+  --text-on-dark: var(--as-white);
+  --text-link: var(--as-blue);
+  --surface-page: var(--as-white);
+  --surface-cream: var(--as-cream);
+  --surface-card: var(--as-white);
+  --surface-dark: var(--as-bg-darker);
+  --border-default: var(--as-border);
+  --border-strong: var(--as-ink);
+  --as-gradient-brand: linear-gradient(90deg,#2367f1,#f124b3);
+}</style>
+  <style>/* Airstride typography tokens */
+:root {
+  --font-heading: "Plus Jakarta Sans","DM Sans",sans-serif;
+  --font-body: "DM Sans",sans-serif;
+  --font-mono: "Fragment Mono","IBM Plex Mono",monospace;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fs-h1: 64px; --lh-h1: 1.2;
+  --fs-h2: 48px; --lh-h2: 1.2;
+  --fs-h3: 40px; --lh-h3: 1.3;
+  --fs-h4: 36px; --lh-h4: 1.3;
+  --fs-h5: 22px; --lh-h5: 1.4;
+  --fs-h6: 18px; --lh-h6: 1.4;
+  --fs-hero: clamp(40px,5.4vw,74px);
+  --lh-hero: 1.03;
+  --tracking-hero: -0.025em;
+  --fs-xl: 20px; --fs-lg: 18px; --fs-md: 16px; --fs-sm: 14px; --fs-xs: 12px;
+  --lh-body: 1.6; --lh-tight: 1.2;
+  --badge-tracking: 0.28px; --badge-size: 14px;
+  --heading-weight: 600; --heading-tracking: -0.2px;
+}</style>
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  .app *{font-family:'DM Sans',system-ui,sans-serif;}
+  .app h1,.app h2,.app h3,.app .jakarta{font-family:'Plus Jakarta Sans','DM Sans',sans-serif;}
+  .nav-item:hover{background:#f4f4f5 !important;}
+  .nav-item:hover .nav-ic{color:#141414 !important;}
+  .btn-blue:hover{background:#1f5cd8 !important;}
+  .btn-ghost:hover{background:#f4f4f5 !important;}
+  .btn-dark:hover{background:#000 !important;}
+  .card-hover:hover{border-color:#cdd3dd !important;box-shadow:0 8px 22px rgba(0,0,0,.07) !important;}
+  .menu-row:hover{background:#f6f7f9 !important;}
+  .fname{cursor:pointer;transition:color .12s;}
+  .fname:hover{color:#2367f1 !important;}
+  .src-row:hover{border-color:#bcd2f8 !important;}
+  .lnk:hover{opacity:.72;}
+  .row-hover:hover{background:#fafafb !important;}
+  ::placeholder{color:#9ca3af;}
+  @keyframes autopulse{0%{box-shadow:0 0 0 0 rgba(200,241,35,.6);}70%{box-shadow:0 0 0 7px rgba(200,241,35,0);}100%{box-shadow:0 0 0 0 rgba(200,241,35,0);}}
+  @keyframes modalIn{from{opacity:0;transform:translateY(10px) scale(.99);}to{opacity:1;transform:translateY(0) scale(1);}}
+  @keyframes menuIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes barGrow{from{width:0;}}
+</style>
+</helmet>
+<div class="app" ref="{{ rootRef }}" onMouseEnter="{{ pauseAuto }}" onMouseLeave="{{ resumeAuto }}" style="display:flex;height:100vh;width:100%;background:#fff;color:#141414;overflow:hidden;font-size:14px;position:relative;">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside style="width:248px;flex:none;border-right:1px solid #ececec;display:flex;flex-direction:column;height:100%;background:#fff;">
+    <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #f2f2f2;">
+      <div style="width:28px;height:28px;background:#141414;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.5px;">NS</div>
+      <span style="font-weight:600;font-size:14px;">Nextron Solu...</span>
+      <svg style="margin-left:2px;color:#9ca3af;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+      <svg style="margin-left:auto;color:#9ca3af;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="border:1px solid #e6e6e6;border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+        <svg style="color:#6b7280;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+        <div>
+          <div style="font-size:9px;letter-spacing:.7px;color:#9ca3af;font-weight:500;">SWITCH PRODUCT</div>
+          <div style="font-weight:600;font-size:13px;">Management</div>
+        </div>
+        <svg style="margin-left:auto;color:#9ca3af;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></svg>
+      </div>
+    </div>
+    <div style="padding:0 14px 8px;">
+      <div style="display:flex;align-items:center;gap:8px;color:#2367f1;font-weight:500;font-size:13px;padding:7px 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Getting started
+      </div>
+    </div>
+    <nav style="flex:1;overflow-y:auto;padding:4px 14px 16px;">
+      <sc-for list="{{ navGroups }}" as="group" hint-placeholder-count="4">
+        <div style="margin-top:14px;">
+          <div style="font-size:10px;letter-spacing:.7px;color:#b0b0b3;font-weight:600;padding:0 8px 6px;">{{ group.title }}</div>
+          <sc-for list="{{ group.items }}" as="it" hint-placeholder-count="3">
+            <div class="nav-item" data-auto="{{ it.auto }}" onClick="{{ it.onClick }}" style="display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:13.5px;margin-bottom:1px;background:{{ it.bg }};color:{{ it.fg }};font-weight:{{ it.weight }};">
+              <span class="nav-ic" style="color:{{ it.icColor }};display:flex;" dangerouslySetInnerHTML="{{ it.icon }}"></span>
+              {{ it.label }}
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </nav>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main style="flex:1;display:flex;flex-direction:column;height:100%;overflow:hidden;position:relative;min-width:0;">
+    <header style="height:60px;flex:none;border-bottom:1px solid #ececec;display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 28px;">
+      <div style="display:flex;align-items:center;gap:6px;color:#6b7280;font-size:13.5px;cursor:pointer;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/></svg> Tasks
+      </div>
+      <svg style="color:#6b7280;cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <svg style="color:#6b7280;cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <div style="width:30px;height:30px;border-radius:50%;background:#8b5e3c;background-image:linear-gradient(135deg,#a16b45,#5b3a22);"></div>
+    </header>
+
+    <!-- ============ EMPTY STATE ============ -->
+    <sc-if value="{{ pageEmpty }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;padding:30px 36px 60px;position:relative;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
+        <div>
+          <h1 style="font-size:26px;font-weight:700;letter-spacing:-.5px;margin:0 0 6px;">Content Library</h1>
+          <p style="margin:0;color:#6b7280;font-size:15px;">Three ways to start. Pick the one that matches where your files already live.</p>
+        </div>
+        <button class="btn-blue" data-auto="create-btn" onClick="{{ openMenu }}" style="display:flex;align-items:center;gap:9px;background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 18px;height:44px;font-size:14px;font-weight:600;cursor:pointer;flex:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Create folder <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      </div>
+
+      <div style="text-align:center;margin:48px 0 40px;">
+        <div style="width:74px;height:74px;border-radius:18px;background:#eaf1ff;display:inline-flex;align-items:center;justify-content:center;margin-bottom:22px;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2367f1" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v1"/><path d="M3 11a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2l-1.5 7a2 2 0 0 1-2 1.6H6.5a2 2 0 0 1-2-1.6z"/></svg></div>
+        <h2 style="font-size:30px;font-weight:700;letter-spacing:-.5px;margin:0 0 14px;">Your library starts here.</h2>
+        <p style="margin:0 auto;color:#6b7280;font-size:15px;line-height:1.6;max-width:560px;">Permissions live on the folder, not the file. Pick whichever path matches where your work already lives — you can mix and match later.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1180px;margin:0 auto;align-items:start;">
+        <!-- Start with a folder -->
+        <div style="border:1px solid #ececec;border-radius:16px;padding:26px 26px 24px;display:flex;flex-direction:column;min-height:430px;">
+          <div style="width:46px;height:46px;border-radius:12px;background:#f3e9fd;display:flex;align-items:center;justify-content:center;margin-bottom:22px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v4M10 13h4"/></svg></div>
+          <h3 style="font-size:18px;font-weight:700;margin:0 0 8px;">Start with a folder</h3>
+          <p style="margin:0 0 22px;color:#6b7280;font-size:14px;line-height:1.55;">Name it, decide who sees it, and every file inside follows the same rules.</p>
+          <div style="border:1px solid #ececec;border-radius:12px;padding:14px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 14px rgba(0,0,0,.04);margin-bottom:10px;">
+            <span style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#f5a3c0,#7c5cff);display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+            <div style="flex:1;"><div style="font-weight:700;font-size:15px;">Sales Collateral</div><div style="color:#9ca3af;font-size:12.5px;">shared with Inngest, Axis</div></div>
+            <div style="display:flex;"><span style="width:30px;height:30px;border-radius:50%;background:#14b8a6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;border:2px solid #fff;">I</span><span style="width:30px;height:30px;border-radius:50%;background:#22d3ee;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;border:2px solid #fff;margin-left:-9px;">A</span><span style="width:30px;height:30px;border-radius:50%;background:#141414;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;border:2px solid #fff;margin-left:-9px;">R</span></div>
+          </div>
+          <div style="border:1px dashed #e2e2e2;border-radius:12px;padding:14px;display:flex;align-items:center;gap:14px;opacity:.5;margin-bottom:10px;">
+            <span style="width:42px;height:42px;border-radius:10px;border:1px dashed #cfcfcf;flex:none;"></span>
+            <div style="flex:1;"><div style="font-weight:700;font-size:15px;color:#9ca3af;">Technical Briefs</div><div style="color:#cfcfcf;font-size:12.5px;">shared with gold partners</div></div>
+            <div style="display:flex;"><span style="width:30px;height:30px;border-radius:50%;background:#e5e7eb;border:2px solid #fff;"></span><span style="width:30px;height:30px;border-radius:50%;background:#eef0f3;border:2px solid #fff;margin-left:-9px;"></span></div>
+          </div>
+          <div style="flex:1;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px;">
+            <span style="color:#9ca3af;font-size:13px;">~30 seconds to set up</span>
+            <button class="btn-dark" onClick="{{ openNewFolder }}" style="display:flex;align-items:center;gap:8px;background:#141414;color:#fff;border:none;border-radius:9px;padding:0 18px;height:42px;font-size:13.5px;font-weight:600;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Create folder</button>
+          </div>
+        </div>
+
+        <!-- right column -->
+        <div style="display:flex;flex-direction:column;gap:24px;">
+          <!-- Mirror an existing source -->
+          <div style="border:1px solid #ececec;border-radius:16px;padding:26px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:#f1f2f4;display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div>
+            <h3 style="font-size:18px;font-weight:700;margin:0 0 8px;">Mirror an existing source</h3>
+            <p style="margin:0 0 20px;color:#6b7280;font-size:14px;line-height:1.55;">Bring a folder over from Drive, Notion, Sharepoint or Dropbox. Two-way sync.</p>
+            <div style="display:flex;gap:14px;align-items:center;margin-bottom:20px;" dangerouslySetInnerHTML="{{ srcLogosRow }}"></div>
+            <button class="btn-ghost" onClick="{{ openSource }}" style="display:flex;align-items:center;gap:8px;background:#fff;color:#141414;border:1px solid #dcdcdc;border-radius:9px;padding:0 18px;height:42px;font-size:13.5px;font-weight:600;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Connect source</button>
+          </div>
+          <!-- Drop files. Carmen sorts -->
+          <div style="border:1px solid #ececec;border-radius:16px;padding:26px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:#eaf6ee;display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="M19 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg></div>
+            <h3 style="font-size:18px;font-weight:700;margin:0 0 8px;">Drop files. Carmen sorts.</h3>
+            <p style="margin:0 0 18px;color:#6b7280;font-size:14px;line-height:1.55;">Upload anything. Carmen proposes the folder, the partners and the permission.</p>
+            <span style="display:inline-flex;align-items:center;gap:6px;background:#eef0f4;color:#6b7280;border-radius:7px;padding:5px 11px;font-size:11px;font-weight:600;letter-spacing:.4px;margin-bottom:18px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg> AI AGENT</span>
+            <div style="display:block;"></div>
+            <button class="btn-ghost" onClick="{{ openCarmen }}" style="display:flex;align-items:center;gap:8px;background:#fff;color:#141414;border:1px solid #dcdcdc;border-radius:9px;padding:0 18px;height:42px;font-size:13.5px;font-weight:600;cursor:pointer;margin-top:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Browse computer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ GRID / LIST (populated) ============ -->
+    <sc-if value="{{ pageGrid }}" hint-placeholder-val="x">
+    <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;padding:30px 36px 60px;position:relative;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:26px;">
+        <div>
+          <h1 style="font-size:26px;font-weight:700;letter-spacing:-.5px;margin:0 0 6px;">Content Library</h1>
+          <p style="margin:0;color:#6b7280;font-size:14.5px;">5 folders <span style="color:#cfcfcf;">•</span> shared across 6 partners</p>
+        </div>
+        <button class="btn-blue" data-auto="create-btn2" onClick="{{ openMenu }}" style="display:flex;align-items:center;gap:9px;background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 18px;height:44px;font-size:14px;font-weight:600;cursor:pointer;flex:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Create folder <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:18px;">
+        <div style="display:flex;background:#f4f4f5;border-radius:10px;padding:4px;">
+          <sc-for list="{{ libTabs }}" as="tb" hint-placeholder-count="3">
+            <button style="display:flex;align-items:center;gap:8px;border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;background:{{ tb.bg }};color:{{ tb.fg }};" dangerouslySetInnerHTML="{{ tb.html }}"></button>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="display:flex;align-items:center;gap:10px;border:1px solid #e2e2e2;border-radius:10px;padding:0 14px;height:42px;width:380px;color:#9ca3af;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+            <span style="font-size:13.5px;">Search folders and files...</span>
+          </div>
+          <div style="display:flex;border:1px solid #e2e2e2;border-radius:10px;overflow:hidden;">
+            <button data-auto="view-grid" onClick="{{ setGridView }}" style="border:none;padding:0 11px;height:42px;cursor:pointer;background:{{ gridBtnBg }};color:{{ gridBtnFg }};display:flex;align-items:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+            <button data-auto="view-list" onClick="{{ setListView }}" style="border:none;border-left:1px solid #e2e2e2;padding:0 11px;height:42px;cursor:pointer;background:{{ listBtnBg }};color:{{ listBtnFg }};display:flex;align-items:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <sc-for list="{{ gridFolders }}" as="f" hint-placeholder-count="6">
+          <div class="card-hover" onClick="{{ f.open }}" style="border:1px solid #ececec;border-radius:16px;padding:20px 20px 0;cursor:pointer;transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column;">
+            <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;">
+              <span style="width:44px;height:44px;border-radius:11px;background:{{ f.color }};display:flex;align-items:center;justify-content:center;flex:none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+              <div style="flex:1;min-width:0;padding-top:1px;">
+                <div class="fname" onClick="{{ f.open }}" style="font-weight:700;font-size:15.5px;margin-bottom:4px;display:inline-block;">{{ f.name }}</div>
+                <div style="color:#9ca3af;font-size:13px;line-height:1.45;">{{ f.desc }}</div>
+              </div>
+              <button data-auto="{{ f.menuAuto }}" onClick="{{ f.openMenu }}" style="border:none;background:transparent;cursor:pointer;color:#9ca3af;padding:2px;flex:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+              <span dangerouslySetInnerHTML="{{ f.avatarsHtml }}"></span>
+              <span dangerouslySetInnerHTML="{{ f.permHtml }}"></span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f2f2f2;padding:13px 0;color:#9ca3af;font-size:13px;">
+              <span>{{ f.files }}</span><span>{{ f.time }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <!-- LIST -->
+      <sc-if value="{{ isList }}" hint-placeholder-val="x">
+      <div style="border:1px solid #ececec;border-radius:16px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:42px 1fr 220px 200px 150px 40px;align-items:center;padding:14px 20px;background:#fafafb;border-bottom:1px solid #ececec;font-size:12.5px;color:#9ca3af;font-weight:600;">
+          <span><span style="width:17px;height:17px;border:1.5px solid #d0d0d4;border-radius:4px;display:inline-block;"></span></span>
+          <span>Folder</span><span>Partners</span><span>Permission</span><span>Date added</span><span></span>
+        </div>
+        <sc-for list="{{ listFolders }}" as="f" hint-placeholder-count="6">
+          <div class="row-hover" onClick="{{ f.open }}" style="display:grid;grid-template-columns:42px 1fr 220px 200px 150px 40px;align-items:center;padding:16px 20px;border-bottom:1px solid #f4f4f5;cursor:pointer;">
+            <span><span style="width:17px;height:17px;border:1.5px solid #d0d0d4;border-radius:4px;display:inline-block;"></span></span>
+            <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+              <span style="width:38px;height:38px;border-radius:9px;background:{{ f.color }};display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+              <div style="min-width:0;"><div class="fname" onClick="{{ f.open }}" style="font-weight:600;font-size:14.5px;display:inline-block;">{{ f.name }}</div><div style="color:#9ca3af;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ f.desc }}</div></div>
+            </div>
+            <span dangerouslySetInnerHTML="{{ f.avatarsHtml }}"></span>
+            <span dangerouslySetInnerHTML="{{ f.permHtml }}"></span>
+            <span style="color:#6b7280;font-size:13.5px;">{{ f.time }}</span>
+            <button style="border:none;background:transparent;cursor:pointer;color:#9ca3af;padding:2px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <!-- ============ FOLDER DETAIL ============ -->
+    <sc-if value="{{ pageFolder }}" hint-placeholder-val="x">
+    <div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;padding:26px 36px 60px;position:relative;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;margin-bottom:18px;">
+        <span class="lnk" onClick="{{ gotoGrid }}" style="display:inline-flex;align-items:center;gap:6px;color:#6b7280;cursor:pointer;font-weight:500;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v1"/><path d="M3 11a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2l-1.5 7a2 2 0 0 1-2 1.6H6.5a2 2 0 0 1-2-1.6z"/></svg> Content Library</span>
+        <svg style="color:#cfcfcf;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        <span style="color:#141414;font-weight:600;">{{ detailName }}</span>
+      </div>
+      <div style="border:1px solid #ececec;border-radius:16px;padding:22px 24px;display:flex;align-items:flex-start;gap:18px;margin-bottom:26px;">
+        <span style="width:54px;height:54px;border-radius:12px;background:{{ detailColor }};display:flex;align-items:center;justify-content:center;flex:none;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+        <div style="flex:1;min-width:0;">
+          <h1 style="font-size:24px;font-weight:700;letter-spacing:-.4px;margin:0 0 6px;">{{ detailName }}</h1>
+          <p style="margin:0 0 12px;color:#9ca3af;font-size:14px;line-height:1.5;max-width:780px;">{{ detailDesc }}</p>
+          <div style="display:flex;align-items:center;gap:12px;color:#6b7280;font-size:13.5px;">
+            <span style="display:flex;align-items:center;" dangerouslySetInnerHTML="{{ detailAvatarsHtml }}"></span>
+            {{ detailPartners }} <span style="color:#cfcfcf;">•</span>
+            <span dangerouslySetInnerHTML="{{ detailPermHtml }}"></span>
+            <span style="color:#cfcfcf;">•</span> Created May 24, 2026, by You
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex:none;">
+          <sc-if value="{{ folderFilled }}" hint-placeholder-val="x"><button class="btn-ghost" style="display:flex;align-items:center;gap:8px;background:#fff;color:#141414;border:1px solid #dcdcdc;border-radius:9px;padding:0 16px;height:42px;font-size:13.5px;font-weight:600;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.2"/></svg> Manage access</button></sc-if>
+          <button class="btn-blue" data-auto="folder-addfiles" onClick="{{ openAddFiles }}" style="display:flex;align-items:center;gap:8px;background:#2367f1;color:#fff;border:none;border-radius:9px;padding:0 18px;height:42px;font-size:13.5px;font-weight:600;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Add files</button>
+          <button style="border:1px solid #e2e2e2;background:#fff;border-radius:9px;width:42px;height:42px;cursor:pointer;color:#6b7280;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+        </div>
+      </div>
+
+      <!-- empty body -->
+      <sc-if value="{{ folderEmpty }}" hint-placeholder-val="{{ true }}">
+      <div style="border:1px solid #ececec;border-radius:16px;padding:42px 44px;display:flex;align-items:center;justify-content:space-between;min-height:300px;overflow:hidden;">
+        <div style="max-width:520px;">
+          <div style="font-size:11px;letter-spacing:.8px;color:#9ca3af;font-weight:600;margin-bottom:18px;">THIS FOLDER IS EMPTY</div>
+          <h2 style="font-size:30px;font-weight:700;letter-spacing:-.5px;margin:0 0 22px;line-height:1.25;">A folder with rules,<br><span style="font-style:italic;font-weight:600;color:#6b7280;">waiting for files</span></h2>
+          <p style="margin:0 0 28px;color:#6b7280;font-size:15px;line-height:1.6;">Permissions are already set - everything you drop in will be shared as <strong style="color:#141414;">View + download</strong> with 3 partners.</p>
+          <button class="btn-dark" data-auto="add-first" onClick="{{ openAddFiles }}" style="display:flex;align-items:center;gap:9px;background:#141414;color:#fff;border:none;border-radius:10px;padding:0 22px;height:48px;font-size:14.5px;font-weight:600;cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Add the first file</button>
+        </div>
+        <div style="position:relative;width:440px;height:220px;flex:none;">
+          <div style="position:absolute;right:60px;top:0;width:330px;height:150px;background:#f3f4f7;border-radius:12px;transform:rotate(-3deg);"></div>
+          <div style="position:absolute;right:30px;top:30px;width:340px;height:160px;background:#eceef1;border-radius:12px;"></div>
+          <div style="position:absolute;right:0;top:55px;width:350px;height:160px;background:#f6f7f9;border:1px solid #ececec;border-radius:12px;box-shadow:0 14px 34px rgba(0,0,0,.05);"></div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- file list -->
+      <sc-if value="{{ folderFilled }}" hint-placeholder-val="x">
+      <div style="border:1px solid #ececec;border-radius:16px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:44px 1fr 160px 160px 160px 40px;align-items:center;padding:14px 20px;border-bottom:1px solid #ececec;font-size:12.5px;color:#9ca3af;font-weight:600;">
+          <span><span style="width:17px;height:17px;border:1.5px solid #d0d0d4;border-radius:4px;display:inline-block;"></span></span>
+          <span>Name</span><span>Size</span><span>Date added</span><span>By</span><span></span>
+        </div>
+        <sc-for list="{{ folderFiles }}" as="fl" hint-placeholder-count="4">
+          <div class="row-hover" style="display:grid;grid-template-columns:44px 1fr 160px 160px 160px 40px;align-items:center;padding:15px 20px;border-bottom:1px solid #f4f4f5;cursor:pointer;">
+            <span><span style="width:17px;height:17px;border:1.5px solid #d0d0d4;border-radius:4px;display:inline-block;"></span></span>
+            <div style="display:flex;align-items:center;gap:13px;">
+              <span style="display:inline-flex;align-items:center;justify-content:center;background:{{ fl.tagBg }};color:{{ fl.tagFg }};border-radius:6px;font-size:10px;font-weight:700;padding:4px 6px;letter-spacing:.3px;">{{ fl.tag }}</span>
+              <span style="font-weight:500;font-size:14.5px;">{{ fl.name }}</span>
+            </div>
+            <span style="color:#6b7280;font-size:13.5px;">{{ fl.size }}</span>
+            <span style="color:#6b7280;font-size:13.5px;">{{ fl.date }}</span>
+            <span style="display:flex;align-items:center;gap:8px;color:#374151;font-size:13.5px;"><span style="width:26px;height:26px;border-radius:50%;background:#2367f1;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;">M</span> Max</span>
+            <button style="border:none;background:transparent;cursor:pointer;color:#9ca3af;padding:2px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+  </main>
+
+  <!-- ===== CREATE MENU ===== -->
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="x">
+  <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:55;"></div>
+  <div style="position:fixed;top:62px;right:36px;z-index:56;background:#fff;border:1px solid #ececec;border-radius:13px;box-shadow:0 16px 40px rgba(0,0,0,.14);padding:7px;width:262px;animation:menuIn .16s ease;">
+    <div class="menu-row" data-auto="menu-newfolder" onClick="{{ openNewFolder }}" style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v4M10 13h4"/></svg> New folder</div>
+    <div class="menu-row" data-auto="menu-mirror" onClick="{{ openSource }}" style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg> Mirror a source</div>
+    <div class="menu-row" data-auto="menu-carmen" onClick="{{ openCarmen }}" style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2"><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/></svg> Drop &amp; sort with Carmen</div>
+  </div>
+  </sc-if>
+
+  <!-- ===== CONNECT SOURCE WIZARD ===== -->
+  <sc-if value="{{ modalSource }}" hint-placeholder-val="x">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.42);display:flex;align-items:center;justify-content:center;z-index:60;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:720px;max-width:100%;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:modalIn .25s ease;overflow:hidden;max-height:92vh;display:flex;flex-direction:column;">
+      <!-- header -->
+      <div style="padding:22px 26px 20px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid #f2f2f2;flex:none;">
+        <span style="width:38px;height:38px;border-radius:9px;background:{{ srcHeadBg }};display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ srcHeadIcon }}"></span>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;font-weight:700;">{{ srcHeadTitle }}</span><span dangerouslySetInnerHTML="{{ srcHeadBadge }}"></span></div>
+          <div style="color:#9ca3af;font-size:13.5px;margin-top:2px;">{{ srcHeadSub }}</div>
+        </div>
+        <svg onClick="{{ closeModal }}" style="cursor:pointer;color:#9ca3af;flex:none;margin-top:4px;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </div>
+      <!-- stepper -->
+      <div style="padding:22px 40px 6px;display:flex;align-items:flex-start;flex:none;">
+        <sc-for list="{{ srcStepper }}" as="st" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;flex:{{ st.flex }};">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:7px;">
+              <span style="width:30px;height:30px;border-radius:50%;background:{{ st.bg }};border:{{ st.border }};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:{{ st.fg }};" dangerouslySetInnerHTML="{{ st.inner }}"></span>
+              <span style="font-size:12.5px;font-weight:600;color:{{ st.labelFg }};">{{ st.label }}</span>
+            </div>
+            <sc-if value="{{ st.hasLine }}" hint-placeholder-val="x"><div style="flex:1;height:1.5px;background:#e6e6e6;margin:15px 4px 0;min-width:48px;"></div></sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <!-- body -->
+      <div style="padding:18px 26px 24px;overflow-y:auto;flex:1;">
+        <!-- step source -->
+        <sc-if value="{{ srcIsSource }}" hint-placeholder-val="{{ true }}">
+        <h3 style="font-size:17px;font-weight:700;margin:6px 0 4px;">Where do your files live?</h3>
+        <p style="margin:0 0 18px;color:#6b7280;font-size:14px;">Pick a source to bring files into your library. Any changes sync both ways automatically.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ srcOptions }}" as="o" hint-placeholder-count="4">
+            <div class="src-row" data-auto="{{ o.auto }}" onClick="{{ o.pick }}" style="border:1px solid #ececec;border-radius:12px;padding:15px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .15s;">
+              <span style="width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ o.logo }}"></span>
+              <div style="flex:1;"><div style="display:flex;align-items:center;gap:9px;"><span style="font-weight:700;font-size:15px;">{{ o.name }}</span><span dangerouslySetInnerHTML="{{ o.badge }}"></span></div><div style="color:#9ca3af;font-size:13px;margin-top:2px;">{{ o.sub }}</div></div>
+              <svg style="color:#cfcfcf;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:11px;background:#fdf6e8;border-radius:12px;padding:14px 16px;margin-top:18px;">
+          <svg style="color:#b58a26;flex:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span style="color:#8a6d24;font-size:13.5px;line-height:1.55;">Airstride only ever reads the folders you select. You choose the access level partners get on the mirrored copy in the next steps.</span>
+        </div>
+        </sc-if>
+        <!-- step auth -->
+        <sc-if value="{{ srcIsAuth }}" hint-placeholder-val="x">
+        <h3 style="font-size:17px;font-weight:700;margin:6px 0 4px;">Authorise Google drive</h3>
+        <p style="margin:0 0 18px;color:#6b7280;font-size:14px;">Sign in to grant Airstride access. You can revoke it any time from App integrations.</p>
+        <div style="background:#fdf6e8;border-radius:14px;padding:24px;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:20px;">
+            <span style="width:54px;height:54px;border-radius:12px;background:#2367f1;display:flex;align-items:center;justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span>
+            <svg style="color:#b58a26;" width="40" height="20" viewBox="0 0 40 20" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"><path d="M2 10h32M30 5l5 5-5 5"/></svg>
+            <span style="width:54px;height:54px;border-radius:12px;background:#141414;display:flex;align-items:center;justify-content:center;" dangerouslySetInnerHTML="{{ gdriveLogo }}"></span>
+          </div>
+          <div style="border-top:1px solid #efe3c6;padding-top:18px;">
+            <div style="font-weight:700;font-size:14.5px;margin-bottom:14px;color:#8a6d24;">This will allow Airstride to:</div>
+            <sc-for list="{{ authPerms }}" as="p" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:13px;"><svg style="color:#b58a26;flex:none;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5 9-10"/></svg><span style="color:#6b5a2a;font-size:14px;">{{ p }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+        <!-- step folders -->
+        <sc-if value="{{ srcIsFolders }}" hint-placeholder-val="x">
+        <h3 style="font-size:17px;font-weight:700;margin:6px 0 4px;">Choose what to mirror</h3>
+        <p style="margin:0 0 16px;color:#6b7280;font-size:14px;">Everything in Google Drive is listed below. Its contents sync automatically.</p>
+        <div style="border:1.5px solid #16a34a;border-radius:12px;padding:15px 16px;display:flex;align-items:center;gap:12px;background:#f6fcf8;margin-bottom:16px;">
+          <span style="width:30px;height:30px;border-radius:50%;border:2px solid #16a34a;display:flex;align-items:center;justify-content:center;flex:none;"><span style="width:11px;height:11px;border-radius:50%;background:#16a34a;"></span></span>
+          <div style="flex:1;"><div style="font-weight:700;font-size:14.5px;">Connected to Google drive</div><div style="color:#9ca3af;font-size:13px;">wande@acme.ai</div></div>
+          <span style="color:#16a34a;font-weight:700;font-size:13.5px;text-decoration:underline;cursor:pointer;">Switch account</span>
+        </div>
+        <div style="border:1px solid #ececec;border-radius:12px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:#fafafb;border-bottom:1px solid #ececec;color:#9ca3af;font-size:12px;font-weight:600;letter-spacing:.5px;"><span style="display:flex;align-items:center;gap:8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg> GOOGLE DRIVE</span><span style="width:17px;height:17px;border:1.5px solid #d0d0d4;border-radius:4px;"></span></div>
+          <sc-for list="{{ mirrorFolders }}" as="m" hint-placeholder-count="5">
+            <div style="display:flex;align-items:center;gap:13px;padding:13px 16px;border-bottom:1px solid #f4f4f5;">
+              <span style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#f5a3c0,#7c5cff);display:flex;align-items:center;justify-content:center;flex:none;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+              <div style="flex:1;"><div style="font-weight:600;font-size:14.5px;">{{ m.name }}</div><div style="color:#9ca3af;font-size:12.5px;">{{ m.meta }}</div></div>
+              <span style="width:20px;height:20px;border-radius:5px;border:{{ m.boxBorder }};background:{{ m.boxBg }};display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ m.check }}"></span>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+        <!-- step review -->
+        <sc-if value="{{ srcIsReview }}" hint-placeholder-val="x">
+        <h3 style="font-size:17px;font-weight:700;margin:6px 0 4px;">Review &amp; connect</h3>
+        <p style="margin:0 0 18px;color:#6b7280;font-size:14px;">One last look before the first sync runs.</p>
+        <div style="border:1px solid #ececec;border-radius:14px;overflow:hidden;">
+          <div style="display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid #f4f4f5;"><span style="color:#9ca3af;display:flex;width:120px;align-items:center;gap:10px;font-size:14px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg> Source</span><span style="display:flex;align-items:center;gap:10px;font-weight:600;font-size:14.5px;"><span style="width:22px;height:22px;display:flex;" dangerouslySetInnerHTML="{{ gdriveLogoSm }}"></span> Google drive</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid #f4f4f5;"><span style="color:#9ca3af;display:flex;width:120px;align-items:center;gap:10px;font-size:14px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg> Account</span><span style="font-weight:600;font-size:14.5px;">wande@acme.ai</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:16px 18px;"><span style="color:#9ca3af;display:flex;width:120px;align-items:center;gap:10px;font-size:14px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg> Mirroring</span><span style="font-weight:600;font-size:14.5px;flex:1;">2 folders <span style="color:#cfcfcf;">.</span> 410 files</span><span style="color:#2367f1;font-weight:600;font-size:13.5px;text-decoration:underline;cursor:pointer;">Edit</span></div>
+        </div>
+        </sc-if>
+      </div>
+      <!-- footer -->
+      <sc-if value="{{ srcHasFooter }}" hint-placeholder-val="x">
+      <div style="padding:16px 26px;border-top:1px solid #f2f2f2;display:flex;justify-content:flex-end;gap:12px;flex:none;background:#fcfcfd;">
+        <button class="btn-ghost" onClick="{{ srcBack }}" style="border:1px solid #e2e2e2;background:#fff;border-radius:10px;padding:0 22px;height:44px;font-size:14px;font-weight:600;cursor:pointer;color:#141414;">Go back</button>
+        <button class="btn-blue" data-auto="{{ srcPrimaryAuto }}" onClick="{{ srcPrimary }}" style="background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 22px;height:44px;font-size:14px;font-weight:600;cursor:pointer;">{{ srcPrimaryLabel }}</button>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== NEW FOLDER MODAL ===== -->
+  <sc-if value="{{ modalNewFolder }}" hint-placeholder-val="x">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.42);display:flex;align-items:center;justify-content:center;z-index:60;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:680px;max-width:100%;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:modalIn .25s ease;overflow:hidden;max-height:92vh;display:flex;flex-direction:column;">
+      <div style="padding:22px 28px 18px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid #f4f4f5;flex:none;">
+        <span style="width:40px;height:40px;border-radius:10px;background:#141414;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v4M10 13h4"/></svg></span>
+        <div style="flex:1;"><div style="font-size:11px;letter-spacing:.7px;color:#9ca3af;font-weight:600;margin-bottom:3px;">NEW FOLDER</div><div style="font-size:20px;font-weight:700;">Name it. Decide who sees it.</div></div>
+        <svg onClick="{{ closeModal }}" style="cursor:pointer;color:#9ca3af;flex:none;margin-top:4px;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </div>
+      <div style="padding:24px 28px;overflow-y:auto;flex:1;">
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-weight:600;font-size:14px;margin-bottom:8px;">Folder Name <span style="color:#dc2626;">*</span></label>
+          <div style="border:1px solid #e2e2e2;border-radius:10px;padding:0 14px;height:48px;display:flex;align-items:center;font-size:14.5px;color:{{ nameColor }};">{{ nameDisplay }}</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-weight:600;font-size:14px;margin-bottom:8px;">Description</label>
+          <div style="border:1px solid #e2e2e2;border-radius:10px;padding:13px 14px;min-height:80px;font-size:14.5px;color:#9ca3af;">What goes in here?</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-weight:600;font-size:14px;margin-bottom:8px;">Share with all partners <span style="color:#dc2626;">*</span></label>
+          <div style="display:flex;border:1px solid #e2e2e2;border-radius:10px;overflow:hidden;height:46px;">
+            <button data-auto="nf-shareyes" onClick="{{ setShareYes }}" style="flex:1;border:none;cursor:pointer;font-size:14px;font-weight:600;background:{{ yesBg }};color:{{ yesFg }};">Yes</button>
+            <button data-auto="nf-shareno" onClick="{{ setShareNo }}" style="flex:1;border:none;border-left:1px solid #e2e2e2;cursor:pointer;font-size:14px;font-weight:600;background:{{ noBg }};color:{{ noFg }};">No</button>
+          </div>
+        </div>
+        <sc-if value="{{ shareSpecific }}" hint-placeholder-val="x">
+        <div style="margin-bottom:20px;position:relative;">
+          <label style="display:block;font-weight:600;font-size:14px;margin-bottom:8px;">Share with <span style="color:#dc2626;">*</span></label>
+          <sc-if value="{{ partnerOpen }}" hint-placeholder-val="x">
+          <div style="border:1px solid #ececec;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.1);padding:8px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:10px;border:1px solid #ececec;border-radius:9px;padding:0 12px;height:42px;color:#9ca3af;margin-bottom:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg><span style="font-size:13.5px;">Search partners...</span></div>
+            <sc-for list="{{ partnerPick }}" as="p" hint-placeholder-count="4">
+              <div class="menu-row" data-auto="{{ p.auto }}" onClick="{{ p.toggle }}" style="display:flex;align-items:center;gap:12px;padding:10px 11px;border-radius:9px;cursor:pointer;">
+                <span style="width:34px;height:34px;border-radius:50%;background:{{ p.color }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:none;">{{ p.initials }}</span>
+                <div style="flex:1;"><div style="font-weight:600;font-size:14px;">{{ p.name }}</div><div style="color:#9ca3af;font-size:12.5px;">{{ p.tier }}</div></div>
+                <span style="width:20px;height:20px;border-radius:5px;border:{{ p.boxBorder }};background:{{ p.boxBg }};display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ p.check }}"></span>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <div data-auto="nf-partners" onClick="{{ openPartnerDropdown }}" style="border:1px solid #e2e2e2;border-radius:10px;padding:0 14px;height:46px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;color:{{ pickedColor }};font-size:14px;"><span dangerouslySetInnerHTML="{{ pickedLabel }}"></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        </sc-if>
+        <div>
+          <label style="display:block;font-weight:600;font-size:14px;margin-bottom:8px;">Permission <span style="color:#dc2626;">*</span></label>
+          <div style="border:1px solid #e2e2e2;border-radius:10px;padding:0 14px;height:46px;display:flex;align-items:center;justify-content:space-between;font-size:14.5px;">View + Download <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+      </div>
+      <div style="padding:15px 28px;border-top:1px solid #f2f2f2;display:flex;align-items:center;justify-content:space-between;flex:none;background:#fcfcfd;">
+        <span style="display:flex;align-items:center;gap:8px;color:#9ca3af;font-size:13px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> You can change all of this later.</span>
+        <div style="display:flex;gap:11px;">
+          <button class="btn-ghost" onClick="{{ closeModal }}" style="border:1px solid #e2e2e2;background:#fff;border-radius:10px;padding:0 20px;height:44px;font-size:14px;font-weight:600;cursor:pointer;color:#141414;">Cancel</button>
+          <button class="btn-blue" data-auto="nf-create" onClick="{{ createFolder }}" style="background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 22px;height:44px;font-size:14px;font-weight:600;cursor:pointer;">Create folder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== FOLDER CREATED ===== -->
+  <sc-if value="{{ modalCreated }}" hint-placeholder-val="x">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.42);display:flex;align-items:center;justify-content:center;z-index:60;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:560px;max-width:100%;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:modalIn .25s ease;padding:34px 34px 0;text-align:center;overflow:hidden;">
+      <div style="width:66px;height:66px;margin:0 auto 22px;"><svg width="66" height="66" viewBox="0 0 24 24" fill="#16a34a"><path d="M12 1.5l2.4 1.8 3-.2 1 2.8 2.5 1.6-.8 2.9.8 2.9-2.5 1.6-1 2.8-3-.2L12 22.5l-2.4-1.8-3 .2-1-2.8-2.5-1.6.8-2.9-.8-2.9 2.5-1.6 1-2.8 3 .2z"/><path d="M8 12l2.6 2.6L16 9" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2 style="font-size:25px;font-weight:700;margin:0 0 12px;">Folder created!</h2>
+      <p style="margin:0 auto 26px;color:#6b7280;font-size:15px;line-height:1.6;max-width:380px;">Your folder “Sales Management” is ready. Drop files in or start sharing with partners.</p>
+      <div style="border:1px solid #ececec;border-radius:14px;padding:6px 20px;text-align:left;background:#fcfcfd;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #f2f2f2;">
+          <span style="display:flex;align-items:center;gap:11px;"><span style="width:36px;height:36px;border-radius:9px;background:#eaf1ff;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2367f1" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span><span style="font-weight:700;font-size:16px;">Sales Management</span></span>
+          <span style="text-align:right;"><span style="font-size:22px;font-weight:700;">0</span><span style="display:block;color:#9ca3af;font-size:12px;">files</span></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #f2f2f2;font-size:13.5px;"><span style="color:#9ca3af;">Folder ID</span><span style="font-weight:600;">FLD - 2848</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #f2f2f2;font-size:13.5px;"><span style="color:#9ca3af;">Visibility</span><span style="display:inline-flex;align-items:center;gap:6px;background:#eaf1ff;color:#2367f1;border-radius:8px;padding:5px 10px;font-size:12.5px;font-weight:600;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg> Partners can view</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #f2f2f2;font-size:13.5px;"><span style="color:#9ca3af;">Shared with</span><span style="display:flex;"><span style="width:24px;height:24px;border-radius:50%;background:#d97706;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #fff;">I</span><span style="width:24px;height:24px;border-radius:50%;background:#14b8a6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #fff;margin-left:-7px;">A</span><span style="width:24px;height:24px;border-radius:50%;background:#ef4444;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #fff;margin-left:-7px;">R</span><span style="width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #fff;margin-left:-7px;">+2</span></span></div>
+        <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #f2f2f2;font-size:13.5px;"><span style="color:#9ca3af;">Created</span><span style="font-weight:600;">Jun 1, 2026</span></div>
+        <div style="display:flex;justify-content:space-between;padding:13px 0;font-size:13.5px;"><span style="color:#9ca3af;">Owner</span><span style="font-weight:600;">Max Edwards</span></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:11px;padding:20px 0;">
+        <button class="btn-ghost" data-auto="created-back" onClick="{{ gotoGrid }}" style="border:1px solid #e2e2e2;background:#fff;border-radius:10px;padding:0 20px;height:44px;font-size:14px;font-weight:600;cursor:pointer;color:#141414;">Back to library</button>
+        <button class="btn-blue" data-auto="open-folder" onClick="{{ openFolderEmpty }}" style="background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 22px;height:44px;font-size:14px;font-weight:600;cursor:pointer;">Open folder</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== CARMEN DROP & SORT ===== -->
+  <sc-if value="{{ modalCarmen }}" hint-placeholder-val="x">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.42);display:flex;align-items:center;justify-content:center;z-index:60;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:640px;max-width:100%;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:modalIn .25s ease;overflow:hidden;max-height:92vh;display:flex;flex-direction:column;">
+      <!-- drop / uploading -->
+      <sc-if value="{{ carmenDropStage }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:22px 26px 16px;display:flex;align-items:flex-start;gap:13px;border-bottom:1px solid #f4f4f5;flex:none;">
+        <span style="width:38px;height:38px;border-radius:9px;background:#141414;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+        <div style="flex:1;"><div style="font-size:11px;letter-spacing:.7px;color:#9ca3af;font-weight:600;margin-bottom:3px;">DROP &amp; SORT</div><div style="font-size:19px;font-weight:700;">Drop files. Carmen finds the home.</div></div>
+        <svg onClick="{{ closeModal }}" style="cursor:pointer;color:#9ca3af;flex:none;margin-top:4px;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </div>
+      <div style="padding:22px 26px;overflow-y:auto;flex:1;">
+        <div style="border:1.5px dashed #d8d8dd;border-radius:14px;padding:34px;text-align:center;">
+          <span style="width:46px;height:46px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg></span>
+          <div style="font-size:15px;color:#141414;margin-bottom:6px;">Drop files here, or <span style="text-decoration:underline;font-weight:600;cursor:pointer;">browse</span></div>
+          <div style="color:#9ca3af;font-size:13.5px;">Carmen will analyse them before anything moves.</div>
+        </div>
+        <div style="color:#9ca3af;font-size:12.5px;letter-spacing:.6px;font-weight:600;margin-top:16px;">PDF • DOCX • KEY</div>
+        <sc-if value="{{ carmenUploading }}" hint-placeholder-val="x">
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+          <sc-for list="{{ uploadFiles }}" as="u" hint-placeholder-count="3">
+            <div style="border:1px solid #ececec;border-radius:12px;padding:14px 16px;animation:fadeUp .3s ease;">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="width:34px;height:34px;border-radius:8px;background:{{ u.tint }};display:flex;align-items:center;justify-content:center;flex:none;" dangerouslySetInnerHTML="{{ u.icon }}"></span>
+                <div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:14px;">{{ u.name }}</div><div style="color:#9ca3af;font-size:12.5px;margin-top:2px;">Date: {{ u.date }}  Size: {{ u.size }}</div></div>
+                <span dangerouslySetInnerHTML="{{ u.action }}"></span>
+              </div>
+              <div style="margin-top:11px;" dangerouslySetInnerHTML="{{ u.status }}"></div>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+      <div style="padding:15px 26px;border-top:1px solid #f2f2f2;display:flex;justify-content:flex-end;gap:11px;flex:none;background:#fcfcfd;">
+        <button class="btn-ghost" onClick="{{ closeModal }}" style="border:1px solid #e2e2e2;background:#fff;border-radius:10px;padding:0 20px;height:44px;font-size:14px;font-weight:600;cursor:pointer;color:#141414;">Cancel</button>
+        <button class="btn-blue" data-auto="{{ carmenPrimaryAuto }}" onClick="{{ carmenPrimary }}" style="background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 22px;height:44px;font-size:14px;font-weight:600;cursor:pointer;">Create folder</button>
+      </div>
+      </sc-if>
+      <!-- proposal -->
+      <sc-if value="{{ carmenProposalStage }}" hint-placeholder-val="x">
+      <div style="padding:22px 26px 16px;display:flex;align-items:flex-start;gap:13px;border-bottom:1px solid #f4f4f5;flex:none;">
+        <span style="width:38px;height:38px;border-radius:9px;background:#141414;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+        <div style="flex:1;"><div style="font-size:11px;letter-spacing:.7px;color:#9ca3af;font-weight:600;margin-bottom:3px;">AI PROPOSAL</div><div style="font-size:19px;font-weight:700;">Here's where I'd put these.</div></div>
+        <svg onClick="{{ closeModal }}" style="cursor:pointer;color:#9ca3af;flex:none;margin-top:4px;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </div>
+      <div style="padding:22px 26px;overflow-y:auto;flex:1;">
+        <div style="background:#f5f7fa;border-radius:14px;padding:18px 20px;margin-bottom:22px;">
+          <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+            <span style="width:42px;height:42px;border-radius:10px;background:#2367f1;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+            <div><div style="font-weight:700;font-size:16px;">Sales Collateral</div><div style="color:#6b7280;font-size:13.5px;">Pitch decks, ROI calculators, partner-facing one-pagers.</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:26px;border-top:1px solid #e6e9ee;padding-top:14px;">
+            <span style="display:flex;align-items:center;gap:9px;"><span style="font-size:11px;letter-spacing:.5px;color:#9ca3af;font-weight:600;">PARTNERS</span><span style="display:flex;"><span style="width:24px;height:24px;border-radius:50%;background:#d97706;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #f5f7fa;">I</span><span style="width:24px;height:24px;border-radius:50%;background:#14b8a6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #f5f7fa;margin-left:-7px;">A</span><span style="width:24px;height:24px;border-radius:50%;background:#ef4444;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #f5f7fa;margin-left:-7px;">R</span><span style="width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;border:2px solid #f5f7fa;margin-left:-7px;">+2</span></span></span>
+            <span style="display:flex;align-items:center;gap:9px;"><span style="font-size:11px;letter-spacing:.5px;color:#9ca3af;font-weight:600;">PERMISSION</span><span style="display:inline-flex;align-items:center;gap:6px;color:#2367f1;font-size:13px;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#2367f1;"></span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg> View + download</span></span>
+            <span style="display:flex;align-items:center;gap:9px;"><span style="font-size:11px;letter-spacing:.5px;color:#9ca3af;font-weight:600;">FILES</span><span style="font-weight:700;font-size:15px;">4</span></span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2"><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9z"/></svg><span style="font-size:11px;letter-spacing:.7px;color:#9ca3af;font-weight:600;">WHY CARMEN CHOSE THIS</span></div>
+        <sc-for list="{{ carmenReasons }}" as="r" hint-placeholder-count="3">
+          <div style="display:flex;gap:18px;margin-bottom:16px;"><span style="width:88px;flex:none;font-weight:600;font-size:13.5px;color:#374151;">{{ r.k }}</span><span style="color:#6b7280;font-size:14px;line-height:1.55;">{{ r.v }}</span></div>
+        </sc-for>
+      </div>
+      <div style="padding:15px 26px;border-top:1px solid #f2f2f2;display:flex;justify-content:flex-end;gap:11px;flex:none;background:#fcfcfd;">
+        <button class="btn-ghost" onClick="{{ carmenBackToDrop }}" style="border:1px solid #e2e2e2;background:#fff;border-radius:10px;padding:0 20px;height:44px;font-size:14px;font-weight:600;cursor:pointer;color:#141414;">Adjust</button>
+        <button class="btn-blue" data-auto="carmen-accept" onClick="{{ showCreated }}" style="background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 22px;height:44px;font-size:14px;font-weight:600;cursor:pointer;">Accept &amp; Create folder</button>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== ADD FILES MODAL ===== -->
+  <sc-if value="{{ modalAddFiles }}" hint-placeholder-val="x">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.42);display:flex;align-items:center;justify-content:center;z-index:60;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:640px;max-width:100%;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:modalIn .25s ease;overflow:hidden;">
+      <div style="padding:22px 26px 16px;display:flex;align-items:flex-start;gap:13px;border-bottom:1px solid #f4f4f5;">
+        <span style="width:38px;height:38px;border-radius:9px;background:#141414;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></span>
+        <div style="flex:1;"><div style="font-size:11px;letter-spacing:.7px;color:#9ca3af;font-weight:600;margin-bottom:3px;">ADD FILES</div><div style="font-size:19px;font-weight:700;">Add files to Sales Management</div></div>
+        <svg onClick="{{ closeModal }}" style="cursor:pointer;color:#9ca3af;flex:none;margin-top:4px;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </div>
+      <div style="padding:22px 26px;">
+        <div style="border:1.5px dashed #d8d8dd;border-radius:14px;padding:34px;text-align:center;">
+          <span style="display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg></span>
+          <div style="font-size:15px;color:#141414;margin-bottom:6px;">Drop files here, or <span style="text-decoration:underline;font-weight:600;cursor:pointer;">browse</span></div>
+          <div style="color:#9ca3af;font-size:13.5px;">Carmen will analyse them before anything moves.</div>
+        </div>
+        <div style="color:#9ca3af;font-size:12.5px;letter-spacing:.6px;font-weight:600;margin-top:16px;">PDF • DOCX • KEY</div>
+      </div>
+      <div style="padding:15px 26px;border-top:1px solid #f2f2f2;display:flex;justify-content:flex-end;gap:11px;background:#fcfcfd;">
+        <button class="btn-ghost" onClick="{{ closeModal }}" style="border:1px solid #e2e2e2;background:#fff;border-radius:10px;padding:0 20px;height:44px;font-size:14px;font-weight:600;cursor:pointer;color:#141414;">Cancel</button>
+        <button class="btn-blue" data-auto="addfiles-confirm" onClick="{{ confirmAddFiles }}" style="background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 22px;height:44px;font-size:14px;font-weight:600;cursor:pointer;">Add to folder</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== MANAGE ACCESS MODAL ===== -->
+  <sc-if value="{{ modalAccess }}" hint-placeholder-val="x">
+  <div style="position:fixed;inset:0;background:rgba(20,20,20,.42);display:flex;align-items:center;justify-content:center;z-index:60;padding:24px;">
+    <div style="background:#fff;border-radius:18px;width:660px;max-width:100%;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:modalIn .25s ease;overflow:hidden;max-height:88vh;display:flex;flex-direction:column;">
+      <div style="padding:22px 26px 18px;display:flex;align-items:flex-start;gap:13px;border-bottom:1px solid #f4f4f5;flex:none;">
+        <span style="width:38px;height:38px;border-radius:9px;background:#141414;display:flex;align-items:center;justify-content:center;flex:none;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.2"/><path d="M16 14c2.5.2 4 2 4 4.5"/></svg></span>
+        <div style="flex:1;"><div style="font-size:18px;font-weight:700;">Manage partner(s) access</div><div style="color:#9ca3af;font-size:13.5px;margin-top:1px;">Set partner permissions for each folder.</div></div>
+        <svg data-auto="access-close" onClick="{{ closeModal }}" style="cursor:pointer;color:#9ca3af;flex:none;margin-top:4px;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </div>
+      <div style="padding:18px 26px 8px;flex:none;">
+        <div style="display:flex;align-items:center;gap:10px;border:1px solid #ececec;border-radius:11px;padding:0 14px;height:46px;color:#9ca3af;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg><span style="font-size:14px;">Search partners...</span></div>
+      </div>
+      <div style="padding:6px 26px 10px;overflow-y:auto;flex:1;">
+        <div style="color:#9ca3af;font-size:13.5px;font-weight:600;margin:8px 0 6px;">Who has access (7)</div>
+        <sc-for list="{{ accessPartners }}" as="p" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:13px;padding:12px 0;border-bottom:1px solid #f6f6f6;">
+            <span style="width:38px;height:38px;border-radius:50%;background:{{ p.color }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none;">{{ p.initials }}</span>
+            <div style="flex:1;"><div style="font-weight:600;font-size:14.5px;">{{ p.name }}</div><div style="color:#9ca3af;font-size:13px;">{{ p.tier }}</div></div>
+            <div style="border:1px solid #e2e2e2;border-radius:9px;padding:0 12px;height:38px;display:flex;align-items:center;gap:18px;font-size:13.5px;font-weight:500;color:#374151;cursor:pointer;">View only <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:15px 26px;border-top:1px solid #f2f2f2;display:flex;align-items:center;justify-content:space-between;flex:none;background:#fcfcfd;">
+        <span style="display:flex;align-items:center;gap:8px;color:#9ca3af;font-size:13px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg> 4 access granted</span>
+        <div style="display:flex;gap:11px;">
+          <button class="btn-ghost" style="border:1px solid #e2e2e2;background:#fff;border-radius:10px;padding:0 18px;height:42px;font-size:14px;font-weight:600;cursor:pointer;color:#141414;">Add more partner(s)</button>
+          <button class="btn-blue" onClick="{{ closeModal }}" style="background:#2367f1;color:#fff;border:none;border-radius:10px;padding:0 22px;height:42px;font-size:14px;font-weight:600;cursor:pointer;">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== AUTOPILOT CURSOR ===== -->
+  <div ref="{{ rippleRef }}" style="position:fixed;left:0;top:0;width:0;height:0;border-radius:50%;border:2px solid #2367f1;pointer-events:none;z-index:998;opacity:0;will-change:transform,width,height,opacity;"></div>
+  <div ref="{{ cursorRef }}" style="position:fixed;left:0;top:0;width:24px;height:24px;pointer-events:none;z-index:999;transform:translate(-100px,-100px);will-change:transform;transition:opacity .25s;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#141414" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,.4));"><path d="M5 3l14.5 8.2-6.1 1.5-2.9 6z"/></svg>
+  </div>
+  <div style="position:fixed;right:18px;bottom:18px;z-index:997;display:flex;align-items:center;gap:8px;background:#141414;color:#fff;border-radius:30px;padding:8px 14px;font-size:11px;font-weight:600;letter-spacing:.6px;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.22);">
+    <span style="width:7px;height:7px;border-radius:50%;background:#c8f123;animation:autopulse 1.6s ease-out infinite;"></span> AUTO DEMO
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    page:'empty', view:'grid', modal:null, menu:false,
+    folderName:'', shareAll:'yes', partnerOpen:false, picked:{},
+    srcStep:'source', carmenStage:'drop', folderFilled:false, selectedFolder:null
+  };
+
+  ic(svg){ return { __html: svg }; }
+
+  componentDidMount(){
+    this.cx = window.innerWidth*0.5; this.cy = window.innerHeight*0.45;
+    if(this.cursorEl) this.cursorEl.style.transform='translate('+this.cx+'px,'+this.cy+'px)';
+    this.playing = true; this.paused = false;
+    this.script = [
+      // --- New folder path ---
+      { auto:'create-btn',    act:()=>this.openMenuAct(),                       wait:1500 },
+      { auto:'menu-newfolder',act:()=>this.openNewFolderAct(),                  wait:1700 },
+      { auto:'nf-name',       act:()=>this.fillName(),                          wait:1300 },
+      { auto:'nf-shareno',    act:()=>this.setState({shareAll:'no'}),           wait:1300 },
+      { auto:'nf-partners',   act:()=>this.setState({partnerOpen:true}),        wait:1300 },
+      { auto:'pick-ts',       act:()=>this.pickPartner('ts'),                   wait:650 },
+      { auto:'pick-ci',       act:()=>this.pickPartner('ci'),                   wait:1100 },
+      { auto:'nf-create',     act:()=>this.setState({modal:'created',partnerOpen:false}), wait:2100 },
+      { auto:'open-folder',   act:()=>this.openFolderEmptyAct(),               wait:1900 },
+      { auto:'add-first',     act:()=>this.setState({modal:'addfiles'}),       wait:1600 },
+      { auto:'addfiles-confirm',act:()=>this.confirmAddFilesAct(),             wait:2200 },
+      { auto:'nav-content',   act:()=>this.gotoGridAct(),                      wait:2300 },
+      // --- Mirror a source path ---
+      { auto:'create-btn2',   act:()=>this.openMenuAct(),                      wait:1300 },
+      { auto:'menu-mirror',   act:()=>this.openSourceAct(),                    wait:1700 },
+      { auto:'src-gdrive',    act:()=>this.setState({srcStep:'auth'}),         wait:1800 },
+      { auto:'src-authorise', act:()=>this.setState({srcStep:'folders'}),      wait:2000 },
+      { auto:'src-review',    act:()=>this.setState({srcStep:'review'}),       wait:1900 },
+      { auto:'src-continue',  act:()=>this.gotoGridAct(),                      wait:1900 },
+      // --- Carmen path ---
+      { auto:'create-btn2',   act:()=>this.openMenuAct(),                      wait:1200 },
+      { auto:'menu-carmen',   act:()=>this.openCarmenAct(),                    wait:1600 },
+      { auto:'carmen-browse', act:()=>this.setState({carmenStage:'uploading'}),wait:2500 },
+      { auto:'carmen-create', act:()=>this.setState({carmenStage:'proposal'}), wait:2700 },
+      { auto:'carmen-accept', act:()=>this.setState({modal:'created'}),        wait:1900 },
+      { auto:'created-back',  act:()=>this.gotoGridAct(),                      wait:1700 },
+      // --- Manage + list ---
+      { auto:'grid-menu',     act:()=>this.setState({modal:'access'}),         wait:2400 },
+      { auto:'access-close',  act:()=>this.closeAll(),                         wait:1300 },
+      { auto:'view-list',     act:()=>this.setState({view:'list'}),            wait:2500 },
+      { auto:'view-grid',     act:()=>this.setState({view:'grid'}),            wait:1700 },
+      { auto:'nav-content',   act:()=>this.resetEmpty(),                       wait:2300 }
+    ];
+    this.runLoop();
+  }
+  componentWillUnmount(){ this.playing=false; clearTimeout(this._t); clearInterval(this._iv); clearInterval(this._sv); }
+
+  openMenuAct(){ this.setState({menu:true}); }
+  openNewFolderAct(){ this.setState({menu:false,modal:'newfolder',folderName:'',shareAll:'yes',partnerOpen:false,picked:{}}); }
+  fillName(){ this.typeName('Sales Management'); }
+  typeName(full){
+    let i=0; clearInterval(this._type);
+    this._type=setInterval(()=>{
+      i++; this.setState({folderName:full.slice(0,i)});
+      if(i>=full.length) clearInterval(this._type);
+    }, 55);
+  }
+  pickPartner(k){ this.setState(s=>({ picked:{...s.picked,[k]:!s.picked[k]} })); }
+  openFolderEmptyAct(){ this.setState({page:'folder',modal:null,menu:false,folderFilled:false,selectedFolder:{ name:'Sales Management', desc:'The description will be in here. No description will just have a dash (-). Truncate text here too...', color:'#141414', avatars:[['I','#9333ea'],['A','#14b8a6'],['R','#ec4899']], extra:'', perm:'view' }}); if(this.scrollEl) this.scrollEl.scrollTop=0; }
+  openFolderAct(data){ this.setState({page:'folder',modal:null,menu:false,partnerOpen:false,folderFilled:true,selectedFolder:data}); if(this.scrollEl) this.scrollEl.scrollTop=0; }
+  confirmAddFilesAct(){ this.setState({modal:null,folderFilled:true}); }
+  gotoGridAct(){ this.setState({page:'grid',modal:null,menu:false}); if(this.scrollEl) this.scrollEl.scrollTop=0; }
+  openSourceAct(){ this.setState({menu:false,modal:'source',srcStep:'source'}); }
+  openCarmenAct(){ this.setState({menu:false,modal:'carmen',carmenStage:'drop'}); }
+  closeAll(){ this.setState({modal:null,menu:false,partnerOpen:false}); }
+  resetEmpty(){ this.setState({page:'empty',view:'grid',modal:null,menu:false,folderName:'',shareAll:'yes',partnerOpen:false,picked:{},srcStep:'source',carmenStage:'drop',folderFilled:false}); if(this.scrollEl) this.scrollEl.scrollTop=0; }
+
+  sleep(ms){ return new Promise(r=>{ this._t=setTimeout(r,ms); }); }
+  animScroll(to){
+    if(!this.scrollEl) return;
+    const el=this.scrollEl, from=el.scrollTop, t0=Date.now(), dur=420;
+    clearInterval(this._sv);
+    this._sv=setInterval(()=>{
+      let t=Math.min(1,(Date.now()-t0)/dur); const e=1-Math.pow(1-t,3);
+      el.scrollTop=from+(to-from)*e;
+      if(t>=1) clearInterval(this._sv);
+    },16);
+  }
+  tween(x,y,dur){
+    const sx=this.cx, sy=this.cy, t0=Date.now();
+    return new Promise(res=>{
+      clearInterval(this._iv);
+      this._iv=setInterval(()=>{
+        let t=Math.min(1,(Date.now()-t0)/dur);
+        const e = t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+        this.cx=sx+(x-sx)*e; this.cy=sy+(y-sy)*e;
+        if(this.cursorEl) this.cursorEl.style.transform='translate('+this.cx+'px,'+this.cy+'px)';
+        if(t>=1 || !this.playing){ clearInterval(this._iv); res(); }
+      },16);
+    });
+  }
+  async moveTo(auto){
+    const root=this.rootEl||document;
+    const el=root.querySelector('[data-auto="'+auto+'"]');
+    if(!el) return false;
+    const b=el.getBoundingClientRect();
+    if(b.width===0 && b.height===0) return false;
+    await this.tween(b.left+b.width/2, b.top+b.height*0.55, 740);
+    return true;
+  }
+  clickFx(){
+    const c=this.cursorEl;
+    if(c){ c.animate([{filter:'drop-shadow(0 2px 5px rgba(0,0,0,.4)) brightness(1)'},{filter:'drop-shadow(0 1px 2px rgba(0,0,0,.4)) brightness(1.6)'},{filter:'drop-shadow(0 2px 5px rgba(0,0,0,.4)) brightness(1)'}],{duration:260}); }
+    const r=this.rippleEl;
+    if(r){
+      r.style.transition='none'; r.style.opacity='0.85';
+      r.style.width='10px'; r.style.height='10px';
+      r.style.transform='translate('+(this.cx-5)+'px,'+(this.cy-5)+'px)';
+      requestAnimationFrame(()=>{
+        r.style.transition='width .5s ease-out, height .5s ease-out, opacity .5s ease-out, transform .5s ease-out';
+        r.style.opacity='0'; r.style.width='46px'; r.style.height='46px';
+        r.style.transform='translate('+(this.cx-23)+'px,'+(this.cy-23)+'px)';
+      });
+    }
+  }
+  async runLoop(){
+    await this.sleep(1200);
+    let i=0;
+    while(this.playing){
+      while(this.paused && this.playing){ await this.sleep(150); }
+      if(!this.playing) break;
+      const s=this.script[i];
+      await this.sleep(60);
+      const ok=await this.moveTo(s.auto);
+      if(!this.playing) break;
+      if(ok){ this.clickFx(); await this.sleep(200); s.act(); }
+      await this.sleep(s.wait||1000);
+      i=(i+1)%this.script.length;
+    }
+  }
+
+  renderVals(){
+    const s = this.state;
+    const I = (svg)=>this.ic(svg);
+    const navIc = {
+      deals:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>',
+      analytics:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18l5-6 4 3 6-8"/></svg>',
+      partners:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.2"/><path d="M16 14c2.5.2 4 2 4 4.5"/></svg>',
+      globe:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>',
+      library:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5M3 18l9 5 9-5"/></svg>',
+      training:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.6 2.6M15.1 15.1l2.6 2.6M17.7 6.3l-2.6 2.6M8.9 15.1l-2.6 2.6"/></svg>',
+      engage:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M8 7a1 1 0 100-2 1 1 0 000 2zM17 19a1 1 0 100-2 1 1 0 000 2z"/></svg>',
+      whitespace:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>',
+      source:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>',
+      jv:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>',
+      agent:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M12 7V4M9 13h.01M15 13h.01"/></svg>',
+      market:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1 4H5z"/><path d="M5 11v8h14v-8"/></svg>',
+      lists:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h9M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+      discovery:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>',
+      apps:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>'
+    };
+    const item = (label,icon,active,auto,onClick)=>({ label, icon:I(icon), auto:auto||'', onClick:onClick||(()=>{}),
+      bg: active?'#eef3ff':'transparent', fg: active?'#2367f1':'#374151',
+      icColor: active?'#2367f1':'#8a8a8f', weight: active?'600':'400' });
+    const navGroups = [
+      { title:'HOME', items:[ item('Deals Management',navIc.deals,false), item('Deals management',navIc.deals,false), item('Analytics',navIc.analytics,false) ] },
+      { title:'PARTNERS', items:[ item('Manage partners',navIc.partners,false), item('Account mapping',navIc.globe,false), item('Content library',navIc.library,true,'nav-content',()=>this.gotoGridAct()), item('Partner training',navIc.training,false), item('Engagement',navIc.engage,false), item('Partner whitespace',navIc.whitespace,false), item('Source attribution',navIc.source,false), item('Prospective partner JV',navIc.jv,false), item('Partner activation agent',navIc.agent,false) ] },
+      { title:'DISCOVER', items:[ item('Marketplace',navIc.market,false), item('Prospect lists',navIc.lists,false), item('Partner discovery',navIc.discovery,false) ] },
+      { title:'WORKSPACE', items:[ item('App integrations',navIc.apps,false) ] }
+    ];
+
+    // ===== source logos =====
+    const gdrive='<svg width="22" height="22" viewBox="0 0 24 24"><path d="M7.7 3.5 16.3 3.5 22 13.3 13.4 13.3z" fill="#fbbc04"/><path d="M7.7 3.5 2 13.3 6.3 20.5 12 10.6z" fill="#34a853"/><path d="M6.3 20.5 17.7 20.5 22 13.3 13.4 13.3z" fill="#4285f4"/><path d="M13.4 13.3 22 13.3 16.3 3.5z" fill="#188038"/><path d="M2 13.3 6.3 20.5 8.5 16.8 4.1 9.7z" fill="#1967d2" opacity="0"/></svg>';
+    const gdriveWhite='<svg width="24" height="24" viewBox="0 0 24 24"><path d="M7.7 3.5 16.3 3.5 22 13.3 13.4 13.3z" fill="#fbbc04"/><path d="M7.7 3.5 2 13.3 6.3 20.5 12 10.6z" fill="#34a853"/><path d="M6.3 20.5 17.7 20.5 22 13.3 13.4 13.3z" fill="#4285f4"/></svg>';
+    const notion='<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="#fff" stroke="#141414" stroke-width="1.4"/><path d="M8 8.5v7M8 8.5l5 6.5M13 8.5v7" stroke="#141414" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const sharepoint='<svg width="20" height="20" viewBox="0 0 24 24"><circle cx="10" cy="9" r="5.5" fill="#036c70"/><circle cx="15" cy="13" r="5" fill="#1a9ba1"/><circle cx="12.5" cy="17.5" r="4" fill="#37c6d0"/><text x="9" y="20" font-size="7" font-weight="700" fill="#fff" font-family="Arial">S</text></svg>';
+    const dropbox='<svg width="20" height="20" viewBox="0 0 24 24" fill="#0061ff"><path d="M7 3 1.5 6.5 7 10 12.5 6.5z"/><path d="M17 3 12.5 6.5 18 10 23 6.5z"/><path d="M1.5 13.5 7 17 12.5 13.5 7 10z"/><path d="M18 10 12.5 13.5 18 17 23 13.5z"/><path d="M7 18.2 12.5 21.7 18 18.2 12.5 15z" opacity=".85"/></svg>';
+    const srcLogosRow = '<span style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;">'+gdrive+'</span><span style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;">'+notion+'</span><span style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;">'+sharepoint+'</span><span style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;">'+dropbox+'</span>';
+
+    // ===== library tabs =====
+    const tabMeta=[['All folders','<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="8" height="7" rx="1.5"/><rect x="13" y="4" width="8" height="7" rx="1.5"/><rect x="3" y="13" width="8" height="7" rx="1.5"/></svg>',true],['Created by me','<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M6 20c0-3 2.7-5 6-5s6 2 6 5"/></svg>',false],['Shared with me','<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 9h18"/></svg>',false]];
+    const libTabs = tabMeta.map(t=>({ bg:t[2]?'#141414':'transparent', fg:t[2]?'#fff':'#6b7280', html:I('<span style="display:inline-flex;align-items:center;gap:8px;">'+t[1]+t[0]+'</span>') }));
+
+    // ===== avatar + perm helpers =====
+    const avA = (arr,extra,bd)=>{ const border=bd||'#fff'; let h='<span style="display:inline-flex;align-items:center;">'; arr.forEach((a,i)=>{ h+='<span style="width:26px;height:26px;border-radius:50%;background:'+a[1]+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;border:2px solid '+border+';margin-left:'+(i?'-8px':'0')+';">'+a[0]+'</span>'; }); if(extra) h+='<span style="width:26px;height:26px;border-radius:50%;background:#e5e7eb;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;border:2px solid '+border+';margin-left:-8px;">'+extra+'</span>'; h+='</span>'; return h; };
+    const permPill = (type)=> type==='full'
+      ? '<span style="display:inline-flex;align-items:center;gap:6px;background:#e7f7ec;color:#16a34a;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:600;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg> Full access</span>'
+      : '<span style="display:inline-flex;align-items:center;gap:6px;background:#eaf1ff;color:#2367f1;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#2367f1;"></span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg> View + download</span>';
+
+    // ===== grid folders =====
+    const gf=[
+      ['Sales Collateral','Pitch decks, ROI calculators, partner-facing one-pagers.','#7c3aed',[['I','#8b6f47'],['A','#14b8a6'],['R','#ef4444']],'+3','view','4 files','Just now'],
+      ['Product Documentation','Pitch decks, ROI calculators, partner-facing one-pagers.','#2367f1',[['C','#8b6f47'],['F','#22d3ee']],'','full','4 files','July 10, 2025'],
+      ['Marketing Materials','User manuals, API documentation, and installation guides.','#16a34a',[['D','#8b6f47'],['N','#14b8a6'],['M','#ef4444']],'+1','view','3 files','Yesterday'],
+      ['Technical Specifications','Detailed specifications, performance metrics, and compliance documentation.','#f59e0b',[['R','#8b6f47'],['S','#14b8a6']],'','view','5 files','May 25, 2026'],
+      ['Technical Guides','User manuals, API documentation, and installation guides.','#141414',[['A','#8b6f47']],'','view','3 files','5 minutes ago'],
+      ['Client Proposals','-','#dc2626',[['I','#141414']],'','full','4 files','Just now'],
+      ['Project Reports','Monthly performance summaries, budget analysis, project timelines.','#f15323',[['W','#8b6f47'],['F','#14b8a6'],['A','#ef4444']],'+9','view','5 files','10 minutes ago'],
+      ['Project Updates','Monthly performance summaries, budget analysis, project timelines.','#ec4899',[['W','#8b6f47'],['F','#14b8a6'],['A','#ef4444']],'+14','full','5 files','10 minutes ago']
+    ];
+    const gridFolders = gf.map((f,i)=>({ name:f[0], desc:f[1], color:f[2], avatarsHtml:I(avA(f[3],f[4])), permHtml:I(permPill(f[5]==='full'?'full':'view')), files:f[6], time:f[7],
+      open:()=>this.openFolderAct({ name:f[0], desc:f[1], color:f[2], avatars:f[3], extra:f[4], perm:f[5] }),
+      menuAuto: i===0?'grid-menu':'', openMenu: (e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); if(i===0)this.setState({modal:'access'}); } }));
+
+    // ===== list folders =====
+    const lf=[
+      ['Marketing Materials','User manuals, API documentation, and installation guides.','#16a34a',[['I','#8b6f47'],['A','#14b8a6'],['R','#ef4444']],'+2','view','May 25, 2026'],
+      ['Product Specifications','Technical sheets, product features, and usage guidelines.','#141414',[['D','#6366f1'],['W','#16a34a'],['H','#f59e0b']],'+4','view','Apr 15, 2026'],
+      ['Sales Reports','-','#f59e0b',[['K','#f59e0b'],['W','#2367f1'],['N','#141414']],'+8','view','Apr 30, 2026'],
+      ['Customer Feedback','Surveys, reviews, and satisfaction ratings.','#2367f1',[['L','#141414'],['Q','#16a34a']],'','full','Apr 15, 2026'],
+      ['Inventory Levels','-','#dc2626',[['W','#9333ea'],['B','#2367f1'],['T','#14b8a6']],'+2','view','Apr 5, 2026'],
+      ['Marketing Campaigns','Performance analytics, ROI, and engagement metrics.','#6366f1',[['T','#8b6f47'],['V','#14b8a6'],['A','#ef4444']],'+3','full','Mar 10, 2026'],
+      ['Financial Audits','Annual review, compliance checks, and risk assessments.','#2367f1',[['S','#2367f1']],'','full','Feb 20, 2026'],
+      ['HR Metrics','Employee turnover, satisfaction scores, and hiring trends.','#8b6f47',[['R','#16a34a'],['I','#f59e0b'],['K','#9ca3af']],'+2','view','Jan 1, 2026']
+    ];
+    const listFolders = lf.map(f=>({ name:f[0], desc:f[1], color:f[2], avatarsHtml:I(avA(f[3],f[4])), permHtml:I(permPill(f[5]==='full'?'full':'view')), time:f[6],
+      open:()=>this.openFolderAct({ name:f[0], desc:f[1], color:f[2], avatars:f[3], extra:f[4], perm:f[5] }) }));
+
+    // ===== detail header (selected folder) =====
+    const sf = s.selectedFolder || { name:'Sales Management', desc:'The description will be in here. No description will just have a dash (-). Truncate text here too...', color:'#141414', avatars:[['I','#9333ea'],['A','#14b8a6'],['R','#ec4899']], extra:'', perm:'view' };
+    const dCount = sf.avatars.length + (sf.extra ? (parseInt(String(sf.extra).replace('+',''))||0) : 0);
+    const detailName = sf.name;
+    const detailDesc = (sf.desc && sf.desc!=='-') ? sf.desc : '—';
+    const detailColor = sf.color;
+    const detailAvatarsHtml = avA(sf.avatars, sf.extra);
+    const detailPartners = dCount + ' partner' + (dCount>1?'s':'');
+    const detailPermHtml = permPill(sf.perm==='full'?'full':'view');
+
+    // ===== folder files =====
+    const ff=[
+      ['MSA_2026.pdf','PDF','#fdecec','#dc2626','402 KB','3w ago'],
+      ['Project_Report_2026.pdf','PDF','#fdecec','#dc2626','1.2 MB','1d ago'],
+      ['Financials_2025.pdf','PDF','#fdecec','#dc2626','850 KB','2d ago'],
+      ['Quarterly_Presentation.docx','DOC','#eaf1ff','#2367f1','500 KB','4d ago']
+    ];
+    const folderFiles = ff.map(f=>({ name:f[0], tag:f[1], tagBg:f[2], tagFg:f[3], size:f[4], date:f[5] }));
+
+    // ===== source wizard =====
+    const ss=s.srcStep;
+    const check='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5 9-10"/></svg>';
+    const stState=(n,st)=>{
+      if(st==='done') return { bg:'#16a34a', fg:'#fff', border:'none', inner:I(check), labelFg:'#141414' };
+      if(st==='active') return { bg:'#2367f1', fg:'#fff', border:'none', inner:I(String(n)), labelFg:'#141414' };
+      return { bg:'#fff', fg:'#9ca3af', border:'1.5px solid #e2e2e2', inner:I(String(n)), labelFg:'#9ca3af' };
+    };
+    let st1,st2,st3,st4;
+    if(ss==='source'){ st1='active'; st2='next'; st3='next'; st4='next'; }
+    else if(ss==='auth'){ st1='done'; st2='active'; st3='next'; st4='next'; }
+    else { st1='done'; st2='done'; st3='active'; st4='next'; }
+    const srcStepper=[
+      { ...stState(1,st1), label:'Source', hasLine:true, flex:'1' },
+      { ...stState(2,st2), label:'Authorise', hasLine:true, flex:'1' },
+      { ...stState(3,st3), label:'Folders', hasLine:true, flex:'1' },
+      { ...stState(4,st4), label:'Review', hasLine:false, flex:'0' }
+    ];
+    const badge=(txt,connected)=> connected
+      ? '<span style="display:inline-flex;align-items:center;gap:5px;background:#e7f7ec;color:#16a34a;border-radius:7px;padding:3px 9px;font-size:11.5px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg>'+txt+'</span>'
+      : '<span style="display:inline-flex;align-items:center;gap:5px;background:#f1f2f4;color:#9ca3af;border-radius:7px;padding:3px 9px;font-size:11.5px;font-weight:600;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg>'+txt+'</span>';
+    const srcOptions=[
+      { name:'Google drive', sub:'Drives, shared drives & folders', logo:I('<span style="width:42px;height:42px;border-radius:10px;background:#fff;border:1px solid #ececec;display:flex;align-items:center;justify-content:center;">'+gdrive+'</span>'), badge:I(badge('Not connected',false)), auto:'src-gdrive', pick:()=>this.setState({srcStep:'auth'}) },
+      { name:'Notion', sub:'Pages, database & team spaces', logo:I('<span style="width:42px;height:42px;border-radius:10px;background:#fbeae6;display:flex;align-items:center;justify-content:center;">'+notion+'</span>'), badge:I(badge('Connected',true)), auto:'', pick:()=>{} },
+      { name:'SharePoint', sub:'Sites, document libraries & folders', logo:I('<span style="width:42px;height:42px;border-radius:10px;background:#e3f5f6;display:flex;align-items:center;justify-content:center;">'+sharepoint+'</span>'), badge:I(badge('Not connected',false)), auto:'', pick:()=>this.setState({srcStep:'auth'}) },
+      { name:'Dropbox', sub:'Team folders & shared spaces', logo:I('<span style="width:42px;height:42px;border-radius:10px;background:#eaf1ff;display:flex;align-items:center;justify-content:center;">'+dropbox+'</span>'), badge:I(badge('Connected',true)), auto:'', pick:()=>{} }
+    ];
+    const authPerms=['See and download the files and folders you select','Create, edit and move files in mirrored folder','View names, owners and modified dates'];
+    const mf=[
+      ['New product unveil','42 items • 480 MB • 4 days ago',true],
+      ['Summer deals','150 items • 1.6 GB • 12 hours ago',true],
+      ['Back to school','65 items • 520 MB • 6 days ago',false],
+      ['User retention','32 items • 300 MB • 3 days ago',true],
+      ['Holiday specials','78 items • 890 MB • 1 day ago',false],
+      ['Spring launch','120 items • 1.2 GB • 2 hours ago',true],
+      ['Q2 campaigns','54 items • 440 MB • 5 days ago',false]
+    ];
+    const mirrorFolders = mf.map(m=>({ name:m[0], meta:m[1],
+      boxBorder: m[2]?'none':'1.5px solid #d8d8dd', boxBg: m[2]?'#2367f1':'#fff',
+      check: m[2]?I('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5 9-10"/></svg>'):I('') }));
+
+    const srcHead = ss==='source'
+      ? { bg:'#141414', icon:I('<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg>'), title:'Connect a source', sub:'Mirror a folder that already exists somewhere else', badge:I('') }
+      : { bg:'#fff', icon:I('<span style="width:38px;height:38px;border:1px solid #ececec;border-radius:9px;display:flex;align-items:center;justify-content:center;">'+gdriveWhite+'</span>'), title:'Google drive', sub:'Drives, shared drives & folders', badge:I(ss==='auth'?badge('Not connected',false):badge('Connected',true)) };
+
+    const srcPrimary = ss==='source' ? { label:'Continue', auto:'', fn:()=>{} }
+      : ss==='auth' ? { label:'Authorise & continue', auto:'src-authorise', fn:()=>this.setState({srcStep:'folders'}) }
+      : ss==='folders' ? { label:'Review (4)', auto:'src-review', fn:()=>this.setState({srcStep:'review'}) }
+      : { label:'Continue (2)', auto:'src-continue', fn:()=>this.gotoGridAct() };
+
+    // ===== new folder =====
+    const partnersData=[
+      ['ms','MS','Maverick Systems','Silver partner','#f59e0b'],
+      ['ci','CI','Crest Innovations','Gold partner','#14b8a6'],
+      ['dt','DT','Delta Technologies','Silver partner','#141414'],
+      ['ts','TS','Titan Solutions','Bronze partner','#6366f1']
+    ];
+    const partnerPick = partnersData.map(p=>{ const on=!!s.picked[p[0]]; return { auto:'pick-'+p[0], initials:p[1], name:p[2], tier:p[3], color:p[4], toggle:()=>this.pickPartner(p[0]),
+      boxBorder: on?'none':'1.5px solid #d8d8dd', boxBg: on?'#2367f1':'#fff',
+      check: on?I('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5 9-10"/></svg>'):I('') }; });
+    const pickedCount = Object.keys(s.picked).filter(k=>s.picked[k]).length;
+    const pickedLabel = pickedCount>0
+      ? '<span style="color:#141414;">'+pickedCount+' partner'+(pickedCount>1?'s':'')+' selected</span>'
+      : '<span style="color:#9ca3af;">Select partners to share folder with</span>';
+
+    // ===== access modal =====
+    const ap=[
+      ['MS','Maverick Systems','Silver partner','#f59e0b'],
+      ['CI','Crest Innovations','Gold partner','#14b8a6'],
+      ['DT','Delta Technologies','Silver partner','#141414'],
+      ['TS','Titan Solutions','Bronze partner','#6366f1'],
+      ['NP','NexusPoint','Platinum partner','#f59e0b'],
+      ['RV','Riviera Ventures','Gold partner','#14b8a6'],
+      ['AE','Aether Enterprises','Bronze partner','#141414']
+    ];
+    const accessPartners = ap.map(p=>({ initials:p[0], name:p[1], tier:p[2], color:p[3] }));
+
+    // ===== carmen uploads =====
+    const pdfTile='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>';
+    const xlsTile='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l3 4M12 13l-3 4"/></svg>';
+    const progressBar='<div style="height:8px;border-radius:5px;background:#eef0f3;overflow:hidden;display:flex;align-items:center;"><div style="height:8px;width:79%;background:linear-gradient(90deg,#16a34a,#86efac);border-radius:5px;animation:barGrow 1s ease;"></div></div><div style="text-align:right;color:#6b7280;font-size:12px;margin-top:4px;">79%</div>';
+    const doneTxt='<span style="color:#16a34a;font-size:13px;font-weight:600;">Completed</span>';
+    const failTxt='<span style="color:#dc2626;font-size:13px;font-weight:600;">Upload Failed</span>';
+    const xBtn='<svg style="cursor:pointer;color:#9ca3af;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+    const trashBtn='<svg style="cursor:pointer;color:#dc2626;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>';
+    const retryBtn='<span style="display:inline-flex;align-items:center;gap:8px;"><svg style="cursor:pointer;color:#dc2626;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg><svg style="cursor:pointer;color:#6b7280;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span>';
+    const uploadFiles=[
+      { name:'Company_budget.pdf', date:'2022-03-21', size:'20 MB', tint:'#fdecec', icon:I(pdfTile), action:I(xBtn), status:I(progressBar) },
+      { name:'Company_budget.xls', date:'2022-03-21', size:'20 MB', tint:'#eaf6ee', icon:I(xlsTile), action:I(trashBtn), status:I(doneTxt) },
+      { name:'tax_data.xlsx', date:'2022-03-21', size:'18 MB', tint:'#eaf6ee', icon:I(xlsTile), action:I(retryBtn), status:I(failTxt) }
+    ];
+    const carmenReasons=[
+      { k:'Folder name', v:'These look like outbound sales material - three of the four are pitch artefacts.' },
+      { k:'Partners', v:'Three partners have active deals, this content is most relevant to them.' },
+      { k:'Permission', v:'View + download. None of the files are drafts or marked internal.' }
+    ];
+
+    const nameSet = s.folderName && s.folderName.length>0;
+
+    return {
+      navGroups, srcLogosRow:I(srcLogosRow),
+      rootRef:(el)=>{ this.rootEl=el; },
+      scrollRef:(el)=>{ this.scrollEl=el; },
+      cursorRef:(el)=>{ this.cursorEl=el; },
+      rippleRef:(el)=>{ this.rippleEl=el; },
+      pauseAuto:()=>{ this.paused=true; if(this.cursorEl)this.cursorEl.style.opacity='0'; if(this.rippleEl)this.rippleEl.style.opacity='0'; },
+      resumeAuto:()=>{ this.paused=false; if(this.cursorEl)this.cursorEl.style.opacity='1'; },
+
+      pageEmpty: s.page==='empty', pageGrid: s.page==='grid', pageFolder: s.page==='folder',
+      isGrid: s.view==='grid', isList: s.view==='list',
+      gridBtnBg: s.view==='grid'?'#141414':'#fff', gridBtnFg: s.view==='grid'?'#fff':'#6b7280',
+      listBtnBg: s.view==='list'?'#141414':'#fff', listBtnFg: s.view==='list'?'#fff':'#6b7280',
+      libTabs, gridFolders, listFolders, folderFiles,
+      folderEmpty: !s.folderFilled, folderFilled: s.folderFilled,
+      detailName, detailDesc, detailColor, detailAvatarsHtml:I(detailAvatarsHtml), detailPartners, detailPermHtml:I(detailPermHtml),
+
+      menuOpen: s.menu,
+      openMenu:()=>this.openMenuAct(), closeModal:()=>this.closeAll(),
+      openNewFolder:()=>this.openNewFolderAct(),
+      openSource:()=>this.openSourceAct(),
+      openCarmen:()=>this.openCarmenAct(),
+      openAddFiles:()=>this.setState({modal:'addfiles'}),
+      confirmAddFiles:()=>this.confirmAddFilesAct(),
+      openFolderEmpty:()=>this.openFolderEmptyAct(),
+      gotoGrid:()=>this.gotoGridAct(),
+      setGridView:()=>this.setState({view:'grid'}), setListView:()=>this.setState({view:'list'}),
+
+      modalSource: s.modal==='source', modalNewFolder: s.modal==='newfolder',
+      modalCreated: s.modal==='created', modalCarmen: s.modal==='carmen',
+      modalAddFiles: s.modal==='addfiles', modalAccess: s.modal==='access',
+
+      // source
+      srcStepper, srcIsSource: ss==='source', srcIsAuth: ss==='auth', srcIsFolders: ss==='folders', srcIsReview: ss==='review',
+      srcOptions, authPerms, mirrorFolders,
+      srcHeadBg: srcHead.bg, srcHeadIcon: srcHead.icon, srcHeadTitle: srcHead.title, srcHeadSub: srcHead.sub, srcHeadBadge: srcHead.badge,
+      gdriveLogo:I(gdriveWhite), gdriveLogoSm:I(gdriveWhite),
+      srcHasFooter: ss!=='source',
+      srcPrimaryLabel: srcPrimary.label, srcPrimaryAuto: srcPrimary.auto, srcPrimary: srcPrimary.fn,
+      srcBack:()=>{ if(ss==='review') this.setState({srcStep:'folders'}); else if(ss==='folders') this.setState({srcStep:'auth'}); else if(ss==='auth') this.setState({srcStep:'source'}); },
+
+      // new folder
+      nameDisplay: nameSet ? s.folderName : 'e.g., Sales Collateral',
+      nameColor: nameSet ? '#141414' : '#9ca3af',
+      shareSpecific: s.shareAll==='no',
+      yesBg: s.shareAll==='yes'?'#eef3ff':'#fff', yesFg: s.shareAll==='yes'?'#2367f1':'#374151',
+      noBg: s.shareAll==='no'?'#eef3ff':'#fff', noFg: s.shareAll==='no'?'#2367f1':'#374151',
+      setShareYes:()=>this.setState({shareAll:'yes',partnerOpen:false}), setShareNo:()=>this.setState({shareAll:'no'}),
+      partnerOpen: s.partnerOpen, openPartnerDropdown:()=>this.setState({partnerOpen:!s.partnerOpen}),
+      partnerPick, pickedLabel:I(pickedLabel), pickedColor:'#141414',
+      createFolder:()=>this.setState({modal:'created',partnerOpen:false}),
+      showCreated:()=>this.setState({modal:'created'}),
+
+      // carmen
+      carmenDropStage: s.carmenStage==='drop'||s.carmenStage==='uploading',
+      carmenUploading: s.carmenStage==='uploading',
+      carmenProposalStage: s.carmenStage==='proposal',
+      uploadFiles, carmenReasons,
+      carmenPrimaryAuto: s.carmenStage==='uploading'?'carmen-create':'carmen-browse',
+      carmenPrimary:()=>{ if(s.carmenStage==='drop') this.setState({carmenStage:'uploading'}); else this.setState({carmenStage:'proposal'}); },
+      carmenBackToDrop:()=>this.setState({carmenStage:'drop'}),
+
+      accessPartners
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -188,6 +188,55 @@ function DealsDemoEmbed() {
   );
 }
 
+function ContentLibraryDemoEmbed() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.65);
+
+  useEffect(() => {
+    const update = () => {
+      if (wrapRef.current) {
+        setScale(wrapRef.current.offsetWidth / 1440);
+      }
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    if (wrapRef.current) ro.observe(wrapRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const DEMO_H = 760;
+
+  return (
+    <Reveal>
+      <Container as="figure" className="my-20">
+        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
+          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
+            <iframe
+              src="/work/airstride/content-library-demo/index.html"
+              title="Content Library interactive demo"
+              style={{
+                width: "1440px",
+                height: `${DEMO_H}px`,
+                border: "none",
+                transform: `scale(${scale})`,
+                transformOrigin: "top left",
+              }}
+            />
+          </div>
+        </div>
+        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
+            Content Library
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
+            Interactive prototype · auto-playing demo
+          </span>
+        </figcaption>
+      </Container>
+    </Reveal>
+  );
+}
+
 function PartnerTrainingDemoEmbed() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.65);
@@ -548,19 +597,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <CaseFigure
-          surface="tile"
-          kicker="Content Library · Vendor User view"
-          caption="Content library with folder structure, per-folder access controls and mirroring review flow"
-          images={[
-            {
-              src: "/work/airstride/content-library.png",
-              alt: "Content library showing folder organisation, permission controls per folder and source mirroring review",
-              width: 1440,
-              height: 900,
-            },
-          ]}
-        />
+        <ContentLibraryDemoEmbed />
       </section>
 
       {/* ===== MODULE 06: ENGAGEMENT ===== */}
