@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
-import { Container } from "@/components/ui/container";
 import { WorkRow } from "@/components/work/work-row";
 import { PROJECTS } from "@/lib/projects";
 
@@ -15,23 +14,21 @@ export default function WorkPage() {
   return (
     <div className="page-anim">
       {/* header */}
-      <header style={{ padding: "120px 0 80px" }}>
-        <Container>
-          <div className="mb-[34px] font-mono text-[12px] uppercase tracking-[0.16em] text-ink-faint">
-            Archive · 2023–2026
-          </div>
-          <h1 className="mb-[34px] font-serif text-[clamp(64px,9vw,92px)] font-normal leading-[1] tracking-[-0.015em]">
-            Selected <span className="accent-it">work.</span>
-          </h1>
-          <p className="max-w-[58ch] text-[20px] leading-[1.6] text-ink-dim">
-            A small set of projects I&apos;m proud of. Each one is a problem, a system, and the
-            team that built it, written the way I&apos;d actually explain it to you over coffee.
-          </p>
-        </Container>
+      <header className="mx-auto w-full max-w-[1280px] px-[clamp(20px,4vw,48px)]" style={{ paddingTop: 120, paddingBottom: 80 }}>
+        <div className="mb-[34px] font-mono text-[12px] uppercase tracking-[0.16em] text-ink-faint">
+          Archive · 2023–2026
+        </div>
+        <h1 className="mb-[34px] font-serif text-[clamp(64px,9vw,92px)] font-normal leading-[1] tracking-[-0.015em]">
+          Selected <span className="accent-it">work.</span>
+        </h1>
+        <p className="max-w-[58ch] text-[20px] leading-[1.6] text-ink-dim">
+          A small set of projects I&apos;m proud of. Each one is a problem, a system, and the team
+          that built it, written the way I&apos;d actually explain it to you over coffee.
+        </p>
       </header>
 
-      {/* project rows */}
-      <Container as="section" className="pb-10">
+      {/* project rows — capped at 1280px to match design spec */}
+      <section className="mx-auto w-full max-w-[1280px] px-[clamp(20px,4vw,48px)] pb-10">
         {PROJECTS.map((project, idx) => (
           <WorkRow
             key={project.slug}
@@ -40,7 +37,7 @@ export default function WorkPage() {
             isLast={idx === PROJECTS.length - 1}
           />
         ))}
-      </Container>
+      </section>
 
       {/* bottom CTA */}
       <section className="py-[110px] text-center">
