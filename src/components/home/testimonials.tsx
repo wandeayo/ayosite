@@ -1,59 +1,113 @@
-import { Container } from "@/components/ui/container";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/site/reveal";
-import { cn } from "@/lib/cn";
+import { Container } from "@/components/ui/container";
 import { TESTIMONIALS, type Testimonial } from "@/lib/testimonials";
+
+const featured = TESTIMONIALS.filter((t) => t.featured);
+const marqueeItems = TESTIMONIALS.filter((t) => !t.featured);
 
 export function Testimonials() {
   return (
     <Reveal>
-      <Container as="section" className="pt-[140px] pb-25">
-        <div className="mb-20 grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_1.6fr] md:gap-[60px]">
-          <Eyebrow>Kind words / Testimonials</Eyebrow>
-          <div>
-            <h2 className="font-serif text-[clamp(40px,5.4vw,80px)] font-normal leading-[0.98] tracking-[-0.02em]">
-              Notes from people
-              <br />
-              I&apos;ve actually
-              <br />
-              <span className="accent-it">shipped with.</span>
-            </h2>
-            <p className="mt-8 max-w-[56ch] text-[16px] leading-[1.55] text-ink-dim">
-              Copied verbatim from LinkedIn recommendations and Slack DMs I never deleted. The bit
-              I&apos;m most precious about on this site.
-            </p>
+      <section className="border-t border-line pb-[104px] pt-[96px]" style={{ background: "#0d0e12" }}>
+        {/* section header */}
+        <Container className="mb-[50px]">
+          <div className="mb-[18px] font-mono text-[12px] uppercase tracking-[0.14em] text-ink-faint">
+            Kind words · Copied verbatim
+          </div>
+          <h2 className="max-w-[22ch] font-serif text-[clamp(36px,4vw,52px)] font-normal leading-[1.06] tracking-[-0.01em]">
+            Notes from people I&apos;ve{" "}
+            <span className="accent-it">actually shipped with.</span>
+          </h2>
+        </Container>
+
+        {/* featured pair */}
+        <Container className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {featured.map((quote) => (
+            <FeaturedCard key={quote.name} quote={quote} />
+          ))}
+        </Container>
+
+        {/* marquee strip */}
+        <div
+          className="mt-6 overflow-hidden"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent)",
+            maskImage:
+              "linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent)",
+          }}
+        >
+          <div
+            className="flex w-max gap-6 px-3"
+            style={{ animation: "ayo-marquee 38s linear infinite" }}
+          >
+            {[...marqueeItems, ...marqueeItems].map((quote, i) => (
+              <MarqueeCard key={`${quote.name}-${i}`} quote={quote} />
+            ))}
           </div>
         </div>
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {TESTIMONIALS.map((quote, i) => (
-            <TestimonialCard key={quote.name} quote={quote} index={i} />
-          ))}
-        </div>
-      </Container>
+      </section>
     </Reveal>
   );
 }
 
-function TestimonialCard({ quote, index }: { quote: Testimonial; index: number }) {
+function FeaturedCard({ quote }: { quote: Testimonial }) {
   return (
     <figure
-      className={cn(
-        "relative flex flex-col gap-6 rounded-[14px] border border-line bg-bg-elev px-9 pt-10 pb-8 transition-[border-color,transform] duration-500 ease-[var(--ease-out-quart)] hover:border-line-strong",
-        `t-card--${index % 4}`,
-      )}
+      className="rounded-[16px] border border-line p-[34px] md:p-[36px]"
+      style={{
+        background: "linear-gradient(160deg, rgba(200,242,80,.05), transparent 50%)",
+      }}
     >
-      <div className="-mb-3 font-serif text-[80px] italic leading-[0.7] text-accent">&ldquo;</div>
-      <blockquote className="font-serif text-[22px] leading-[1.4] tracking-[-0.005em] text-ink">
-        {quote.body}
-      </blockquote>
-      <figcaption className="mt-auto border-t border-line pt-5">
-        <div className="mb-1 text-[14px] text-ink">{quote.name}</div>
-        <div className="font-mono text-[11px] tracking-[0.04em] text-ink-faint">
-          {quote.role} <span className="text-ink-faint">·</span>{" "}
-          <span className="text-ink-dim">{quote.company}</span>
+      {/* avatar + name row */}
+      <div className="mb-[22px] flex items-center gap-[14px]">
+        <div
+          className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full font-mono text-[14px] font-medium"
+          style={{ background: "var(--color-accent)", color: "#08130d" }}
+        >
+          {quote.initials}
         </div>
-      </figcaption>
+        <div>
+          <div className="text-[16px] font-semibold text-ink">{quote.name}</div>
+          <div className="font-mono text-[11px] text-ink-faint">
+            {quote.role}{quote.company ? ` · ${quote.company}` : ""}
+          </div>
+        </div>
+        {quote.date && (
+          <span className="ml-auto font-mono text-[10px] text-ink-faint/60">{quote.date}</span>
+        )}
+      </div>
+
+      <blockquote className="font-serif text-[clamp(17px,1.5vw,21px)] leading-[1.5] text-ink">
+        &ldquo;{quote.body}&rdquo;
+      </blockquote>
+    </figure>
+  );
+}
+
+function MarqueeCard({ quote }: { quote: Testimonial }) {
+  return (
+    <figure
+      className="flex w-[420px] shrink-0 flex-col rounded-[14px] border border-line p-7"
+      style={{ background: "#0e0f13" }}
+    >
+      <blockquote className="flex-1 text-[15px] leading-[1.6] text-ink-dim">
+        &ldquo;{quote.body}&rdquo;
+      </blockquote>
+      <div className="mt-5 flex items-center gap-3">
+        <div
+          className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full font-mono text-[12px] text-ink"
+          style={{ background: "#22252c" }}
+        >
+          {quote.initials}
+        </div>
+        <div>
+          <div className="text-[14px] font-semibold text-ink">{quote.name}</div>
+          <div className="font-mono text-[11px] text-ink-faint">
+            {quote.role}{quote.company ? ` · ${quote.company}` : ""}
+          </div>
+        </div>
+      </div>
     </figure>
   );
 }

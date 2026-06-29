@@ -358,6 +358,97 @@
 }
 
 /* ============================================================
+   Work card thumbnail animations (Carmen, Airstride, Arctic, Dexla)
+   ============================================================ */
+
+/* Carmen AI — autonomous agent running, progress + feed */
+@keyframes car-progress {
+  0% { width: 8%; }
+  70%, 100% { width: 66%; }
+}
+@keyframes car-feed1 {
+  0%, 30% { opacity: 0; transform: translateY(6px); }
+  42%, 100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes car-feed2 {
+  0%, 52% { opacity: 0; transform: translateY(6px); }
+  64%, 100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes car-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes car-tick {
+  0%, 60% { opacity: 0.5; }
+  75% { opacity: 1; }
+  90%, 100% { opacity: 0.5; }
+}
+
+/* Airstride — 6-module platform, cycling active indicator + detail panel */
+@keyframes air-active {
+  0% { opacity: 0; }
+  3% { opacity: 1; }
+  13% { opacity: 1; }
+  16% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes air-panel {
+  0%, 32% { transform: translateX(115%); opacity: 0; }
+  44%, 76% { transform: translateX(0); opacity: 1; }
+  88%, 100% { transform: translateX(115%); opacity: 0; }
+}
+@keyframes air-flag {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Arctic Edge — temperature dial, three system states */
+@keyframes arc-s1 {
+  0% { opacity: 0; transform: scale(0.94); }
+  4%, 30% { opacity: 1; transform: scale(1); }
+  34%, 100% { opacity: 0; transform: scale(0.94); }
+}
+@keyframes arc-s2 {
+  0%, 34% { opacity: 0; transform: scale(0.94); }
+  38%, 63% { opacity: 1; transform: scale(1); }
+  67%, 100% { opacity: 0; transform: scale(0.94); }
+}
+@keyframes arc-s3 {
+  0%, 67% { opacity: 0; transform: scale(0.94); }
+  71%, 96% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.94); }
+}
+
+/* Dexla — token swatches cycling through themes */
+@keyframes tw-swatch {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes tw-theme-a {
+  0%, 33% { background: var(--color-accent); }
+  33.1%, 66% { background: #5b6cff; }
+  66.1%, 100% { background: #ff7a59; }
+}
+@keyframes tw-theme-b {
+  0%, 33% { border-color: var(--color-accent); color: var(--color-accent); }
+  33.1%, 66% { border-color: #5b6cff; color: #5b6cff; }
+  66.1%, 100% { border-color: #ff7a59; color: #ff7a59; }
+}
+@keyframes tw-active {
+  0%, 33% { opacity: 1; }
+  33.1%, 100% { opacity: 0; }
+}
+@keyframes tw-active2 {
+  0%, 33% { opacity: 0; }
+  33.1%, 66% { opacity: 1; }
+  66.1%, 100% { opacity: 0; }
+}
+@keyframes tw-active3 {
+  0%, 66% { opacity: 0; }
+  66.1%, 100% { opacity: 1; }
+}
+
+/* ============================================================
    Carmen AI case study — token aliases.
    The case-study + product-demo CSS below was authored against
    short token names (--accent, --ink, --line …). Map them onto

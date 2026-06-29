@@ -14,7 +14,7 @@ export default function HomePage() {
       <CTAStrip
         lead={<>Have a problem</>}
         emphasis="worth thinking about?"
-        description="I take on a small number of senior product engagements each year. If you are building something with AI at its core, let's talk."
+        description="I work with a handful of teams each year. If you're building something with AI in it and you want a designer who'll obsess over the details, let's talk."
         primary={{ label: "Start a conversation", href: "/about" }}
       />
     </div>

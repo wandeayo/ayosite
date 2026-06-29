@@ -1,9 +1,9 @@
 export const SITE = {
   name: "Ayowande Olubo",
   shortName: "Ayowande",
-  role: "Senior Product Designer",
+  role: "Product Designer",
   description:
-    "Ayowande Olubo. Senior Product Designer working at the seam where AI capability meets human reasoning. Selected work, writing, and a short field guide.",
+    "Ayowande Olubo. Product designer specializing in AI interfaces and SaaS tools. Selected work, writing, and a short field guide.",
   url: "https://waande.com",
   email: "ayowandeolubo@gmail.com",
   location: "Lagos · Remote · UTC+1",

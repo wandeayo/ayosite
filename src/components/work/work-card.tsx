@@ -1,48 +1,60 @@
+"use client";
+
 import Link from "next/link";
 
-import { MediaTile } from "@/components/ui/media-tile";
-import { Tag } from "@/components/ui/tag";
+import { cn } from "@/lib/cn";
 import type { Project } from "@/lib/projects";
+import { WorkThumb } from "./work-thumb";
 
 interface WorkCardProps {
   project: Project;
-  index: number;
+  className?: string;
 }
 
-
-export function WorkCard({ project, index }: WorkCardProps) {
+export function WorkCard({ project, className }: WorkCardProps) {
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="group block overflow-hidden rounded-lg border border-line bg-bg-elev transition-[border-color,transform] duration-500 ease-[var(--ease-out-quart)] hover:border-line-strong"
+      className={cn(
+        "group block overflow-hidden rounded-[14px] border border-line bg-bg-elev",
+        "transition-[transform,border-color] duration-[350ms] ease-[cubic-bezier(.2,.7,.2,1)]",
+        "hover:-translate-y-[6px] hover:border-accent/40",
+        className,
+      )}
     >
-      <MediaTile
-        aspect="aspect-[21/9]"
-        background={project.cardGradient}
-        className="rounded-none border-0"
+      {/* thumbnail */}
+      <div
+        className="relative w-full border-b border-line"
+        style={{ aspectRatio: "16/10" }}
       >
-        <div className="absolute top-5 left-6 font-mono text-[11px] uppercase tracking-[0.1em] text-white/50">
-          {String(index + 1).padStart(2, "0")} / {project.role}
-        </div>
-        <div className="absolute bottom-5 left-6 font-serif italic leading-[1] tracking-[-0.03em] text-accent text-[56px] md:text-[96px]">
-          {project.title.split(" ")[0]}
-        </div>
-      </MediaTile>
+        <WorkThumb kind={project.thumbKind} />
+      </div>
 
-      <div className="flex items-end justify-between gap-6 p-6 md:px-7 md:pt-6 md:pb-7">
-        <div>
-          <h3 className="mb-1.5 font-serif text-[32px] font-normal leading-tight tracking-[-0.01em]">
+      {/* card body */}
+      <div className="p-6 md:px-[26px] md:py-6">
+        {/* title row */}
+        <div className="mb-[10px] flex items-baseline justify-between gap-4">
+          <h3 className="font-serif text-[27px] font-[500] leading-tight tracking-[-0.01em] text-ink">
             {project.title}
           </h3>
-          <p className="text-[14px] text-ink-dim">{project.description}</p>
-          <div className="mt-2.5 flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-          </div>
+          <span className="shrink-0 text-right font-mono text-[11px] text-ink-faint">
+            {project.role} · {project.year}
+          </span>
         </div>
-        <div className="whitespace-nowrap text-right font-mono text-[11px] tracking-[0.08em] text-ink-faint">
-          {project.year}
+
+        {/* description */}
+        <p className="mb-4 text-[15px] leading-[1.55] text-ink-dim">{project.description}</p>
+
+        {/* tags */}
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-line px-[10px] py-[5px] font-mono text-[11px] text-ink-faint"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
     </Link>

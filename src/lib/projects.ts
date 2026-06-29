@@ -1,3 +1,5 @@
+export type ThumbKind = "carmen" | "airstride" | "arctic" | "dexla";
+
 export interface Project {
   slug: string;
   num: string;
@@ -12,6 +14,8 @@ export interface Project {
   cardGradient: string;
   /** Preview image shown in cursor-tracking work list (path under /public). */
   cardImage?: string;
+  /** Which animated thumbnail to render on cards. */
+  thumbKind: ThumbKind;
 }
 
 export const PROJECTS: Project[] = [
@@ -21,13 +25,14 @@ export const PROJECTS: Project[] = [
     title: "Carmen AI",
     summary: "AI Agent · SaaS",
     description:
-      "AI partner acquisition agent. Trust-first interface for autonomous outreach.",
+      "Autonomous agent for partner acquisition. The hard part was building trust into something that sends messages while no one is watching.",
     year: "2025",
     role: "Product Designer",
     tags: ["AI Agent", "B2B SaaS"],
     featured: true,
     cardGradient: "linear-gradient(135deg, #1a2a1f 0%, #0f1612 100%)",
     cardImage: "/work/carmen-ai.png",
+    thumbKind: "carmen",
   },
   {
     slug: "airstride",
@@ -41,18 +46,20 @@ export const PROJECTS: Project[] = [
     tags: ["Web App", "Internal"],
     cardGradient: "linear-gradient(135deg, #1f1a26 0%, #0f0c14 100%)",
     cardImage: "/work/airstride.png",
+    thumbKind: "airstride",
   },
   {
     slug: "arctic-edge",
     num: "03",
     title: "Arctic Edge",
     summary: "Mobile · Wellness",
-    description: "Health and wellness mobile platform. Full visual and IA refresh.",
+    description: "Cold water therapy app. Redesigned the visual language, the IA, and the temperature dial people stare at while sitting in ice.",
     year: "2024",
     role: "Design Lead",
     tags: ["Mobile", "Wellness"],
     cardGradient: "linear-gradient(135deg, #1a242a 0%, #0c1316 100%)",
     cardImage: "/work/arctic-edge.png",
+    thumbKind: "arctic",
   },
   {
     slug: "dexla-design-system",
@@ -66,6 +73,7 @@ export const PROJECTS: Project[] = [
     tags: ["Design System", "Tokens"],
     cardGradient: "linear-gradient(135deg, #2a261a 0%, #16130c 100%)",
     cardImage: "/work/dexla-design-system.png",
+    thumbKind: "dexla",
   },
 ];
 

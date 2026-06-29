@@ -1,37 +1,37 @@
+import Link from "next/link";
+
 import { Container } from "@/components/ui/container";
-import { Eyebrow } from "@/components/ui/eyebrow";
-import { MarginNote } from "@/components/ui/margin-note";
 
 export function Hero() {
   return (
-    <Container as="section" className="relative overflow-hidden pt-[120px] pb-20">
-      <div className="mb-[60px] flex flex-wrap items-center justify-between gap-3">
-        <Eyebrow>Portfolio</Eyebrow>
-        <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-          UTC+1
-        </div>
+    <Container as="header" className="pb-[104px] pt-[130px]">
+      <div className="mb-[38px] font-mono text-[12px] uppercase tracking-[0.16em] text-ink-faint">
+        Product Designer · AI &amp; SaaS · Since 2021
       </div>
 
-      <h1 className="font-serif text-[clamp(56px,11vw,184px)] font-normal leading-[0.92] tracking-[-0.03em] text-ink">
-        Designing
-        <br />
-        <span className="accent-it">considered</span> systems
-        <br />
-        <span className="stroke-text">for AI products.</span>
+      <h1 className="mb-10 max-w-[15ch] font-serif text-[clamp(56px,7.5vw,96px)] font-normal leading-[1.0] tracking-[-0.015em]">
+        Designing AI products people{" "}
+        <span className="accent-it">actually trust.</span>
       </h1>
 
-      <div className="mt-16 grid grid-cols-1 items-end gap-6 border-t border-line pt-8 md:grid-cols-[minmax(0,56ch)_1fr] md:gap-20">
-        <p className="text-[18px] leading-[1.55] text-ink-dim">
-          I&apos;m Ayowande, a Product Designer working at the seam where AI capability meets
-          human reasoning. I build interfaces that developers enjoy implementing, stakeholders
-          are proud to ship, and users actually trust.
-        </p>
-        <MarginNote>
-          {" "}
-          a fancy way of saying I sweat
-          <br />
-          the small stuff so you don&apos;t have to.
-        </MarginNote>
+      <p className="max-w-[60ch] text-[clamp(17px,1.6vw,21px)] leading-[1.62] text-ink-dim">
+        Product designer, four years deep in AI and SaaS. I like the messy middle. Where the idea
+        is real but the interface hasn&apos;t caught up yet. That&apos;s where I do my best work.
+      </p>
+
+      <div className="mt-[46px] flex flex-wrap gap-[13px]">
+        <Link
+          href="/work"
+          className="inline-flex items-center rounded-full bg-ink px-[26px] py-[14px] text-[14px] font-semibold text-bg transition-colors duration-300 hover:bg-accent hover:text-accent-ink"
+        >
+          See selected work →
+        </Link>
+        <Link
+          href="/contact"
+          className="inline-flex items-center rounded-full border border-line-strong px-[26px] py-[14px] text-[14px] text-ink transition-colors duration-300 hover:border-line-strong hover:bg-bg-glass-strong"
+        >
+          Start a conversation
+        </Link>
       </div>
     </Container>
   );

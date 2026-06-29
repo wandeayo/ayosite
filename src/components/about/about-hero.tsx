@@ -15,8 +15,8 @@ export function AboutHero() {
       </h1>
       <div className="mt-14 grid grid-cols-1 items-end gap-6 border-t border-line pt-8 md:grid-cols-[minmax(0,56ch)_1fr] md:gap-15">
         <p className="text-[18px] leading-[1.55] text-ink-dim">
-          Five years designing AI and SaaS products for startups that ship fast and iterate
-          faster. Clean layouts, thorough documentation, and interfaces that make sense.
+          Five years designing AI and SaaS products at startups that move fast. I care about
+          clean layouts and I document obsessively. Both have a way of paying off later.
         </p>
         <MarginNote rotate={1}>
           {" "}

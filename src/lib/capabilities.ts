@@ -8,7 +8,7 @@ export const CAPABILITIES: Capability[] = [
   {
     num: "01 / Discipline",
     title: "AI & agentic interfaces",
-    body: "Designing interfaces for systems that reason and act autonomously. Trust scaffolding, transparency layers, control surfaces, graceful failure.",
+    body: "Designing interfaces for systems that reason and act on their own. The job is making that legible: what the agent is doing, when to trust it, and how to stop it.",
   },
   {
     num: "02 / Discipline",
