@@ -11,7 +11,7 @@ import { CTAStrip } from "@/components/home/cta-strip";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Ayowande Olubo. Five years designing AI and SaaS products for startups that ship fast and iterate faster.",
+    "Ayowande Olubo. Five years designing AI and SaaS products at startups that move fast.",
 };
 
 export default function AboutPage() {

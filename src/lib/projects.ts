@@ -25,7 +25,7 @@ export const PROJECTS: Project[] = [
     title: "Carmen AI",
     summary: "AI Agent · SaaS",
     description:
-      "AI partner acquisition agent. Trust-first interface for autonomous outreach.",
+      "Autonomous agent for partner acquisition. The hard part was building trust into something that sends messages while no one is watching.",
     year: "2025",
     role: "Product Designer",
     tags: ["AI Agent", "B2B SaaS"],
@@ -53,7 +53,7 @@ export const PROJECTS: Project[] = [
     num: "03",
     title: "Arctic Edge",
     summary: "Mobile · Wellness",
-    description: "Health and wellness mobile platform. Full visual and IA refresh.",
+    description: "Cold water therapy app. Redesigned the visual language, the IA, and the temperature dial people stare at while sitting in ice.",
     year: "2024",
     role: "Design Lead",
     tags: ["Mobile", "Wellness"],

@@ -70,7 +70,7 @@ function FeaturedCard({ quote }: { quote: Testimonial }) {
         <div>
           <div className="text-[16px] font-semibold text-ink">{quote.name}</div>
           <div className="font-mono text-[11px] text-ink-faint">
-            {quote.role} · {quote.company}
+            {quote.role}{quote.company ? ` · ${quote.company}` : ""}
           </div>
         </div>
         {quote.date && (
@@ -88,13 +88,13 @@ function FeaturedCard({ quote }: { quote: Testimonial }) {
 function MarqueeCard({ quote }: { quote: Testimonial }) {
   return (
     <figure
-      className="w-[420px] shrink-0 rounded-[14px] border border-line p-7"
+      className="flex w-[420px] shrink-0 flex-col rounded-[14px] border border-line p-7"
       style={{ background: "#0e0f13" }}
     >
-      <blockquote className="mb-5 text-[15px] leading-[1.6] text-ink-dim">
+      <blockquote className="flex-1 text-[15px] leading-[1.6] text-ink-dim">
         &ldquo;{quote.body}&rdquo;
       </blockquote>
-      <div className="flex items-center gap-3">
+      <div className="mt-5 flex items-center gap-3">
         <div
           className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full font-mono text-[12px] text-ink"
           style={{ background: "#22252c" }}
@@ -104,7 +104,7 @@ function MarqueeCard({ quote }: { quote: Testimonial }) {
         <div>
           <div className="text-[14px] font-semibold text-ink">{quote.name}</div>
           <div className="font-mono text-[11px] text-ink-faint">
-            {quote.role} · {quote.company}
+            {quote.role}{quote.company ? ` · ${quote.company}` : ""}
           </div>
         </div>
       </div>

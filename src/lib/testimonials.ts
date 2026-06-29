@@ -2,7 +2,7 @@ export interface Testimonial {
   body: string;
   name: string;
   role: string;
-  company: string;
+  company?: string;
   initials: string;
   date?: string;
   featured?: boolean;
@@ -45,7 +45,6 @@ export const TESTIMONIALS: Testimonial[] = [
     body: "Had a great time working with Ayo. His design skills spiced up our team's project. Easygoing, talented and always brought fresh ideas.",
     name: "Valeria Cuciniello",
     role: "Product Designer",
-    company: "Independent",
     initials: "VC",
   },
   {

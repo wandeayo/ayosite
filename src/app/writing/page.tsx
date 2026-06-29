@@ -24,8 +24,8 @@ export default function WritingPage() {
           <span className="accent-it">the studio.</span>
         </h1>
         <p className="mt-8 max-w-[55ch] text-[18px] text-ink-dim">
-          Short essays on AI interfaces, the craft of design systems, and the small details that
-          quietly earn user trust.
+          Things that bothered me enough at work to write about. Mostly AI interfaces, design
+          systems, and the decisions that seem small until they&apos;re not.
         </p>
       </Container>
 

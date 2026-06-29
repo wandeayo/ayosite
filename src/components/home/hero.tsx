@@ -15,7 +15,7 @@ export function Hero() {
       </h1>
 
       <p className="max-w-[60ch] text-[clamp(17px,1.6vw,21px)] leading-[1.62] text-ink-dim">
-        Product designer, four years deep in AI and SaaS. I like the messy middle — where the idea
+        Product designer, four years deep in AI and SaaS. I like the messy middle. Where the idea
         is real but the interface hasn&apos;t caught up yet. That&apos;s where I do my best work.
       </p>
 

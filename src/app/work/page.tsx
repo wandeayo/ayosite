@@ -24,8 +24,8 @@ export default function WorkPage() {
         </h1>
 
         <p className="mt-10 max-w-[50ch] text-[17px] text-ink-dim">
-          A small set of projects I am proud of. Each entry tells the story of a problem, a
-          system, and the team that built it.
+          Four projects I&apos;m proud of. Each one has a problem behind it, a decision I made, and
+          a few things I&apos;d do differently.
         </p>
 
         <div className="grid grid-cols-1 gap-[30px] pt-20 pb-10 md:grid-cols-2">
