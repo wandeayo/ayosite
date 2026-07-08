@@ -506,9 +506,13 @@
 }
 
 /* Hero — editorial. Top padding matches the breathing room of the other
-   page heroes (work/about sit ~120px under the fixed nav). */
+   page heroes (work/about sit ~120px under the fixed nav). Vertical
+   only: the horizontal gutters come from the Container utility, and a
+   `padding` shorthand here would zero them out (unlayered CSS wins
+   over Tailwind's layered utilities). */
 .csx-hero {
-  padding: clamp(64px, 10vw, 112px) 0 clamp(48px, 7vw, 64px);
+  padding-top: clamp(64px, 10vw, 112px);
+  padding-bottom: clamp(48px, 7vw, 64px);
 }
 .csx-hero .meta-grid {
   display: grid;
