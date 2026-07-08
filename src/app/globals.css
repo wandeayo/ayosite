@@ -568,6 +568,9 @@
 }
 .csx-hero-cta {
   margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
 }
 
 /* On desktop the subtitle runs wider (~44% of viewport) for a shorter,

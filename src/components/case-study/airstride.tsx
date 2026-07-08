@@ -203,6 +203,14 @@ export function AirstrideCase() {
           >
             See it live
           </Button>
+          <Button
+            href="https://airstride.ai"
+            trailingArrow
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit airstride.ai
+          </Button>
         </div>
       </Container>
 
