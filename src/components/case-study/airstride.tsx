@@ -43,15 +43,16 @@ const MODULES = [
 
 /* ------------------------------------------------------------------
    Interactive module demos.
-   The demo HTML files are fixed 1440px desktop apps, so the iframe is
-   scaled to fit the container. Below MIN_SCALE the UI stops being
-   legible, so instead of shrinking further the demo holds a readable
-   scale and becomes a horizontally pannable, auto-playing preview
-   (pointer events off so page/pan gestures stay reliable on touch).
+   The demo HTML files are fixed 1440px desktop apps. The iframe always
+   scales to fit the container width so the frame keeps the exact
+   desktop proportions at every size — on a phone it reads as a living
+   thumbnail of the app. Below INTERACT_SCALE the UI is too small to
+   tap meaningfully, so pointer events switch off (the demo autoplays
+   anyway) and the caption offers the full-tab version instead.
 ------------------------------------------------------------------- */
 const DEMO_W = 1440;
 const DEMO_H = 760;
-const MIN_SCALE = 0.55;
+const INTERACT_SCALE = 0.5;
 
 function DemoEmbed({ slug, label }: { slug: string; label: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -67,47 +68,36 @@ function DemoEmbed({ slug, label }: { slug: string; label: string }) {
     return () => ro.disconnect();
   }, []);
 
-  const fitScale = width ? width / DEMO_W : 0.65;
-  const scale = Math.max(fitScale, MIN_SCALE);
-  const pannable = scale > fitScale;
+  const scale = width ? width / DEMO_W : 0.65;
+  const compact = scale < INTERACT_SCALE;
   const src = `/work/airstride/${slug}/index.html`;
 
   return (
     <Reveal>
       <Container as="figure" className="my-20">
         <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div
-            ref={wrapRef}
-            style={{
-              height: `${DEMO_H * scale}px`,
-              position: "relative",
-              overflowY: "hidden",
-              overflowX: pannable ? "auto" : "hidden",
-            }}
-          >
-            <div style={{ width: `${DEMO_W * scale}px`, height: `${DEMO_H * scale}px` }}>
-              <iframe
-                src={src}
-                title={`${label} interactive demo`}
-                loading="lazy"
-                style={{
-                  width: `${DEMO_W}px`,
-                  height: `${DEMO_H}px`,
-                  border: "none",
-                  transform: `scale(${scale})`,
-                  transformOrigin: "top left",
-                  pointerEvents: pannable ? "none" : "auto",
-                }}
-              />
-            </div>
+          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
+            <iframe
+              src={src}
+              title={`${label} interactive demo`}
+              loading="lazy"
+              style={{
+                width: `${DEMO_W}px`,
+                height: `${DEMO_H}px`,
+                border: "none",
+                transform: `scale(${scale})`,
+                transformOrigin: "top left",
+                pointerEvents: compact ? "none" : "auto",
+              }}
+            />
           </div>
         </div>
         <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
           <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">{label}</span>
           <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            {pannable ? "Auto-playing demo · swipe to pan" : "Interactive prototype · auto-playing demo"}
+            {compact ? "Auto-playing demo" : "Interactive prototype · auto-playing demo"}
           </span>
-          {pannable && (
+          {compact && (
             <a
               href={src}
               target="_blank"
