@@ -18,7 +18,7 @@ const MARK_AFTER_INDEX = 4;
 export function PhotoMosaic() {
   return (
     <Reveal>
-      <Container as="section" className="grid grid-cols-6 auto-rows-[90px] gap-4 py-20 min-[801px]:grid-cols-12 min-[801px]:auto-rows-[120px]">
+      <Container as="section" className="photo-mosaic grid grid-cols-6 auto-rows-[90px] gap-4 py-20 min-[801px]:grid-cols-12 min-[801px]:auto-rows-[120px]">
         {PHOTOS.map((photo, index) => (
           <Fragment key={photo.src}>
             <MediaTile

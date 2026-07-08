@@ -209,7 +209,7 @@ export function CampaignDemo() {
           </div>
 
           {/* timeline + what's happening */}
-          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16 }}>
+          <div className="air-cols" style={{ ["--cols" as string]: "1.5fr 1fr" }}>
             <div className="air-card" style={{ padding: 16 }}>
               <div
                 style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}

@@ -134,7 +134,14 @@ export function CarmenChatDemo() {
               Here&rsquo;s a summary of your match review. I&rsquo;ve carried over your preferences so we can pick up
               where you left off.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 14 }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+                gap: 10,
+                marginBottom: 14,
+              }}
+            >
               {FEEDBACK_STATS.map(([n, l]) => (
                 <div key={l} className="air-card" style={{ padding: "12px 8px", textAlign: "center" }}>
                   <div style={{ fontFamily: "var(--font-jakarta)", fontWeight: 700, fontSize: 22 }}>{n}</div>

@@ -41,343 +41,82 @@ const MODULES = [
   { id: "engagement", label: "Engagement" },
 ];
 
-function AnalyticsDemoEmbed() {
+/* ------------------------------------------------------------------
+   Interactive module demos.
+   The demo HTML files are fixed 1440px desktop apps, so the iframe is
+   scaled to fit the container. Below MIN_SCALE the UI stops being
+   legible, so instead of shrinking further the demo holds a readable
+   scale and becomes a horizontally pannable, auto-playing preview
+   (pointer events off so page/pan gestures stay reliable on touch).
+------------------------------------------------------------------- */
+const DEMO_W = 1440;
+const DEMO_H = 760;
+const MIN_SCALE = 0.55;
+
+function DemoEmbed({ slug, label }: { slug: string; label: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.65);
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
-    const update = () => {
-      if (wrapRef.current) {
-        setScale(wrapRef.current.offsetWidth / 1440);
-      }
-    };
+    const node = wrapRef.current;
+    if (!node) return;
+    const update = () => setWidth(node.offsetWidth);
     update();
     const ro = new ResizeObserver(update);
-    if (wrapRef.current) ro.observe(wrapRef.current);
+    ro.observe(node);
     return () => ro.disconnect();
   }, []);
 
-  const DEMO_H = 760;
+  const fitScale = width ? width / DEMO_W : 0.65;
+  const scale = Math.max(fitScale, MIN_SCALE);
+  const pannable = scale > fitScale;
+  const src = `/work/airstride/${slug}/index.html`;
 
   return (
     <Reveal>
       <Container as="figure" className="my-20">
         <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
-            <iframe
-              src="/work/airstride/analytics-demo/index.html"
-              title="Analytics interactive demo"
-              style={{
-                width: "1440px",
-                height: `${DEMO_H}px`,
-                border: "none",
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-              }}
-            />
+          <div
+            ref={wrapRef}
+            style={{
+              height: `${DEMO_H * scale}px`,
+              position: "relative",
+              overflowY: "hidden",
+              overflowX: pannable ? "auto" : "hidden",
+            }}
+          >
+            <div style={{ width: `${DEMO_W * scale}px`, height: `${DEMO_H * scale}px` }}>
+              <iframe
+                src={src}
+                title={`${label} interactive demo`}
+                loading="lazy"
+                style={{
+                  width: `${DEMO_W}px`,
+                  height: `${DEMO_H}px`,
+                  border: "none",
+                  transform: `scale(${scale})`,
+                  transformOrigin: "top left",
+                  pointerEvents: pannable ? "none" : "auto",
+                }}
+              />
+            </div>
           </div>
         </div>
         <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
-            Analytics
-          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">{label}</span>
           <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Interactive prototype · auto-playing demo
+            {pannable ? "Auto-playing demo · swipe to pan" : "Interactive prototype · auto-playing demo"}
           </span>
-        </figcaption>
-      </Container>
-    </Reveal>
-  );
-}
-
-function AccountMappingDemoEmbed() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.65);
-
-  useEffect(() => {
-    const update = () => {
-      if (wrapRef.current) {
-        setScale(wrapRef.current.offsetWidth / 1440);
-      }
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    if (wrapRef.current) ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  const DEMO_H = 760;
-
-  return (
-    <Reveal>
-      <Container as="figure" className="my-20">
-        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
-            <iframe
-              src="/work/airstride/account-mapping-demo/index.html"
-              title="Account Mapping interactive demo"
-              style={{
-                width: "1440px",
-                height: `${DEMO_H}px`,
-                border: "none",
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-              }}
-            />
-          </div>
-        </div>
-        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
-            Account Mapping
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Interactive prototype · auto-playing demo
-          </span>
-        </figcaption>
-      </Container>
-    </Reveal>
-  );
-}
-
-function DealsDemoEmbed() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.65);
-
-  useEffect(() => {
-    const update = () => {
-      if (wrapRef.current) {
-        setScale(wrapRef.current.offsetWidth / 1440);
-      }
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    if (wrapRef.current) ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  const DEMO_H = 760;
-
-  return (
-    <Reveal>
-      <Container as="figure" className="my-20">
-        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
-            <iframe
-              src="/work/airstride/deals-demo/index.html"
-              title="Deals Management interactive demo"
-              style={{
-                width: "1440px",
-                height: `${DEMO_H}px`,
-                border: "none",
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-              }}
-            />
-          </div>
-        </div>
-        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
-            Deals Management
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Interactive prototype · auto-playing demo
-          </span>
-        </figcaption>
-      </Container>
-    </Reveal>
-  );
-}
-
-function ContentLibraryDemoEmbed() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.65);
-
-  useEffect(() => {
-    const update = () => {
-      if (wrapRef.current) {
-        setScale(wrapRef.current.offsetWidth / 1440);
-      }
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    if (wrapRef.current) ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  const DEMO_H = 760;
-
-  return (
-    <Reveal>
-      <Container as="figure" className="my-20">
-        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
-            <iframe
-              src="/work/airstride/content-library-demo/index.html"
-              title="Content Library interactive demo"
-              style={{
-                width: "1440px",
-                height: `${DEMO_H}px`,
-                border: "none",
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-              }}
-            />
-          </div>
-        </div>
-        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
-            Content Library
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Interactive prototype · auto-playing demo
-          </span>
-        </figcaption>
-      </Container>
-    </Reveal>
-  );
-}
-
-function EngagementDemoEmbed() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.65);
-
-  useEffect(() => {
-    const update = () => {
-      if (wrapRef.current) {
-        setScale(wrapRef.current.offsetWidth / 1440);
-      }
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    if (wrapRef.current) ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  const DEMO_H = 760;
-
-  return (
-    <Reveal>
-      <Container as="figure" className="my-20">
-        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
-            <iframe
-              src="/work/airstride/engagement-demo/index.html"
-              title="Engagement interactive demo"
-              style={{
-                width: "1440px",
-                height: `${DEMO_H}px`,
-                border: "none",
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-              }}
-            />
-          </div>
-        </div>
-        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
-            Engagement
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Interactive prototype · auto-playing demo
-          </span>
-        </figcaption>
-      </Container>
-    </Reveal>
-  );
-}
-
-function OverviewDemoEmbed() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.65);
-
-  useEffect(() => {
-    const update = () => {
-      if (wrapRef.current) {
-        setScale(wrapRef.current.offsetWidth / 1440);
-      }
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    if (wrapRef.current) ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  const DEMO_H = 760;
-
-  return (
-    <Reveal>
-      <Container as="figure" className="my-20">
-        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
-            <iframe
-              src="/work/airstride/overview-demo/index.html"
-              title="Overview interactive demo"
-              style={{
-                width: "1440px",
-                height: `${DEMO_H}px`,
-                border: "none",
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-              }}
-            />
-          </div>
-        </div>
-        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
-            Overview
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Interactive prototype · auto-playing demo
-          </span>
-        </figcaption>
-      </Container>
-    </Reveal>
-  );
-}
-
-function PartnerTrainingDemoEmbed() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.65);
-
-  useEffect(() => {
-    const update = () => {
-      if (wrapRef.current) {
-        setScale(wrapRef.current.offsetWidth / 1440);
-      }
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    if (wrapRef.current) ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  const DEMO_H = 760;
-
-  return (
-    <Reveal>
-      <Container as="figure" className="my-20">
-        <div className="overflow-hidden rounded-lg border border-line bg-bg-elev">
-          <div ref={wrapRef} style={{ height: `${DEMO_H * scale}px`, position: "relative", overflow: "hidden" }}>
-            <iframe
-              src="/work/airstride/partner-training-demo/index.html"
-              title="Partner Training interactive demo"
-              style={{
-                width: "1440px",
-                height: `${DEMO_H}px`,
-                border: "none",
-                transform: `scale(${scale})`,
-                transformOrigin: "top left",
-              }}
-            />
-          </div>
-        </div>
-        <figcaption className="mt-6 flex flex-col gap-1 text-center md:flex-row md:items-baseline md:justify-center md:gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">
-            Partner Training
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-            Interactive prototype · auto-playing demo
-          </span>
+          {pannable && (
+            <a
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent underline underline-offset-4"
+            >
+              Open full demo ↗
+            </a>
+          )}
         </figcaption>
       </Container>
     </Reveal>
@@ -572,7 +311,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <OverviewDemoEmbed />
+        <DemoEmbed slug="overview-demo" label="Overview" />
       </section>
 
       {/* ===== MODULE 01: DEALS MANAGEMENT ===== */}
@@ -603,7 +342,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <DealsDemoEmbed />
+        <DemoEmbed slug="deals-demo" label="Deals Management" />
       </section>
 
       {/* ===== MODULE 02: ACCOUNT MAPPING ===== */}
@@ -634,7 +373,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <AccountMappingDemoEmbed />
+        <DemoEmbed slug="account-mapping-demo" label="Account Mapping" />
       </section>
 
       {/* ===== MODULE 03: ANALYTICS ===== */}
@@ -665,7 +404,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <AnalyticsDemoEmbed />
+        <DemoEmbed slug="analytics-demo" label="Analytics" />
       </section>
 
       {/* ===== MODULE 04: PARTNER TRAINING ===== */}
@@ -697,7 +436,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <PartnerTrainingDemoEmbed />
+        <DemoEmbed slug="partner-training-demo" label="Partner Training" />
       </section>
 
       {/* ===== MODULE 05: CONTENT LIBRARY ===== */}
@@ -729,7 +468,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <ContentLibraryDemoEmbed />
+        <DemoEmbed slug="content-library-demo" label="Content Library" />
       </section>
 
       {/* ===== MODULE 06: ENGAGEMENT ===== */}
@@ -759,7 +498,7 @@ export function AirstrideCase() {
             </div>
           </Container>
         </Reveal>
-        <EngagementDemoEmbed />
+        <DemoEmbed slug="engagement-demo" label="Engagement" />
       </section>
 
       {/* ===== REFLECTION ===== */}
