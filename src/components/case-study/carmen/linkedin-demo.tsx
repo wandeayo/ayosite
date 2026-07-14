@@ -33,7 +33,7 @@ export function LinkedInDemo() {
           </p>
 
           {!connected && (
-            <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 18, alignItems: "start" }}>
+            <div className="air-cols" style={{ ["--cols" as string]: "1.15fr 1fr", gap: 18, alignItems: "start" }}>
               <div className="air-card" style={{ padding: 20 }}>
                 <div className="air-stepper" style={{ marginBottom: 20 }}>
                   {STEPS.map((s, i) => (

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CASE_STUDIES } from "@/components/case-study/registry";
 import type { Project } from "@/lib/projects";
 import { WorkThumb } from "./work-thumb";
 
@@ -11,6 +12,7 @@ interface WorkRowProps {
 
 export function WorkRow({ project, index, isLast }: WorkRowProps) {
   const flipLayout = index % 2 !== 0;
+  const hasCaseStudy = project.slug in CASE_STUDIES;
 
   const thumbnail = (
     <div
@@ -45,7 +47,7 @@ export function WorkRow({ project, index, isLast }: WorkRowProps) {
           </span>
         ))}
       </div>
-      {project.featured ? (
+      {hasCaseStudy ? (
         <span className="font-mono text-[13px] text-accent">Read case study →</span>
       ) : (
         <span className="font-mono text-[13px] text-ink-faint/60">Case study on request</span>
@@ -55,7 +57,7 @@ export function WorkRow({ project, index, isLast }: WorkRowProps) {
 
   const rowClass = `group grid grid-cols-1 items-center gap-10 border-t border-line py-14 md:gap-14 ${isLast ? "border-b" : ""} ${flipLayout ? "md:grid-cols-[1fr_1.15fr]" : "md:grid-cols-[1.15fr_1fr]"}`;
 
-  if (project.featured) {
+  if (hasCaseStudy) {
     return (
       <Link href={`/work/${project.slug}`} className={rowClass}>
         {flipLayout ? (

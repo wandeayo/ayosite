@@ -243,6 +243,11 @@
   }
 
   /* Photo mosaic spans (semantic, not utility soup) ----------- */
+  .photo-mosaic {
+    /* dense packing lets later tiles backfill gaps so the grid
+       reads as one composed mosaic instead of leaving holes */
+    grid-auto-flow: row dense;
+  }
   .photo-tile--tall {
     grid-column: span 4;
     grid-row: span 4;
@@ -260,7 +265,10 @@
     grid-row: span 1;
   }
   @media (max-width: 800px) {
-    .photo-tile--tall {
+    /* Mobile composition: portrait pairs side by side, full-width
+       landscapes between them, signature on its own row. */
+    .photo-tile--tall,
+    .photo-tile--square {
       grid-column: span 3;
       grid-row: span 4;
     }
@@ -268,12 +276,8 @@
       grid-column: span 6;
       grid-row: span 3;
     }
-    .photo-tile--square {
-      grid-column: span 3;
-      grid-row: span 3;
-    }
     .photo-mark {
-      grid-column: span 3;
+      grid-column: span 6;
       grid-row: span 1;
     }
   }
@@ -501,9 +505,14 @@
   background: var(--accent);
 }
 
-/* Hero — editorial */
+/* Hero — editorial. Top padding matches the breathing room of the other
+   page heroes (work/about sit ~120px under the fixed nav). Vertical
+   only: the horizontal gutters come from the Container utility, and a
+   `padding` shorthand here would zero them out (unlayered CSS wins
+   over Tailwind's layered utilities). */
 .csx-hero {
-  padding: 40px 0 56px;
+  padding-top: clamp(64px, 10vw, 112px);
+  padding-bottom: clamp(48px, 7vw, 64px);
 }
 .csx-hero .meta-grid {
   display: grid;
@@ -559,6 +568,9 @@
 }
 .csx-hero-cta {
   margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
 }
 
 /* On desktop the subtitle runs wider (~44% of viewport) for a shorter,
@@ -878,6 +890,9 @@
 }
 
 @media (max-width: 900px) {
+  .csx-sec {
+    padding: 64px 0;
+  }
   .csx-sec-grid {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -909,12 +924,20 @@
     grid-template-columns: 1fr;
   }
 }
-.csx-hero .meta-grid {
-  /* fall back to two columns on narrow screens */
-}
 @media (max-width: 640px) {
   .csx-hero .meta-grid {
+    /* fall back to two columns on narrow screens */
     grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+  }
+  .csx-hero h1 {
+    margin-top: 36px;
+  }
+  .csx-hero .lede {
+    margin-top: 28px;
+  }
+  .csx-hero .csx-impact {
+    margin-top: 36px;
   }
 }
 
@@ -1189,6 +1212,15 @@
 .air-content {
   padding: 26px;
   flex: 1;
+}
+
+/* Two-pane content row inside a demo. Column ratio comes from the
+   --cols var so each surface keeps its own proportions on desktop;
+   collapses to a single column on small screens (see 720px block). */
+.air-cols {
+  display: grid;
+  grid-template-columns: var(--cols, 1fr 1fr);
+  gap: 16px;
 }
 
 /* Buttons */
@@ -1635,13 +1667,21 @@
 @media (max-width: 720px) {
   .air {
     grid-template-columns: 1fr;
-    height: 720px;
+    /* App-window height that fits inside a phone viewport; the
+       main pane scrolls internally like the real product. */
+    height: min(78svh, 640px);
   }
   .air-side {
     display: none;
   }
   .air-metrics {
     grid-template-columns: 1fr 1fr;
+  }
+  .air-content {
+    padding: 16px;
+  }
+  .air-cols {
+    grid-template-columns: 1fr;
   }
 }
 

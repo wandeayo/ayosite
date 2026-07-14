@@ -52,9 +52,8 @@ export function Footer() {
       </Container>
 
       <Container className="mt-[60px] border-t border-line px-(--gutter) py-[30px]">
-        <div className="flex justify-between font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
+        <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink-faint">
           <span>© {new Date().getFullYear()} {SITE.name}</span>
-          <span>Built with care · v05</span>
         </div>
       </Container>
     </footer>
