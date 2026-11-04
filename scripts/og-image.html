@@ -1,0 +1,52 @@
+<!doctype html>
+<!--
+  Social card for the landing page (handoff section 8): the hero text on a
+  thumbnail tile (Carmen's gradient and film grain), using the site's tokens.
+
+  Rendered once in a real browser and committed as
+  src/app/(home)/opengraph-image.png and twitter-image.png:
+
+    npx playwright screenshot --viewport-size=1200,630 --wait-for-timeout=1500 \
+      "file://$PWD/scripts/og-image.html" "src/app/(home)/opengraph-image.png"
+    cp "src/app/(home)/opengraph-image.png" "src/app/(home)/twitter-image.png"
+
+  (A browser render rather than next/og: Satori mis-measures Geist and leaves
+  uneven gaps between words, and it can't draw the grain.)
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500&family=Geist+Mono:wght@400&display=block">
+<style>
+  html, body { margin: 0; }
+  .card {
+    position: relative; width: 1200px; height: 630px; box-sizing: border-box; overflow: hidden; isolation: isolate;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 72px 80px;
+    font-family: "Geist", sans-serif; font-weight: 500; color: #141413; -webkit-font-smoothing: antialiased;
+    /* [data-play="carmen"] tile tokens, light */
+    --base: #e4ebfa; --hi: #f8faff; --mid: #d9e3fb; --deep: #bccdf6;
+    background:
+      radial-gradient(70% 60% at 18% 0%, var(--hi) 0%, transparent 70%),
+      radial-gradient(80% 70% at 100% 100%, var(--deep) 0%, transparent 72%),
+      radial-gradient(60% 60% at 0% 100%, var(--mid) 0%, transparent 70%),
+      var(--base);
+  }
+  /* same film grain as .thumb::before */
+  .card::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .22; mix-blend-mode: soft-light; background-size: 180px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .top { display: flex; justify-content: space-between; align-items: baseline; }
+  .name { font-size: 30px; letter-spacing: -.01em; }
+  .domain { font-family: "Geist Mono", monospace; font-weight: 400; font-size: 22px; color: #6b6a65; }
+  h1 { margin: 0; font-size: 66px; font-weight: 500; line-height: 1.2; letter-spacing: -.025em; max-width: 960px; }
+  h1 span { display: block; color: #6b6a65; white-space: nowrap; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="top"><span class="name">Ayowande Olubo</span><span class="domain">waande.com</span></div>
+    <h1>Product designer for early‑stage AI and SaaS teams. <span>I design it, then I ship it.</span></h1>
+  </div>
+</body>
+</html>
