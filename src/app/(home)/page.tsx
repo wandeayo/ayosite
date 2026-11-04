@@ -1,4 +1,4 @@
-import { BACKGROUND, LINKS, PERSON_JSON_LD, SERVICES, SOCIALS } from "@/components/landing/content";
+import { LINKS, PERSON_JSON_LD, SERVICES, SOCIALS } from "@/components/landing/content";
 import { EmailRow } from "@/components/landing/email-row";
 import { KindWords } from "@/components/landing/kind-words";
 import { LocalClock } from "@/components/landing/local-clock";
@@ -87,7 +87,7 @@ export default function HomePage() {
             </a>
           </div>
         </div>
-  
+
         <section id="work">
           <div className="sec-head">
             <h2 className="label">Selected work</h2>
@@ -133,7 +133,7 @@ export default function HomePage() {
           </WorkGrid>
           <script dangerouslySetInnerHTML={{ __html: FIT_STAGES_INLINE }} />
         </section>
-  
+
         <section id="about">
           <div className="sec-head">
             <h2 className="label">What I do</h2>
@@ -147,26 +147,9 @@ export default function HomePage() {
             ))}
           </div>
         </section>
-  
-        <section>
-          <div className="sec-head">
-            <h2 className="label">Background</h2>
-          </div>
-          <div className="list">
-            {BACKGROUND.map((b) => (
-              <div className="item" key={b.title}>
-                <div>
-                  <b>{b.title}</b>
-                  <p>{b.body}</p>
-                </div>
-                <span className="mono">{b.when}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-  
+
         <KindWords />
-  
+
         <section id="contact" className="contact">
           <span className="label">Contact</span>
           <h2>Building something early and need a designer who can ship? Let’s talk.</h2>

@@ -49,24 +49,6 @@ export const SERVICES = [
   },
 ] as const;
 
-export const BACKGROUND = [
-  {
-    title: "Embedded with founding teams",
-    body: "Sole or first designer at early-stage fintech and B2B SaaS companies including Airstride, Dexla, Qoinpal, Groflex and Approvam.",
-    when: "2021 –",
-  },
-  {
-    title: "Designing and shipping",
-    body: "Building production front-end myself with AI coding tools. This site is one example: designed and built by me.",
-    when: "Now",
-  },
-  {
-    title: "Microbiology",
-    body: "Where I started. It taught me to run experiments and trust evidence over opinion.",
-    when: "Before",
-  },
-] as const;
-
 export interface KindWord {
   name: string;
   role: string;

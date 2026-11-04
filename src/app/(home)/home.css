@@ -5,7 +5,9 @@
  *    (accessibility; not visible, see the notes at each rule);
  *  - --faint is darker in both themes so small text meets WCAG AA (4.5:1).
  *    Reference: light #a19f99 (2.47:1), dark #64635e (3.19:1). Approved by Ayo,
- *    2026-11-04. Values are the first AA pass on the line toward --muted.
+ *    2026-11-04. Values are the first AA pass on the line toward --muted;
+ *  - the Background section (and its .list/.item styles) is removed, at Ayo's
+ *    request, 2026-11-04.
  * Otherwise keep values in sync with the reference rather than "improving" them. */
 /* Layout: one quiet 880px column. Every project shot sits in the same frame, at the same scale, with equal margins. */
 :root{
@@ -234,12 +236,6 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 @media (max-width:640px){.cols{grid-template-columns:1fr}}
 .cols h3{margin:0 0 4px;font-size:14px;font-weight:500}
 .cols p{margin:0;color:var(--muted);font-size:14px}
-.list{display:grid}
-.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:12px 0;border-top:1px solid var(--line);align-items:baseline}
-.item:first-child{border-top:0;padding-top:0}
-.item b{font-weight:500}
-.item p{margin:2px 0 0;color:var(--muted);font-size:14px}
-.item .mono{color:var(--faint)}
 
 .kw{display:grid;grid-template-columns:220px minmax(0,1fr);gap:64px;align-items:start}
 .kw-people{display:grid;gap:2px;position:relative}
