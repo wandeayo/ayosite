@@ -22,8 +22,8 @@ const SHOTS = {
   "airstride-01-board": { w: 1440, h: 1008, hi: false },
   "airstride-02-menu": { w: 239, h: 441, hi: false },
   "airstride-03-summary-modal": { w: 520, h: 871, hi: false },
-  "arctic-01-cooling": { w: 402, h: 874, hi: false },
-  "arctic-02-heating": { w: 402, h: 874, hi: false },
+  "arctic-01-cooling": { w: 402, h: 874, hi: true },
+  "arctic-02-heating": { w: 402, h: 874, hi: true },
 } as const satisfies Record<string, { w: number; h: number; hi: boolean }>;
 
 export type ShotName = keyof typeof SHOTS;
