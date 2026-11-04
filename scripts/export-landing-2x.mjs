@@ -1,6 +1,12 @@
 // Re-export the landing page thumbnail screens at 2x from Figma (handoff section 7).
 //
-//   FIGMA_TOKEN=figd_… node scripts/export-landing-2x.mjs [--dry-run]
+//   FIGMA_TOKEN=figd_… node scripts/export-landing-2x.mjs [--dry-run] [--only arctic,carmen-02]
+//   node scripts/export-landing-2x.mjs --from-dir ~/Desktop/figma-2x   (frames exported by hand)
+//
+// Figma's API limits Starter-plan tokens hard (a full run can lock a file
+// out for days), so a normal run writes each verified image as it goes; use
+// --dry-run sparingly. --from-dir skips the API: export each source node
+// below from Figma at 2x as PNG, named <node id with - for :>.png.
 //
 // Each source frame is rendered through the Figma REST API at 2x of its 1x
 // target width (1440 for web frames, 402 for the Arctic Edge phone), then
@@ -20,6 +26,14 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = join(ROOT, "public", "home");
 const TOKEN = process.env.FIGMA_TOKEN;
 const DRY_RUN = process.argv.includes("--dry-run");
+const argValue = (flag) => {
+  const i = process.argv.indexOf(flag);
+  return i > -1 ? process.argv[i + 1] : undefined;
+};
+/** Comma-separated asset-name prefixes to process, e.g. --only arctic */
+const ONLY = argValue("--only")?.split(",");
+/** Read frames exported by hand instead of calling the API (see readExported). */
+const FROM_DIR = argValue("--from-dir");
 /** Mean absolute channel difference (0–255) allowed between our 1x downscale and the shipped 1x. */
 const MAX_MEAN_DIFF = 6;
 
@@ -54,7 +68,9 @@ const SOURCES = [
     file: AYOSTRIDE,
     node: "7:107656",
     width: 1440,
-    out: [{ name: "carmen-03-campaign", crop: "full", paint: [{ rect: [380, 427, 1388, 562], color: "#ffffff" }] }],
+    // The handoff says "full frame", but the shipped 1x is the top 1500px of the
+    // frame scaled to 1440 wide (the scroll in the timeline never goes further).
+    out: [{ name: "carmen-03-campaign", crop: [0, 0, 1440, 1500], paint: [{ rect: [380, 427, 1388, 562], color: "#ffffff" }] }],
   },
   {
     file: AYOSTRIDE,
@@ -69,15 +85,36 @@ const SOURCES = [
   { file: ARCTIC, node: "107:1239", width: 402, out: [{ name: "arctic-02-heating", crop: "full", paint: [ARCTIC_MARKER] }] },
 ];
 
-async function figma(path) {
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** Figma REST call. Retries 429s, honouring Retry-After (capped), with backoff. */
+async function figma(path, attempt = 0) {
   const res = await fetch(`https://api.figma.com/v1${path}`, { headers: { "X-Figma-Token": TOKEN } });
+  if (res.status === 429 && attempt < 5) {
+    const retryAfter = Number(res.headers.get("retry-after"));
+    const ms = Math.min(Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter * 1000 : 0, 120_000) || 5_000 * 2 ** attempt;
+    console.log(`  rate limited on ${path.split("?")[0]}, retrying in ${Math.round(ms / 1000)}s`);
+    await wait(ms);
+    return figma(path, attempt + 1);
+  }
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(`Figma ${path} → ${res.status} ${body.err ?? body.message ?? ""}`.trim());
   return body;
 }
 
+/** A frame exported by hand from Figma at 2x, named after its node id (9:169064 → 9-169064.png). */
+async function readExported(node, targetWidth) {
+  const path = join(FROM_DIR, `${node.replace(":", "-")}.png`);
+  const png = await readFile(path).catch(() => {
+    throw new Error(`missing ${path} (export node ${node} from Figma at 2x as PNG)`);
+  });
+  const { width } = await sharp(png).metadata();
+  return targetWidth && width !== 2 * targetWidth ? sharp(png).resize({ width: 2 * targetWidth }).png().toBuffer() : png;
+}
+
 /** Render one node so that its width is 2 × targetWidth (or plain 2x when targetWidth is null). */
 async function render(file, node, targetWidth) {
+  if (FROM_DIR) return readExported(node, targetWidth);
   let scale = 2;
   if (targetWidth) {
     const meta = await figma(`/files/${file}/nodes?ids=${encodeURIComponent(node)}`);
@@ -130,12 +167,15 @@ async function verify(name, png2x) {
 }
 
 async function main() {
-  if (!TOKEN) {
-    console.error("Set FIGMA_TOKEN to a Figma personal access token with File content: Read.");
+  if (!TOKEN && !FROM_DIR) {
+    console.error("Set FIGMA_TOKEN to a Figma personal access token with File content: Read, or pass --from-dir.");
     process.exit(1);
   }
   const failures = [];
-  for (const src of SOURCES) {
+  const sources = SOURCES.map((s) => ({ ...s, out: s.out.filter((o) => !ONLY || ONLY.some((p) => o.name.startsWith(p))) })).filter(
+    (s) => s.out.length,
+  );
+  for (const src of sources) {
     let frame;
     try {
       frame = await render(src.file, src.node, src.width);
