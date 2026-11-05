@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Metric-adjusted fallbacks for the self-hosted (site) fonts (lib/site-fonts.ts), with
+   next/font/google's exact values so glyphs the fonts lack render exactly as before. */
+@font-face{font-family:"Geist Fallback";src:local("Arial");ascent-override:95.94%;descent-override:28.16%;line-gap-override:0.00%;size-adjust:104.76%}
+@font-face{font-family:"Instrument Serif Fallback";src:local("Times New Roman");ascent-override:117.94%;descent-override:36.93%;line-gap-override:0.00%;size-adjust:83.94%}
+@font-face{font-family:"JetBrains Mono Fallback";src:local("Arial");ascent-override:75.79%;descent-override:22.29%;line-gap-override:0.00%;size-adjust:134.59%}
+
 /* ============================================================
    Design tokens registered with Tailwind v4 @theme so utilities
    like bg-bg, text-ink, border-line, font-serif are generated.
