@@ -1,7 +1,9 @@
 /**
  * The four case studies: route, metadata and the hero/next-nav copy.
  * Every string is verbatim from waande-case-handoff/reference/<case>.html
- * (curly quotes included). The bodies live in ./pages.
+ * (curly quotes included), except the Company label and the Scope values,
+ * which Ayo updated on 2026-11-05. "human‑in‑the‑loop" uses U+2011
+ * non-breaking hyphens so it never splits across lines (as the home H1 does). The bodies live in ./pages.
  */
 
 export type CaseSlug = "carmen-ai" | "airstride" | "arctic-edge" | "dexla-design-system";
@@ -48,7 +50,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
       facts: [
         ["Company", "Airstride · 2025"],
         ["Role", "Product Designer"],
-        ["Scope", "Onboarding, campaign UI, automation"],
+        ["Scope", "0→1 agentic UX, human‑in‑the‑loop setup, AI trust and transparency"],
         ["Status", "Shipped to production"],
       ],
     },
@@ -72,7 +74,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
       facts: [
         ["Company", "Airstride · 2025"],
         ["Role", "UX Designer"],
-        ["Scope", "6 modules, end to end"],
+        ["Scope", "End-to-end product design, AI features, coded prototypes"],
         ["Status", "Shipped to production"],
       ],
     },
@@ -92,7 +94,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
       facts: [
         ["Company", "Arctic Edge · 2024"],
         ["Role", "UI Designer"],
-        ["Scope", "Mobile app redesign"],
+        ["Scope", "Mobile product design, hardware control UX, state and safety systems"],
         ["Status", "Delivered"],
       ],
     },
@@ -118,7 +120,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
       facts: [
         ["Company", "Dexla · 2024"],
         ["Role", "UX Designer"],
-        ["Team", "2 designers, with Toba"],
+        ["Scope", "Design system, tokens, AI builder components"],
         ["Status", "Shipped and documented"],
       ],
     },
