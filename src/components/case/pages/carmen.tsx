@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 
 import { CarmenThumb } from "@/components/landing/thumbs/thumbs";
 
@@ -11,8 +11,25 @@ import { LinkedInFigure } from "../carmen/linkedin-proto";
 import { SetupProto } from "../carmen/setup-proto";
 import { ProtoFrame } from "../proto-frame";
 
-/** The prototypes are product UI: always light, always Inter (handoff section 4.1). */
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-inter", display: "swap" });
+/**
+ * The prototypes are product UI: always light, always Inter (handoff section 4.1).
+ * Self-hosted from src/fonts (see (home)/layout.tsx for why): Google's latin faces, one per
+ * weight on the variable file, and Google's metric-adjusted Arial fallback (case.css).
+ */
+const inter = localFont({
+  src: [
+    { path: "../../../fonts/inter-normal-latin.woff2", weight: "400", style: "normal" },
+    { path: "../../../fonts/inter-normal-latin.woff2", weight: "500", style: "normal" },
+    { path: "../../../fonts/inter-normal-latin.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-inter",
+  display: "swap",
+  // The fallback face is declared in case.css with next/font/google's exact metrics, so
+  // glyphs Inter lacks (✓ ↗ →) render exactly as before; next/font/local measures slightly differently.
+  adjustFontFallback: false,
+  fallback: ["Inter Fallback"],
+  declarations: [{ prop: "unicode-range", value: "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD" }],
+});
 
 /** Copy verbatim from waande-case-handoff/reference/carmen.html. */
 export function CarmenCase() {

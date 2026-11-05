@@ -590,3 +590,7 @@ img{height:auto}
 /* Carmen setup: the select chevron sits at the field's right edge, centred on its line
    (Ayo, 2026-11-05). The reference placed a "⌄" glyph right after the value. */
 .fa-in .fa-chev{margin-left:auto;width:16px;height:16px;flex:none;fill:none;stroke:#555;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* Inter's metric-adjusted fallback, with next/font/google's exact values (Inter is self-hosted
+   with next/font/local, which measures slightly differently; see pages/carmen.tsx). Glyphs Inter
+   lacks (✓ ↗ →) are drawn from this face. */
+@font-face{font-family:"Inter Fallback";src:local("Arial");ascent-override:90.44%;descent-override:22.52%;line-gap-override:0.00%;size-adjust:107.12%}
