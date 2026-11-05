@@ -94,21 +94,50 @@ export const KIND_WORDS: readonly KindWord[] = [
   },
 ];
 
-/** JSON-LD Person for the landing page (handoff section 8). */
-/** Stable id, so the case studies' CreativeWork `author` points at this same Person. */
+/**
+ * Structured data (schema.org JSON-LD). One Person, given a stable id so every page points at
+ * the same entity: the home page pairs it with the WebSite (which Google reads for the site
+ * name in results), About wraps it in a ProfilePage, and each case study's CreativeWork names
+ * it as author. Started from the home handoff's Person (section 8).
+ */
 export const PERSON_ID = `${LANDING.url}/#person`;
+export const WEBSITE_ID = `${LANDING.url}/#website`;
 
-export const PERSON_JSON_LD = {
-  "@context": "https://schema.org",
+export const PERSON = {
   "@type": "Person",
   "@id": PERSON_ID,
   name: LANDING.name,
   url: LANDING.url,
+  image: `${LANDING.url}/about/about-horse@2x.webp`,
+  email: LANDING.email,
   jobTitle: "Product Designer",
+  knowsAbout: [
+    "Product design",
+    "UX design",
+    "AI and agentic interfaces",
+    "SaaS products",
+    "Design systems",
+    "Design engineering",
+    "Front-end development",
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Abuja",
     addressCountry: "NG",
   },
-  sameAs: [LINKS.linkedin, LINKS.github, LINKS.x, LINKS.dribbble],
+  sameAs: [LINKS.linkedin, LINKS.github, LINKS.x, LINKS.dribbble, LINKS.instagram],
+} as const;
+
+export const HOME_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    PERSON,
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      url: LANDING.url,
+      name: LANDING.name,
+      publisher: { "@id": PERSON_ID },
+    },
+  ],
 } as const;

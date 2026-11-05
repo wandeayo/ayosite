@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 
 import { Engineers } from "@/components/about/engineers";
 import { ContactSection, SiteFooter, SiteHeader } from "@/components/landing/chrome";
-import { LANDING } from "@/components/landing/content";
+import { LANDING, PERSON, WEBSITE_ID } from "@/components/landing/content";
 import { FloatingNav } from "@/components/landing/floating-nav";
+import { JsonLd } from "@/components/landing/json-ld";
 
 import "@/components/about/about.css";
 
 /*
  * About. Every string, size and alt text is from waande-about-handoff/reference/about.html.
- * It shares the landing page's root layout ((home)/layout.tsx): tokens, fonts, the pre-paint
+ * It shares the site's root layout (app/layout.tsx): tokens, fonts, the pre-paint
  * theme script and home.css. Header, contact section, footer and pill are the live components.
  * The social cards use the site's default image (ABOUT.md section 4 allows it): the files next
  * to this page are copies of (home)/opengraph-image.png and twitter-image.png, because a page
@@ -33,6 +34,18 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
+};
+
+/** schema.org ProfilePage: this page is about the site's Person (see content.ts). */
+const PROFILE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${LANDING.url}/about#page`,
+  url: `${LANDING.url}/about`,
+  name: TITLE,
+  description: DESCRIPTION,
+  isPartOf: { "@id": WEBSITE_ID },
+  mainEntity: PERSON,
 };
 
 const EXPERIENCE = [
@@ -60,6 +73,8 @@ const HERO_SIZES = "(max-width: 720px) calc(100vw - 32px), 347px";
 export default function AboutPage() {
   return (
     <div className="wrap">
+      <JsonLd data={PROFILE_JSON_LD} />
+
       <SiteHeader />
 
       {/* header and footer stay outside main, as the banner and contentinfo landmarks */}

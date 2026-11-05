@@ -6,8 +6,7 @@ import { THEME_INIT_SCRIPT } from "@/components/landing/theme";
 
 import "./home.css";
 
-// The landing page is its own root layout so none of the (site) shell
-// (globals.css, Tailwind preflight, nav, footer, cursor) reaches it.
+// The one root layout: home, About, the case studies and the 404 all render inside it.
 //
 // Fonts are self-hosted from src/fonts (scripts/fetch-fonts.mjs): the same latin files
 // next/font/google used to download at build time, so builds no longer depend on Google
@@ -21,9 +20,9 @@ import "./home.css";
 // that stack and render them in Arial instead.
 const geist = localFont({
   src: [
-    { path: "../../fonts/geist-normal-latin.woff2", weight: "400", style: "normal" },
-    { path: "../../fonts/geist-normal-latin.woff2", weight: "500", style: "normal" },
-    { path: "../../fonts/geist-normal-latin.woff2", weight: "600", style: "normal" },
+    { path: "../fonts/geist-normal-latin.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/geist-normal-latin.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/geist-normal-latin.woff2", weight: "600", style: "normal" },
   ],
   variable: "--font-geist",
   display: "swap",
@@ -33,8 +32,8 @@ const geist = localFont({
 
 const geistMono = localFont({
   src: [
-    { path: "../../fonts/geist-mono-normal-latin.woff2", weight: "400", style: "normal" },
-    { path: "../../fonts/geist-mono-normal-latin.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/geist-mono-normal-latin.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/geist-mono-normal-latin.woff2", weight: "500", style: "normal" },
   ],
   variable: "--font-geist-mono",
   display: "swap",
@@ -68,7 +67,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function HomeLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // suppressHydrationWarning: the head script may set data-theme before React hydrates.
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>

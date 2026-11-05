@@ -15,10 +15,10 @@ import { useEffect, useState } from "react";
  *
  * `home` marks the section being read (aria-current="location") for the two
  * items that live on the home page, Work and Contact. `case` marks Work and
- * `about` marks About as the current page (aria-current="page").
+ * `about` marks About as the current page (aria-current="page"). `page` (the 404) marks nothing.
  */
 
-type Variant = "home" | "case" | "about";
+type Variant = "home" | "case" | "about" | "page";
 
 type Item = "work" | "about" | "contact";
 
@@ -78,7 +78,8 @@ export function FloatingNav({ variant }: { variant: Variant }) {
   const ariaCurrent = (item: Item): "page" | "location" | undefined => {
     if (variant === "home") return item !== "about" && current === item ? "location" : undefined;
     if (variant === "case") return item === "work" ? "page" : undefined;
-    return item === "about" ? "page" : undefined;
+    if (variant === "about") return item === "about" ? "page" : undefined;
+    return undefined;
   };
 
   return (

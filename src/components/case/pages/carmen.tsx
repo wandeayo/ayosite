@@ -13,7 +13,7 @@ import { ProtoFrame } from "../proto-frame";
 
 /**
  * The prototypes are product UI: always light, always Inter (handoff section 4.1).
- * Self-hosted from src/fonts (see (home)/layout.tsx for why): Google's latin faces, one per
+ * Self-hosted from src/fonts (see app/layout.tsx for why): Google's latin faces, one per
  * weight on the variable file, and Google's metric-adjusted Arial fallback (case.css).
  */
 const inter = localFont({

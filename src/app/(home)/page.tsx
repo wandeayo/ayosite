@@ -1,6 +1,7 @@
 import { ContactSection, SiteFooter, SiteHeader } from "@/components/landing/chrome";
-import { LINKS, PERSON_JSON_LD, SERVICES } from "@/components/landing/content";
+import { HOME_JSON_LD, LINKS, SERVICES } from "@/components/landing/content";
 import { FloatingNav } from "@/components/landing/floating-nav";
+import { JsonLd } from "@/components/landing/json-ld";
 import { KindWords } from "@/components/landing/kind-words";
 import { LocalClock } from "@/components/landing/local-clock";
 import { FIT_STAGES_INLINE } from "@/components/landing/thumbs/fit-stages";
@@ -38,11 +39,7 @@ function ProjectCard({ href, thumb, title, year, description, role }: ProjectCar
 export default function HomePage() {
   return (
     <div className="wrap">
-      <script
-        type="application/ld+json"
-        // Static, trusted JSON; `<` is escaped so it can never close the tag.
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={HOME_JSON_LD} />
 
       <SiteHeader home />
 

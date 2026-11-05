@@ -3,10 +3,15 @@ import type { NextConfig } from "next";
 const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  experimental: {
-    // Needed for app/global-not-found.tsx: the landing page and the rest of
-    // the site use separate root layouts, so there is no shared one for 404s.
-    globalNotFound: true,
+  // The old site's pages, retired with its dark design: send visitors and search engines
+  // (308, permanent) to where that content lives now. /work/<slug> case studies are untouched.
+  async redirects() {
+    return [
+      { source: "/work", destination: "/#work", permanent: true },
+      { source: "/contact", destination: "/#contact", permanent: true },
+      { source: "/writing", destination: "/", permanent: true },
+      { source: "/writing/:path*", destination: "/", permanent: true },
+    ];
   },
 };
 

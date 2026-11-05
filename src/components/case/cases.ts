@@ -2,7 +2,8 @@
  * The four case studies: route, metadata and the hero/next-nav copy.
  * Every string is verbatim from waande-case-handoff/reference/<case>.html
  * (curly quotes included), except the Company label, the Scope values and
- * the Arctic Edge H1, which Ayo updated on 2026-11-05. "human‑in‑the‑loop" uses U+2011
+ * the Arctic Edge H1, which Ayo updated on 2026-11-05, and the <title>s, which name
+ * what each case is so search results can match it (2026-11-06). "human‑in‑the‑loop" uses U+2011
  * non-breaking hyphens so it never splits across lines (as the home H1 does). The bodies live in ./pages.
  */
 
@@ -19,7 +20,7 @@ export interface CaseMeta {
   slug: CaseSlug;
   /** Name on the previous/next cards. */
   name: string;
-  /** <title>, from the reference. */
+  /** <title>: the case name, what kind of case it is, and the site name. */
   title: string;
   /** <meta name="description"> from the reference. */
   description: string;
@@ -39,7 +40,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
   "carmen-ai": {
     slug: "carmen-ai",
     name: "Carmen",
-    title: "Carmen · Ayowande Olubo",
+    title: "Carmen: AI agent UX case study · Ayowande Olubo",
     description:
       "Case study: designing Carmen, Airstride's AI partner-acquisition agent, so sceptical partnership managers would trust it.",
     tile: "carmen",
@@ -59,7 +60,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
   airstride: {
     slug: "airstride",
     name: "Airstride",
-    title: "Airstride · Ayowande Olubo",
+    title: "Airstride: SaaS redesign case study · Ayowande Olubo",
     description:
       "Case study: redesigning all six modules of Airstride’s partner management platform as the sole designer.",
     tile: "air",
@@ -83,7 +84,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
   "arctic-edge": {
     slug: "arctic-edge",
     name: "Arctic Edge",
-    title: "Arctic Edge · Ayowande Olubo",
+    title: "Arctic Edge: smart ice bath app case study · Ayowande Olubo",
     description: "Case study: redesigning the Arctic Edge smart ice bath app around one readable home screen.",
     tile: "arctic",
     hero: {
@@ -103,7 +104,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
   "dexla-design-system": {
     slug: "dexla-design-system",
     name: "Dexla Design System",
-    title: "Dexla · Ayowande Olubo",
+    title: "Dexla: design system case study · Ayowande Olubo",
     description:
       "Case study: building Dexla’s design system from a logo to tokens, components and documentation.",
     tile: "dexla",
