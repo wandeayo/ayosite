@@ -12,6 +12,20 @@ export const LANDING = {
   email: "ayowandeolubo@gmail.com",
 } as const;
 
+/**
+ * Default social card (public/og.png) for every page without its own; the case studies set
+ * their own. Root layout and About both list it, because a page that sets openGraph or
+ * twitter replaces the inherited object, images included.
+ */
+export const DEFAULT_OG_IMAGE = {
+  url: `${LANDING.url}/og.png`,
+  width: 2400,
+  height: 1260,
+  alt: "Ayowande Olubo — I design it, then I ship it.",
+} as const;
+
+export const DEFAULT_TWITTER_IMAGE = { url: DEFAULT_OG_IMAGE.url, alt: DEFAULT_OG_IMAGE.alt } as const;
+
 export const LINKS = {
   calendly: "https://calendly.com/ayowandeolubo",
   resume: "https://drive.google.com/file/d/1eKx9Ip4GIbps8MWfdX-IsLJWEUvp1n2l/view?usp=sharing",
@@ -94,21 +108,50 @@ export const KIND_WORDS: readonly KindWord[] = [
   },
 ];
 
-/** JSON-LD Person for the landing page (handoff section 8). */
-/** Stable id, so the case studies' CreativeWork `author` points at this same Person. */
+/**
+ * Structured data (schema.org JSON-LD). One Person, given a stable id so every page points at
+ * the same entity: the home page pairs it with the WebSite (which Google reads for the site
+ * name in results), About wraps it in a ProfilePage, and each case study's CreativeWork names
+ * it as author. Started from the home handoff's Person (section 8).
+ */
 export const PERSON_ID = `${LANDING.url}/#person`;
+export const WEBSITE_ID = `${LANDING.url}/#website`;
 
-export const PERSON_JSON_LD = {
-  "@context": "https://schema.org",
+export const PERSON = {
   "@type": "Person",
   "@id": PERSON_ID,
   name: LANDING.name,
   url: LANDING.url,
+  image: `${LANDING.url}/about/about-horse@2x.webp`,
+  email: LANDING.email,
   jobTitle: "Product Designer",
+  knowsAbout: [
+    "Product design",
+    "UX design",
+    "AI and agentic interfaces",
+    "SaaS products",
+    "Design systems",
+    "Design engineering",
+    "Front-end development",
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Abuja",
     addressCountry: "NG",
   },
-  sameAs: [LINKS.linkedin, LINKS.github, LINKS.x, LINKS.dribbble],
+  sameAs: [LINKS.linkedin, LINKS.github, LINKS.x, LINKS.dribbble, LINKS.instagram],
+} as const;
+
+export const HOME_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    PERSON,
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      url: LANDING.url,
+      name: LANDING.name,
+      publisher: { "@id": PERSON_ID },
+    },
+  ],
 } as const;

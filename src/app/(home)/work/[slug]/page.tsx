@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CASES, CASE_ORDER, isCaseSlug, type CaseMeta, type CaseSlug } from "@/components/case/cases";
-import { LANDING, PERSON_ID } from "@/components/landing/content";
+import { LANDING, PERSON_ID, WEBSITE_ID } from "@/components/landing/content";
+import { JsonLd } from "@/components/landing/json-ld";
 import { AirstrideCase } from "@/components/case/pages/airstride";
 import { ArcticEdgeCase } from "@/components/case/pages/arctic";
 import { CarmenCase } from "@/components/case/pages/carmen";
@@ -16,7 +17,7 @@ const PAGES: Record<CaseSlug, () => React.ReactNode> = {
   "dexla-design-system": DexlaCase,
 };
 
-// Case studies share the landing page's root layout ((home)/layout.tsx): tokens,
+// Case studies share the site's root layout (app/layout.tsx): tokens,
 // fonts, the pre-paint theme script and home.css. Only these four slugs exist.
 export const dynamicParams = false;
 
@@ -73,6 +74,7 @@ function caseJsonLd(meta: CaseMeta) {
     inLanguage: "en-GB",
     ...(year && { dateCreated: year }),
     author: { "@type": "Person", "@id": PERSON_ID, name: LANDING.name, url: LANDING.url },
+    isPartOf: { "@id": WEBSITE_ID },
   };
 }
 
@@ -82,11 +84,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const Page = PAGES[slug];
   return (
     <>
-      <script
-        type="application/ld+json"
-        // Static, trusted JSON; `<` is escaped so it can never close the tag.
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(caseJsonLd(CASES[slug])).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={caseJsonLd(CASES[slug])} />
       <Page />
     </>
   );

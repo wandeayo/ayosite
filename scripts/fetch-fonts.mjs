@@ -10,7 +10,7 @@
 // This requests the CSS exactly as next/font/google does (same css2 URLs, same Chrome user
 // agent, so Google returns woff2), keeps the latin face of each family (the subset every
 // family here was configured with), downloads it, and prints each face's weight, style and
-// unicode-range for src/lib/fonts.ts.
+// unicode-range for the localFont() calls (see src/fonts/README.md).
 //
 // Guard: every non-ASCII character the site renders that falls outside latin must be absent
 // from the font's other Google subsets too. Then dropping those subsets changes nothing: the
@@ -30,8 +30,6 @@ const FAMILIES = [
   { name: "Geist", file: "geist", query: "Geist:wght@300;400;500;600" },
   { name: "Geist Mono", file: "geist-mono", query: "Geist+Mono:wght@400;500" },
   { name: "Inter", file: "inter", query: "Inter:wght@400;500;600" },
-  { name: "Instrument Serif", file: "instrument-serif", query: "Instrument+Serif:ital@0;1" },
-  { name: "JetBrains Mono", file: "jetbrains-mono", query: "JetBrains+Mono:wght@400;500" },
 ];
 
 // Characters the site renders outside the latin range (see the commit that added this file).
