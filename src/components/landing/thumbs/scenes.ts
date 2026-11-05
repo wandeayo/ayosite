@@ -1,10 +1,18 @@
 /**
  * The four thumbnail stories, ported step for step from `scenes` in the
  * approved prototype. Coordinates are stage px (1440 wide); numbers passed to
- * `k.w()` are the exact waits from the reference. Don't retime these here:
- * change the reference first, then port the change.
+ * `k.w()` are the exact waits from the reference, except OPENING_HOLD_MS.
+ * Don't retime these here: change the reference first, then port the change.
  */
 import { $, $$, setCam, type Scene } from "./engine";
+
+/**
+ * Every loop that zooms opens on the full screen for this long before the
+ * camera's first move, so the whole screen reads before the close-ups start
+ * (case-study handoff section 9, "Home page fixes"). Carmen and Dexla never
+ * zoom, so their timings are unchanged.
+ */
+const OPENING_HOLD_MS = 1500;
 
 /* ------------------------------------------------------------------ Carmen */
 
@@ -93,7 +101,7 @@ const air: Scene = {
   async run(t, k) {
     const s = k.stage;
     k.place(1100, 900);
-    await k.w(300);
+    await k.w(OPENING_HOLD_MS);
     // move to the deal card, camera eases in on it
     airCam(s, 640, 760, 1.7);
     await k.move(620, 800, 900);
@@ -161,7 +169,7 @@ const arctic: Scene = {
     const CY = 80 + 288;
     const FX = 519 + 300;
     const FY = 80 + 630;
-    await k.w(700);
+    await k.w(OPENING_HOLD_MS);
     // tap the mode chip, camera follows
     k.place(1040, 800);
     arcticCam(s, CX, CY, 2.1);

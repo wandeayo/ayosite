@@ -1,0 +1,20 @@
+/* Case studies. Ported verbatim from waande-case-handoff/reference/*.html (the four files
+ * share one stylesheet); tokens, tiles, frames and chrome come from (home)/home.css, which
+ * every case page also loads. Keep values in sync with the references rather than
+ * "improving" them. Deliberate differences are noted next to each rule. */
+
+/* ---------- case study ---------- */
+:root{--fg2:#3a3935}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--fg2:#c9c8c2}}
+:root[data-theme="dark"]{--fg2:#c9c8c2}
+
+.cs-hero{padding-block:40px 40px;display:grid;gap:18px}
+.cs-back{color:var(--faint);width:max-content;transition:color .15s}
+@media (hover:hover){.cs-back:hover{color:var(--fg)}}
+.cs-hero h1{margin:6px 0 0;font-size:clamp(28px,4.6vw,40px);line-height:1.15;font-weight:500;letter-spacing:-.028em;text-wrap:balance;max-width:22ch}
+.cs-lede{margin:0;font-size:17px;line-height:1.6;color:var(--muted);max-width:60ch}
+.cs-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.cs-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 24px;margin:14px 0 0;padding-top:18px;border-top:1px solid var(--line)}
+.cs-facts dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
+.cs-facts dd{margin:4px 0 0;font-size:14px;line-height:1.45}
+@media (max-width:640px){.cs-facts{grid-template-columns:1fr 1fr}}

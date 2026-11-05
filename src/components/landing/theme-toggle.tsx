@@ -71,17 +71,18 @@ export function ThemeToggle() {
     setTheme(next);
   };
 
-  const label = theme ? `Switch to ${theme === "dark" ? "light" : "dark"} theme` : "Switch colour theme";
+  const label = theme ? `Switch to ${theme === "dark" ? "light" : "dark"} mode` : "Switch colour mode";
 
   return (
     <button type="button" className="tt" onClick={toggle} aria-label={label} title={label}>
-      {/* moon in light mode, sun in dark mode: the icon shows where the button takes you */}
-      <svg className="i-moon" viewBox="0 0 16 16" aria-hidden="true">
-        <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z" />
+      {/* moon in light mode, sun in dark mode: the icon shows where the button takes you.
+          Paths are the case-study handoff's (waande-case-handoff/reference, .theme-t). */}
+      <svg className="i-sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
       </svg>
-      <svg className="i-sun" viewBox="0 0 16 16" aria-hidden="true">
-        <circle cx="8" cy="8" r="2.75" />
-        <path d="M8 1.5v1.25M8 13.25v1.25M1.5 8h1.25M13.25 8h1.25M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9" />
+      <svg className="i-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
       </svg>
     </button>
   );

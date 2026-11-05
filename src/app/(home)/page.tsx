@@ -1,9 +1,8 @@
-import { BottomNav } from "@/components/landing/bottom-nav";
-import { LINKS, PERSON_JSON_LD, SERVICES, SOCIALS } from "@/components/landing/content";
-import { EmailRow } from "@/components/landing/email-row";
+import { ContactSection, SiteFooter, SiteHeader } from "@/components/landing/chrome";
+import { LINKS, PERSON_JSON_LD, SERVICES } from "@/components/landing/content";
+import { FloatingNav } from "@/components/landing/floating-nav";
 import { KindWords } from "@/components/landing/kind-words";
 import { LocalClock } from "@/components/landing/local-clock";
-import { ThemeToggle } from "@/components/landing/theme-toggle";
 import { FIT_STAGES_INLINE } from "@/components/landing/thumbs/fit-stages";
 import { AirstrideThumb, ArcticThumb, CarmenThumb, DexlaThumb } from "@/components/landing/thumbs/thumbs";
 import { WorkGrid } from "@/components/landing/work-grid";
@@ -45,12 +44,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD).replace(/</g, "\\u003c") }}
       />
 
-      <header className="top">
-        <a className="brand" href="#top" id="top">
-          Ayowande Olubo
-        </a>
-        <ThemeToggle />
-      </header>
+      <SiteHeader home />
 
       {/* header and footer stay outside main, as the banner and contentinfo landmarks */}
       <main>
@@ -148,27 +142,12 @@ export default function HomePage() {
 
         <KindWords />
 
-        <section id="contact" className="contact">
-          <span className="label">Contact</span>
-          <h2>Building something early and need a designer who can ship? Let’s talk.</h2>
-          <EmailRow />
-          <div className="socials">
-            {SOCIALS.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener">
-                {/* one text node, so "Label ↗" shapes as a single run like the design */}
-                {`${s.label} ↗`}
-              </a>
-            ))}
-          </div>
-        </section>
+        <ContactSection />
       </main>
 
-      <footer className="mono">
-        <span>© 2026 Ayowande Olubo</span>
-        <span>Built by Ayowande</span>
-      </footer>
+      <SiteFooter />
 
-      <BottomNav />
+      <FloatingNav variant="home" />
     </div>
   );
 }
