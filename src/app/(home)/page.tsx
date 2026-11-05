@@ -165,7 +165,7 @@ export default function HomePage() {
 
       <footer className="mono">
         <span>© 2026 Ayowande Olubo</span>
-        <span>Designed and built by hand, mostly</span>
+        <span>Built by Ayowande</span>
       </footer>
 
       <BottomNav />
