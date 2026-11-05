@@ -1,8 +1,8 @@
 /**
  * The four case studies: route, metadata and the hero/next-nav copy.
  * Every string is verbatim from waande-case-handoff/reference/<case>.html
- * (curly quotes included), except the Company label and the Scope values,
- * which Ayo updated on 2026-11-05. "human‑in‑the‑loop" uses U+2011
+ * (curly quotes included), except the Company label, the Scope values and
+ * the Arctic Edge H1, which Ayo updated on 2026-11-05. "human‑in‑the‑loop" uses U+2011
  * non-breaking hyphens so it never splits across lines (as the home H1 does). The bodies live in ./pages.
  */
 
@@ -88,7 +88,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
     tile: "arctic",
     hero: {
       label: "Case 03 · Smart hardware app",
-      h1: "Redesigning the smart ice bath app, so the tub runs without thinking about the app.",
+      h1: "Redesigning the smart ice bath app.",
       lede: "Arctic Edge makes smart cooling tubs. Their companion app worked, but read as cluttered: competing surfaces, decorative colour, and a temperature you had to look at twice. The brief was a redesign people could operate at a glance, often with wet hands.",
       links: [{ label: "Visit Arctic Edge ↗", href: "https://www.arcticedge.me/" }],
       facts: [
