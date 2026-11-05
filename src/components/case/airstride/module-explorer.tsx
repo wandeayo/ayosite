@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 
 import { Img } from "../blocks";
 import { ProtoFrame } from "../proto-frame";
@@ -19,6 +19,8 @@ import { ProtoFrame } from "../proto-frame";
  *   at, so the frame shows exactly the reference's framing (800:537).
  * - Phones get ProtoFrame's preview + viewer, and the iframe only mounts once
  *   the viewer opens; the preview is just the still.
+ * - The demo is unmounted while the explorer is off screen, so it isn't
+ *   animating unseen (handoff section 6); it restarts when scrolled back.
  */
 
 const DEMO_W = 1280;
@@ -82,6 +84,17 @@ export function ModuleExplorer() {
   const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0]));
   const [loaded, setLoaded] = useState<number | null>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const root = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    // A little margin so the demo is already loading as the frame scrolls in.
+    const io = new IntersectionObserver(([e]) => setNear(e.isIntersecting), { rootMargin: "200px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const show = (n: number, focus = false) => {
     setActive(n);
@@ -101,7 +114,7 @@ export function ModuleExplorer() {
   const m = MODULES[active];
 
   return (
-    <div className="mx" id="as-mods">
+    <div className="mx" id="as-mods" ref={root}>
       <div className="mx-tabs" role="tablist" aria-label="Airstride modules" onKeyDown={onKey}>
         {MODULES.map((mod, i) => (
           <button
@@ -136,8 +149,9 @@ export function ModuleExplorer() {
         {({ open, small }) =>
           MODULES.map((mod, i) => {
             const on = i === active;
-            // The live demo mounts for the active module only, and on phones only in the viewer.
-            const live = on && (open || !small);
+            // The live demo mounts for the active module only: in the viewer on phones,
+            // otherwise while the explorer is on (or near) the screen.
+            const live = on && (open || (!small && near));
             return (
               <div key={mod.slug} className={on ? "mx-p on" : "mx-p"} aria-hidden={on ? undefined : true}>
                 {live && (

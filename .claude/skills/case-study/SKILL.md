@@ -335,7 +335,7 @@ A new case study is shipped by:
 1. Adding its entry to `CASES` and its slug to `CASE_ORDER` in `src/components/case/cases.ts` (the `CaseSlug` type lists the slugs).
 2. Writing `src/components/case/pages/<slug>.tsx` exporting a named component (e.g. `ArcticEdgeCase`) that returns one `CaseLayout`.
 3. Registering it in `PAGES` in `src/app/(home)/work/[slug]/page.tsx`.
-4. Adding its card to the home page work grid in `src/app/(home)/page.tsx` (and a thumbnail scene if it should animate), and its entry in `src/lib/projects.ts`, which the sitemap and the retired /work index still read. Ask the user for the card copy rather than writing it.
+4. Adding its card to the home page work grid in `src/app/(home)/page.tsx` (and a thumbnail scene if it should animate), and its entry in `src/lib/projects.ts`, which the retired /work index still reads. The sitemap follows `CASE_ORDER`. Ask the user for the card copy rather than writing it.
 5. Verifying the route at `/work/<slug>` renders, then comparing it with the handoff template at 1440, 1024 and 390px.
 
 The slug must match the route param exactly. Filenames with spaces in `/public/work/<slug>/` work but are fragile. Prefer kebab-case for new exports when possible.

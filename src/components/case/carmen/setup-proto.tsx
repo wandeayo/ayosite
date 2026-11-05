@@ -13,6 +13,11 @@ import { AppShell, FeedbackOpening } from "./shell";
  * Restarting remounts this component (ProtoFrame), which clears every timer.
  */
 
+/*
+ * Product headings keep their tags (the prototype CSS styles them by element) but sit at
+ * level 3 in the page outline, under the section's H2, via aria-level.
+ */
+
 /**
  * CloudBridge is real, from Figma. Partners 2–5 are placeholder scores, facts
  * and reasons (handoff section 4.2): replace with Ayo's real values.
@@ -249,7 +254,7 @@ export function SetupProto() {
         </ol>
 
         <section className="fa-v" data-v="org" hidden={view !== "org"}>
-          <h5 className="fa-h">Create your organisation</h5>
+          <h5 className="fa-h" aria-level={3}>Create your organisation</h5>
           <p className="fa-sub">Tell us a bit about your company. We will use this to personalise your experience</p>
           <label className="fa-lbl">
             Organisation Name <em>*</em>
@@ -270,7 +275,7 @@ export function SetupProto() {
         </section>
 
         <section className="fa-v" data-v="setup" hidden={view !== "setup"}>
-          <h5 className="fa-h">Setting up your account…</h5>
+          <h5 className="fa-h" aria-level={3}>Setting up your account…</h5>
           <p className="fa-sub">Analysing your company information. This takes about a minute</p>
           <Tasks items={SETUP_TASKS} states={setupTasks} barRef={barRef("setup")} />
         </section>
@@ -281,13 +286,13 @@ export function SetupProto() {
             <b>CARMEN-AI</b>
             <em className="fa-chip ok">↗ Research completed</em>
           </div>
-          <h6>Your Business</h6>
+          <h6 aria-level={3}>Your Business</h6>
           <p className="fa-p">
             Airstride is an AI-powered partnership management platform that helps B2B SaaS companies discover, recruit, and
             manage channel partners at scale. Conversational AI agent (Carmen) that automates partner acquisition, co-sell
             planning, and campaign management — replacing manual partner ops.
           </p>
-          <h6>Your Market</h6>
+          <h6 aria-level={3}>Your Market</h6>
           {TAG_GROUPS.map(([group, tags]) => (
             <TagGroup
               key={group}
@@ -317,7 +322,7 @@ export function SetupProto() {
         </section>
 
         <section className="fa-v" data-v="scan" hidden={view !== "scan"}>
-          <h5 className="fa-h">Scanning partner database…</h5>
+          <h5 className="fa-h" aria-level={3}>Scanning partner database…</h5>
           <p className="fa-sub">Searching across 85,000+ partner companies</p>
           <Tasks items={SCAN_TASKS} states={scanTasks} barRef={barRef("scan")} />
         </section>
@@ -403,7 +408,7 @@ export function SetupProto() {
         </section>
 
         <section className="fa-v" data-v="review" hidden={view !== "review"}>
-          <h5 className="fa-h">Review your matches</h5>
+          <h5 className="fa-h" aria-level={3}>Review your matches</h5>
           <p className="fa-sub">Approve or reject each partner, this teaches Carmen your preferences.</p>
           <ul className="fa-rows" id="pa-rows">
             {view === "review" &&
@@ -479,7 +484,12 @@ export function SetupProto() {
               id="pa-chat"
               ref={chatBtn}
               disabled={saving !== "saved"}
-              onClick={() => document.getElementById("fig-chat")?.scrollIntoView({ behavior: "smooth", block: "center" })}
+              onClick={() =>
+                document.getElementById("fig-chat")?.scrollIntoView({
+                  behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                  block: "center",
+                })
+              }
             >
               Find more partners in chat
             </button>

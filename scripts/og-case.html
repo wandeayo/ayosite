@@ -1,0 +1,84 @@
+<!doctype html>
+<!--
+  Social cards for the four case studies (case-study handoff, section 6): each case's H1 on
+  its tile gradient, with the same type, layout and film grain as the landing card
+  (scripts/og-image.html). Pick the case with the hash, e.g. og-case.html#arctic-edge.
+
+  Rendered in a real browser and committed as public/work/<slug>/og.png:
+
+    for s in carmen-ai airstride arctic-edge dexla-design-system; do
+      npx playwright screenshot --viewport-size=1200,630 --wait-for-timeout=1500 \
+        "file://$PWD/scripts/og-case.html#$s" "public/work/$s/og.png"
+    done
+
+  Copy and tile colours mirror src/components/case/cases.ts and (home)/home.css; keep them in sync.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500&family=Geist+Mono:wght@400&display=block">
+<style>
+  html, body { margin: 0; }
+  .card {
+    position: relative; width: 1200px; height: 630px; box-sizing: border-box; overflow: hidden; isolation: isolate;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 72px 80px;
+    font-family: "Geist", sans-serif; font-weight: 500; color: var(--ink); -webkit-font-smoothing: antialiased;
+    --ink: #141413; --muted: #6b6a65;
+    background:
+      radial-gradient(70% 60% at 18% 0%, var(--hi) 0%, transparent 70%),
+      radial-gradient(80% 70% at 100% 100%, var(--deep) 0%, transparent 72%),
+      radial-gradient(60% 60% at 0% 100%, var(--mid) 0%, transparent 70%),
+      var(--base);
+  }
+  /* tile tokens from home.css (light) */
+  .card[data-tile="carmen"] { --base: #e4ebfa; --hi: #f8faff; --mid: #d9e3fb; --deep: #bccdf6; }
+  .card[data-tile="air"] { --base: #ece9e3; --hi: #faf8f4; --mid: #f1e6d6; --deep: #d8dfec; }
+  .card[data-tile="dexla"] { --base: #e9e6f3; --hi: #f8f7fc; --mid: #e3dcf3; --deep: #cdc4ec; }
+  .card[data-tile="arctic"] { --base: #0a1117; --hi: #1b3550; --mid: #0e1b26; --deep: #10263a; --grain: .35; --ink: #ededea; --muted: #9a9993; }
+  /* same film grain as .thumb::before */
+  .card::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: var(--grain, .22); mix-blend-mode: soft-light; background-size: 180px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .top { display: flex; justify-content: space-between; align-items: baseline; }
+  .name { font-size: 30px; letter-spacing: -.01em; }
+  .domain { font-family: "Geist Mono", monospace; font-weight: 400; font-size: 22px; color: var(--muted); }
+  .label { display: block; margin-bottom: 22px; font-family: "Geist Mono", monospace; font-weight: 400; font-size: 22px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { margin: 0; font-size: 66px; font-weight: 500; line-height: 1.15; letter-spacing: -.028em; max-width: 1000px; text-wrap: balance; }
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="top"><span class="name">Ayowande Olubo</span><span class="domain">waande.com</span></div>
+    <div><span class="label" id="label"></span><h1 id="h1"></h1></div>
+  </div>
+<script>
+  const CASES = {
+  "carmen-ai": {
+    "tile": "carmen",
+    "h1": "Teaching a sales team to trust an agent that works while they sleep.",
+    "label": "Case 01 · AI partner acquisition"
+  },
+  "airstride": {
+    "tile": "air",
+    "h1": "Redesigning the platform that was losing deals.",
+    "label": "Case 02 · Partner management platform"
+  },
+  "arctic-edge": {
+    "tile": "arctic",
+    "h1": "Redesigning the smart ice bath app, so the tub runs without thinking about the app.",
+    "label": "Case 03 · Smart hardware app"
+  },
+  "dexla-design-system": {
+    "tile": "dexla",
+    "h1": "Dexla: from a logo to a system.",
+    "label": "Case 04 · Design system"
+  }
+};
+  const c = CASES[location.hash.slice(1)] || CASES["carmen-ai"];
+  document.getElementById("card").dataset.tile = c.tile;
+  document.getElementById("label").textContent = c.label;
+  document.getElementById("h1").textContent = c.h1;
+</script>
+</body>
+</html>

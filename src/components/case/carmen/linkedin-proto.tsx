@@ -100,7 +100,21 @@ function LinkedInProto({ outcome }: { outcome: Outcome }) {
         <a>Outreach</a>
         <a>Partner Intelligence</a>
         <span className="ax-gh">Configuration</span>
-        <a className="on" data-nav="li" onClick={() => connected && go(4)}>
+        {/* Acts as a button (opens the connected settings once LinkedIn is connected), so it is
+            one for keyboards, screen readers and crawlers too. The reference only handled clicks. */}
+        <a
+          className="on"
+          data-nav="li"
+          role="button"
+          tabIndex={0}
+          aria-disabled={!connected}
+          onClick={() => connected && go(4)}
+          onKeyDown={(e) => {
+            if (e.key !== "Enter" && e.key !== " ") return;
+            e.preventDefault();
+            if (connected) go(4);
+          }}
+        >
           LinkedIn{" "}
           <em className={connected ? "ax-badge ok" : "ax-badge"} id="pc-badge">
             {connected ? "Connected" : "Not connected"}
@@ -119,7 +133,8 @@ function LinkedInProto({ outcome }: { outcome: Outcome }) {
           <span className="ax-me">AO</span>
         </div>
         <div className="ax-page">
-          <h4>Connect your LinkedIn account</h4>
+          {/* level 3 in the page outline, under the section H2; the tag stays for the prototype CSS */}
+          <h4 aria-level={3}>Connect your LinkedIn account</h4>
           <p className="ap-sub">Allow Carmen AI to send automated connection requests, messages, and follow-ups on your behalf.</p>
 
           {/* step 1 */}
