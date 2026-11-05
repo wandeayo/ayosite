@@ -260,13 +260,15 @@ export function SetupProto() {
             Organisation Name <em>*</em>
           </label>
           <div className="fa-in">
-            Airstride <span>⌄</span>
+            Airstride
+            <SelectChevron />
           </div>
           <label className="fa-lbl">
             Website <em>*</em>
           </label>
           <div className="fa-in">
-            airstride.ai <span>⌄</span>
+            airstride.ai
+            <SelectChevron />
           </div>
           <button className="fa-btn wide" type="button" onClick={goSetup}>
             Create organisation
@@ -497,6 +499,18 @@ export function SetupProto() {
         </div>
       </div>
     </>
+  );
+}
+
+/**
+ * A select field's chevron: drawn, so it sits exactly on the field's centre line (the
+ * reference's "⌄" character rides below it), and pushed to the field's right edge.
+ */
+function SelectChevron() {
+  return (
+    <svg className="fa-chev" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M4 6l4 4 4-4" />
+    </svg>
   );
 }
 

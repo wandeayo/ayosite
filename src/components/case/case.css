@@ -587,3 +587,6 @@ img{height:auto}
 .mx-p iframe{position:absolute;left:0;top:0;width:1280px;height:859px;border:0;display:block;background:#fff}
 .mx-p .mx-poster{position:absolute;left:0;top:0;transition:opacity .4s ease}
 .mx-p .mx-poster.out{opacity:0;pointer-events:none}
+/* Carmen setup: the select chevron sits at the field's right edge, centred on its line
+   (Ayo, 2026-11-05). The reference placed a "⌄" glyph right after the value. */
+.fa-in .fa-chev{margin-left:auto;width:16px;height:16px;flex:none;fill:none;stroke:#555;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
