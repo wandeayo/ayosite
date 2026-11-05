@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState, type HTMLAttributes, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 import type { TileKind } from "./cases";
@@ -43,10 +43,27 @@ interface ProtoFrameProps {
   below?: ReactNode;
   /** What the dialog is called when open full size. */
   label: string;
-  children: ReactNode;
+  /**
+   * Show ↺ ⤢ on desktop (default). Airstride's explorer frame shows only its URL; its
+   * controls appear only in the phone viewer, where ✕ is the way out.
+   */
+  controls?: boolean;
+  /** Extra classes on `.pview` (the explorer's is also `.mx-view`). */
+  viewClass?: string;
+  /** Extra attributes on the tile (the explorer makes it a tabpanel). */
+  rootProps?: HTMLAttributes<HTMLDivElement>;
+  /** The prototype, or a function of the frame's state, to mount heavy content only when it can be seen. */
+  children: ReactNode | ((state: FrameState) => ReactNode);
 }
 
-export function ProtoFrame({ tile, url, w, h, stageClass, stageId, below, label, children }: ProtoFrameProps) {
+export interface FrameState {
+  /** Open full size (or in the phone viewer). */
+  open: boolean;
+  /** Viewport ≤ 720px: the inline frame is a cover-up preview. */
+  small: boolean;
+}
+
+export function ProtoFrame({ tile, url, w, h, stageClass, stageId, below, label, controls = true, viewClass, rootProps, children }: ProtoFrameProps) {
   const viewRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const expRef = useRef<HTMLButtonElement>(null);
@@ -151,7 +168,7 @@ export function ProtoFrame({ tile, url, w, h, stageClass, stageId, below, label,
   const winClass = ["win", "pwin", open && "expanded", open?.mob && "mob"].filter(Boolean).join(" ");
 
   return (
-    <div className={open ? "thumb still ptile has-exp" : "thumb still ptile"} data-tile={tile}>
+    <div {...rootProps} className={open ? "thumb still ptile has-exp" : "thumb still ptile"} data-tile={tile}>
       <div
         className={winClass}
         role={open ? "dialog" : undefined}
@@ -163,22 +180,26 @@ export function ProtoFrame({ tile, url, w, h, stageClass, stageId, below, label,
           <i />
           <i />
           <span className="url">{url}</span>
-          <span className="pctl">
-            <button type="button" className="prestart" aria-label="Restart prototype" onClick={() => setRun((r) => r + 1)}>
-              ↺
-            </button>
-            <button
-              type="button"
-              className="pexp"
-              ref={expRef}
-              aria-label={open ? "Close prototype" : "Open prototype full size"}
-              onClick={(e) => openView(e.currentTarget)}
-            >
-              {open ? "✕" : "⤢"}
-            </button>
-          </span>
+          {(controls || open) && (
+            <span className="pctl">
+              {controls && (
+                <button type="button" className="prestart" aria-label="Restart prototype" onClick={() => setRun((r) => r + 1)}>
+                  ↺
+                </button>
+              )}
+              <button
+                type="button"
+                className="pexp"
+                ref={expRef}
+                aria-label={open ? "Close prototype" : "Open prototype full size"}
+                onClick={(e) => openView(e.currentTarget)}
+              >
+                {open ? "✕" : "⤢"}
+              </button>
+            </span>
+          )}
         </div>
-        <div className="pview" data-w={w} data-h={h} ref={viewRef} style={{ "--ph": h } as React.CSSProperties} suppressHydrationWarning>
+        <div className={viewClass ? `pview ${viewClass}` : "pview"} data-w={w} data-h={h} ref={viewRef} style={{ "--ph": h } as React.CSSProperties} suppressHydrationWarning>
           <div
             className={stageClass ? `pstage ${stageClass}` : "pstage"}
             id={stageId}
@@ -187,7 +208,7 @@ export function ProtoFrame({ tile, url, w, h, stageClass, stageId, below, label,
             inert={small && !open}
             suppressHydrationWarning
           >
-            <Fragment key={run}>{children}</Fragment>
+            <Fragment key={run}>{typeof children === "function" ? children({ open: !!open, small }) : children}</Fragment>
           </div>
           <div className="pcover">
             <button type="button" className="popen" onClick={(e) => openView(e.currentTarget)}>

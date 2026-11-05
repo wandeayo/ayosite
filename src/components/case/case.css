@@ -578,3 +578,12 @@
    reference sizes an image by width alone, the height must follow the aspect ratio, not the
    attribute. Rules that set an explicit height (.fa-left, .sw-img, …) still win. */
 img{height:auto}
+/* Airstride explorer, production change (handoff section 4.4): each module's live demo is
+   embedded in the frame at 1280 × 859, with the reference still kept over it as a poster
+   until the demo has loaded. Replaces the reference's still + "Play live demo" link. */
+/* .mx-view's aspect-ratio would derive the frame's width from its scaled height (a loop
+   that settles at whatever scale it starts with); ProtoFrame sizes this view instead. */
+.pview.mx-view{aspect-ratio:auto}
+.mx-p iframe{position:absolute;left:0;top:0;width:1280px;height:859px;border:0;display:block;background:#fff}
+.mx-p .mx-poster{position:absolute;left:0;top:0;transition:opacity .4s ease}
+.mx-p .mx-poster.out{opacity:0;pointer-events:none}

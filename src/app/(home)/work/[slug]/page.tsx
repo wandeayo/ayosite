@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CaseLayout } from "@/components/case/case-layout";
 import { CASES, CASE_ORDER, isCaseSlug, type CaseSlug } from "@/components/case/cases";
+import { AirstrideCase } from "@/components/case/pages/airstride";
+import { ArcticEdgeCase } from "@/components/case/pages/arctic";
 import { CarmenCase } from "@/components/case/pages/carmen";
+import { DexlaCase } from "@/components/case/pages/dexla";
 
-/** Pages built so far; the rest render the shared shell until they're ported. */
-const PAGES: Partial<Record<CaseSlug, () => React.ReactNode>> = {
+/** One template, four pages: each composes the shared blocks with its own content. */
+const PAGES: Record<CaseSlug, () => React.ReactNode> = {
   "carmen-ai": CarmenCase,
+  airstride: AirstrideCase,
+  "arctic-edge": ArcticEdgeCase,
+  "dexla-design-system": DexlaCase,
 };
 
 // Case studies share the landing page's root layout ((home)/layout.tsx): tokens,
@@ -40,5 +45,5 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
   if (!isCaseSlug(slug)) notFound();
   const Page = PAGES[slug];
-  return Page ? <Page /> : <CaseLayout meta={CASES[slug]} />;
+  return <Page />;
 }
