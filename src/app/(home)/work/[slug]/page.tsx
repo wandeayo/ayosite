@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 /** schema.org CreativeWork for the case, authored by the home page's Person. */
 function caseJsonLd(meta: CaseMeta) {
-  const year = meta.hero.facts.find(([k]) => k === "Client")?.[1].match(/\d{4}/)?.[0];
+  const year = meta.hero.facts.find(([k]) => k === "Company")?.[1].match(/\d{4}/)?.[0];
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",

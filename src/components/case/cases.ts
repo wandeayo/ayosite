@@ -46,7 +46,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
       h1: "Teaching a sales team to trust an agent that works while they sleep.",
       lede: "Carmen is Airstride’s AI agent for partner acquisition. It sources, qualifies and contacts partners on its own. The automation was never the hard part. Getting a sceptical partnership manager to hand over the relationship was.",
       facts: [
-        ["Client", "Airstride · 2025"],
+        ["Company", "Airstride · 2025"],
         ["Role", "Product Designer"],
         ["Scope", "Onboarding, campaign UI, automation"],
         ["Status", "Shipped to production"],
@@ -70,7 +70,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
         { label: "Visit airstride.ai ↗", href: "https://airstride.ai" },
       ],
       facts: [
-        ["Client", "Airstride · 2025"],
+        ["Company", "Airstride · 2025"],
         ["Role", "UX Designer"],
         ["Scope", "6 modules, end to end"],
         ["Status", "Shipped to production"],
@@ -90,7 +90,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
       lede: "Arctic Edge makes smart cooling tubs. Their companion app worked, but read as cluttered: competing surfaces, decorative colour, and a temperature you had to look at twice. The brief was a redesign people could operate at a glance, often with wet hands.",
       links: [{ label: "Visit Arctic Edge ↗", href: "https://www.arcticedge.me/" }],
       facts: [
-        ["Client", "Arctic Edge · 2024"],
+        ["Company", "Arctic Edge · 2024"],
         ["Role", "UI Designer"],
         ["Scope", "Mobile app redesign"],
         ["Status", "Delivered"],
@@ -116,7 +116,7 @@ export const CASES: Record<CaseSlug, CaseMeta> = {
         },
       ],
       facts: [
-        ["Client", "Dexla · 2024"],
+        ["Company", "Dexla · 2024"],
         ["Role", "UX Designer"],
         ["Team", "2 designers, with Toba"],
         ["Status", "Shipped and documented"],

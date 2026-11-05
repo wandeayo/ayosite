@@ -110,7 +110,7 @@ For visual-craft / redesign stories. The reader is here to see craft.
 ### Default section spine
 
 ```
-Hero        Label, H1, lede, facts (Client/Role/Scope/Status), link to the
+Hero        Label, H1, lede, facts (Company/Role/Scope/Status), link to the
             live URL. Lives in cases.ts; CaseLayout renders it.
 Fig. 1      HeroFigure with the project's home-page thumbnail if it has
             one; otherwise the strongest screen as a Fig (PhoneStrip,
@@ -171,7 +171,7 @@ For problem-led product stories. The reader is here to see how you think.
 ### Default section spine
 
 ```
-Hero            Label, H1, lede, facts (Client/Role/Team/Status), link to
+Hero            Label, H1, lede, facts (Company/Role/Team/Status), link to
                 the live URL. Lives in cases.ts.
 Fig. 1          HeroFigure (home thumbnail) or the strongest composition
                 shot as a Fig.
