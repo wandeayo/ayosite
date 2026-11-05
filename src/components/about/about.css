@@ -1,0 +1,63 @@
+/* About page. Ported verbatim from waande-about-handoff/reference/about.html ("about page"
+ * block). Tokens, .wrap, header, .sec-head/.label, .btn, the contact section, footer, theme
+ * toggle and floating pill come from (home)/home.css, as on the home page and case studies.
+ * Keep values in sync with the reference rather than "improving" them. Deliberate,
+ * mechanical differences:
+ *  - :hover rules only apply on devices that can hover, as everywhere else on the site;
+ *  - .eng-note is left out: the reference styles it but never renders one. */
+.ab-hero{border-top:0;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:48px;align-items:start;padding-block:56px 52px}
+.ab-intro h1{margin:0;font-size:clamp(30px,4.8vw,42px);line-height:1.1;font-weight:500;letter-spacing:-.03em}
+.ab-lead{margin:14px 0 0;font-size:19px;line-height:1.5;color:var(--fg);max-width:34ch;letter-spacing:-.01em}
+.ab-bio{margin-top:26px;display:grid;gap:14px;max-width:56ch}
+.ab-bio p{margin:0;font-size:16px;line-height:1.7;color:var(--muted)}
+.ab-photo{margin:0;border-radius:14px;overflow:hidden;aspect-ratio:4/5;background:var(--line)}
+.ab-photo img{width:100%;height:100%;object-fit:cover;object-position:88% 50%;display:block}
+@media (max-width:720px){.ab-hero{grid-template-columns:1fr;gap:28px;padding-block:32px 40px}.ab-photo{aspect-ratio:1/1;order:-1}.ab-photo img{object-position:70% 40%}}
+.ab-sec{padding-block:40px;border-top:1px solid var(--line)}
+.ab-xp{list-style:none;margin:0;padding:0}
+.ab-xp li{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:13px 0;border-top:1px solid var(--line)}
+.ab-xp li:first-child{border-top:0;padding-top:0}
+.ab-xp b{font-weight:500}
+.ab-xp span{color:var(--muted);font-size:14.5px}
+.ab-xp .mono{color:var(--faint);font-size:12px;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.ab-xp li{grid-template-columns:minmax(0,1fr) auto;row-gap:2px}.ab-xp li span:not(.mono){grid-column:1/-1;grid-row:2}}
+.ab-photos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ab-photos img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:10px;display:block}
+@media (max-width:560px){.ab-photos{grid-template-columns:1fr 1fr}}
+.ab-cta{margin:0;color:var(--muted);max-width:52ch}
+
+/* "engineers": a hand of cards that fans out (engineers.tsx) */
+.eng-wrap{position:relative;display:inline-block}
+.eng{font:inherit;color:var(--fg);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline dashed;text-decoration-color:var(--faint);text-underline-offset:4px;text-decoration-thickness:1px;transition:text-decoration-color .2s}
+.eng[aria-expanded="true"]{text-decoration-color:var(--fg)}
+@media (hover:hover){.eng:hover{text-decoration-color:var(--fg)}}
+.eng-hand{position:absolute;left:50%;bottom:calc(100% + 14px);width:0;height:0;z-index:20;pointer-events:none}
+.eng-card{position:absolute;left:0;bottom:0;width:196px;display:grid;grid-template-columns:32px 1fr;column-gap:10px;align-items:center;padding:11px 12px;border-radius:12px;
+  background:var(--surface);box-shadow:0 0 0 1px var(--line),0 14px 30px -14px rgba(0,0,0,.35);opacity:0;
+  transform:translate(-50%,10px) rotate(0deg) scale(.9);transform-origin:50% 140%;
+  transition:transform .5s cubic-bezier(.2,.9,.25,1.15),opacity .25s ease;transition-delay:calc(var(--i) * 45ms)}
+.eng-card i{grid-row:1/3;width:32px;height:32px;border-radius:50%;background:var(--c);color:var(--t);font-style:normal;font-size:11px;font-weight:600;display:grid;place-items:center;font-family:var(--mono)}
+.eng-card b{font-size:13.5px;font-weight:500;line-height:1.3;color:var(--fg)}
+.eng-card small{font-size:11.5px;color:var(--muted);line-height:1.3}
+.eng-wrap.open .eng-hand{pointer-events:auto}
+.eng-wrap.open .eng-card{opacity:1}
+.eng-wrap.open .eng-card:nth-child(1){transform:translate(calc(-50% - 192px),-12px) rotate(-6deg)}
+.eng-wrap.open .eng-card:nth-child(2){transform:translate(-50%,-30px) rotate(0deg);z-index:2}
+.eng-wrap.open .eng-card:nth-child(3){transform:translate(calc(-50% + 192px),-12px) rotate(6deg)}
+@media (hover:hover){
+  .eng-wrap.open .eng-card:hover{z-index:3}
+  .eng-wrap.open .eng-card:nth-child(1):hover{transform:translate(calc(-50% - 192px),-22px) rotate(-3deg)}
+  .eng-wrap.open .eng-card:nth-child(2):hover{transform:translate(-50%,-40px)}
+  .eng-wrap.open .eng-card:nth-child(3):hover{transform:translate(calc(-50% + 192px),-22px) rotate(3deg)}
+}
+@media (max-width:640px){
+  .ab-bio p{position:relative}
+  .eng-wrap{position:static}
+  .eng-hand{left:0;bottom:calc(100% + 6px)}
+  .eng-card{width:min(250px,calc(100vw - 48px));transform:translate(0,10px) scale(.95);transform-origin:20% 100%}
+  .eng-wrap.open .eng-card:nth-child(1){transform:translate(0,-112px) rotate(-2deg)}
+  .eng-wrap.open .eng-card:nth-child(2){transform:translate(22px,-58px) rotate(1.5deg)}
+  .eng-wrap.open .eng-card:nth-child(3){transform:translate(6px,-4px) rotate(-1deg)}
+}
+@media (max-width:640px) and (hover:hover){.eng-wrap.open .eng-card:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){.eng-card{transition:opacity .2s}}

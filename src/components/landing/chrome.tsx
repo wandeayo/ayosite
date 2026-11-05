@@ -19,11 +19,19 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
   );
 }
 
-export function ContactSection() {
+const CONTACT_HEADING = "Building something early and need a designer who can ship? Let’s talk.";
+
+/**
+ * Home and case pages use the default heading and no line. The About page passes its own
+ * heading and a line under it (waande-about-handoff/ABOUT.md, section 1.4); the line's
+ * style (.ab-cta) lives in about.css.
+ */
+export function ContactSection({ heading = CONTACT_HEADING, line }: { heading?: string; line?: string }) {
   return (
     <section id="contact" className="contact">
       <span className="label">Contact</span>
-      <h2>Building something early and need a designer who can ship? Let’s talk.</h2>
+      <h2>{heading}</h2>
+      {line && <p className="ab-cta">{line}</p>}
       <EmailRow />
       <div className="socials">
         {SOCIALS.map((s) => (
