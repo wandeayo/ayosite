@@ -9,25 +9,40 @@ import { useEffect, useState } from "react";
  * full size its overlay covers the page, so ProtoFrame sets `data-proto-open`
  * on <html> and the CSS hides the pill underneath.
  *
- * `home` links to the page's own sections and marks the one being read
- * (aria-current="location"). `case` links back to the home sections, with
- * Work as the current page.
+ * Links follow waande-site-handoff/CASE-STUDIES.md section 2: Work → /#work,
+ * About → /about (its own page), Contact → #contact (repeated at the foot of
+ * every page, so it stays on the page).
+ *
+ * `home` marks the section being read (aria-current="location") for the two
+ * items that live on the home page, Work and Contact. `case` marks Work and
+ * `about` marks About as the current page (aria-current="page").
  */
 
-type Variant = "home" | "case";
+type Variant = "home" | "case" | "about";
 
+type Item = "work" | "about" | "contact";
+
+const ITEMS: readonly Item[] = ["work", "about", "contact"];
+
+const LABELS: Record<Item, string> = { work: "Work", about: "About", contact: "Contact" };
+
+/** Home section ids, in page order. `about` is the "What I do" section, which no pill item points at. */
 const HOME_SECTIONS = ["work", "about", "contact"] as const;
 type SectionId = (typeof HOME_SECTIONS)[number];
-
-const LABELS: Record<SectionId, string> = { work: "Work", about: "About", contact: "Contact" };
 
 /** On home, a section counts as current once its top passes this fraction of the viewport. */
 const READ_LINE = 0.4;
 
+function hrefFor(item: Item, variant: Variant): string {
+  if (item === "about") return "/about";
+  if (item === "contact") return "#contact";
+  return variant === "home" ? "#work" : "/#work";
+}
+
 export function FloatingNav({ variant }: { variant: Variant }) {
   const [current, setCurrent] = useState<SectionId | null>(null);
 
-  // Home only: mark the section being read. Case pages have nothing to track.
+  // Home only: track the section being read. The other pages mark a fixed item.
   useEffect(() => {
     if (variant !== "home") return;
     const sections = HOME_SECTIONS.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => el !== null);
@@ -60,24 +75,19 @@ export function FloatingNav({ variant }: { variant: Variant }) {
     };
   }, [variant]);
 
+  const ariaCurrent = (item: Item): "page" | "location" | undefined => {
+    if (variant === "home") return item !== "about" && current === item ? "location" : undefined;
+    if (variant === "case") return item === "work" ? "page" : undefined;
+    return item === "about" ? "page" : undefined;
+  };
+
   return (
     <nav className="fnav" aria-label="Site">
-      {HOME_SECTIONS.map((id) => {
-        if (variant === "home") {
-          return (
-            <a key={id} href={`#${id}`} aria-current={current === id ? "location" : undefined}>
-              {LABELS[id]}
-            </a>
-          );
-        }
-        // Contact is repeated at the foot of every case page, so it stays on the page.
-        const href = id === "contact" ? "#contact" : `/#${id}`;
-        return (
-          <a key={id} href={href} aria-current={id === "work" ? "page" : undefined}>
-            {LABELS[id]}
-          </a>
-        );
-      })}
+      {ITEMS.map((item) => (
+        <a key={item} href={hrefFor(item, variant)} aria-current={ariaCurrent(item)}>
+          {LABELS[item]}
+        </a>
+      ))}
     </nav>
   );
 }
