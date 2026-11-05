@@ -12,6 +12,20 @@ export const LANDING = {
   email: "ayowandeolubo@gmail.com",
 } as const;
 
+/**
+ * Default social card (public/og.png) for every page without its own; the case studies set
+ * their own. Root layout and About both list it, because a page that sets openGraph or
+ * twitter replaces the inherited object, images included.
+ */
+export const DEFAULT_OG_IMAGE = {
+  url: `${LANDING.url}/og.png`,
+  width: 2400,
+  height: 1260,
+  alt: "Ayowande Olubo — I design it, then I ship it.",
+} as const;
+
+export const DEFAULT_TWITTER_IMAGE = { url: DEFAULT_OG_IMAGE.url, alt: DEFAULT_OG_IMAGE.alt } as const;
+
 export const LINKS = {
   calendly: "https://calendly.com/ayowandeolubo",
   resume: "https://drive.google.com/file/d/1eKx9Ip4GIbps8MWfdX-IsLJWEUvp1n2l/view?usp=sharing",

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
-import { LANDING } from "@/components/landing/content";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, LANDING } from "@/components/landing/content";
 import { THEME_INIT_SCRIPT } from "@/components/landing/theme";
 
 import "./home.css";
@@ -53,11 +53,13 @@ export const metadata: Metadata = {
     title: LANDING.title,
     description: LANDING.description,
     locale: "en_US",
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: LANDING.title,
     description: LANDING.description,
+    images: [DEFAULT_TWITTER_IMAGE],
   },
 };
 
