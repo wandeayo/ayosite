@@ -7,7 +7,9 @@
  *    Reference: light #a19f99 (2.47:1), dark #64635e (3.19:1). Approved by Ayo,
  *    2026-11-04. Values are the first AA pass on the line toward --muted;
  *  - the Background section (and its .list/.item styles) is removed, at Ayo's
- *    request, 2026-11-04.
+ *    request, 2026-11-04;
+ *  - hover effects only apply on devices that can hover (no sticky hover on touch),
+ *    and a block of mobile/touch refinements sits at the end of this file.
  * Otherwise keep values in sync with the reference rather than "improving" them. */
 /* Layout: one quiet 880px column. Every project shot sits in the same frame, at the same scale, with equal margins. */
 :root{
@@ -41,21 +43,21 @@ header.top{display:flex;justify-content:space-between;align-items:center;gap:16p
 .brand{font-weight:500;letter-spacing:-.01em}
 nav.links{display:flex;gap:20px;color:var(--muted);font-size:14px}
 nav.links a{transition:color .15s}
-nav.links a:hover{color:var(--fg)}
+@media (hover:hover){nav.links a:hover{color:var(--fg)}}
 
 .intro{padding-block:72px 64px;display:grid;gap:22px}
 .intro h1{font-size:clamp(26px,4.4vw,34px);line-height:1.2;font-weight:500;letter-spacing:-.025em;margin:0;text-wrap:balance;max-width:23ch}
 .intro h1 span{color:var(--muted);white-space:nowrap}
 .intro p{margin:0;color:var(--muted);max-width:56ch;font-size:16px}
 .intro p a{color:var(--fg);border-bottom:1px solid var(--line);transition:border-color .15s}
-.intro p a:hover{border-color:var(--fg)}
+@media (hover:hover){.intro p a:hover{border-color:var(--fg)}}
 .status{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;color:var(--muted)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:8px;box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
 .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 .btn{font:inherit;font-size:14px;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;transition:border-color .15s,opacity .15s}
-.btn:hover{border-color:var(--faint)}
+@media (hover:hover){.btn:hover{border-color:var(--faint)}}
 .btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.btn.primary:hover{opacity:.86}
+@media (hover:hover){.btn.primary:hover{opacity:.86}}
 
 section{padding-block:40px;border-top:1px solid var(--line)}
 .sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px;gap:12px}
@@ -72,7 +74,7 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 .meta .yr,.meta .role{color:var(--faint)}
 .meta .role{padding-top:4px}
 .arrow{display:inline-block;transition:transform .2s,color .2s;color:var(--faint)}
-.project:hover .arrow{transform:translateX(3px);color:var(--fg)}
+@media (hover:hover){.project:hover .arrow{transform:translateX(3px);color:var(--fg)}}
 
 /* thumbnail tile + one shared frame system */
 .thumb{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:12px;overflow:hidden;isolation:isolate;cursor:pointer;
@@ -81,7 +83,7 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 /* film grain + a soft light that wakes up on hover */
 .thumb::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;opacity:var(--grain,.22);mix-blend-mode:soft-light}
 .thumb::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60% 50% at 50% 0%,var(--hi),transparent 70%);opacity:0;transition:opacity .6s ease}
-.project:hover .thumb::after{opacity:.7}
+@media (hover:hover){.project:hover .thumb::after{opacity:.7}}
 .thumb>.win,.thumb>.ph-stage{z-index:1}
 .win{--frame-shadow:0 1px 2px rgba(0,0,0,.05),0 22px 44px -20px var(--sh),0 8px 16px -10px var(--sh)}
 /* each tile takes its colour from the product it frames */
@@ -99,7 +101,7 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 :root[data-theme="dark"] [data-play="dexla"]{--base:#18161f;--hi:#2c2742;--mid:#201c30;--deep:#28215a;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
 .win{position:absolute;left:6%;right:6%;top:50%;transform:translateY(-50%);border-radius:8px;overflow:hidden;
   background:var(--chrome);box-shadow:var(--frame-shadow);outline:1px solid var(--frame-line);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.project:hover .win{transform:translateY(calc(-50% - 3px))}
+@media (hover:hover){.project:hover .win{transform:translateY(calc(-50% - 3px))}}
 .chrome{height:0;padding-top:3.2%;position:relative;border-bottom:1px solid var(--frame-line)}
 .chrome i{position:absolute;top:50%;width:1.05%;aspect-ratio:1;border-radius:50%;background:var(--chrome-dot);transform:translateY(-50%)}
 .chrome i:nth-child(1){left:2%}.chrome i:nth-child(2){left:3.7%}.chrome i:nth-child(3){left:5.4%}
@@ -244,7 +246,7 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 .kw-p i{position:absolute;left:0;top:8px;bottom:8px;width:1.5px;background:var(--fg);transform:scaleY(0);transform-origin:top}
 .kw-p b{font-weight:500;font-size:14px;color:var(--faint);transition:color .2s}
 .kw-p span{font-family:var(--mono);font-size:11px;line-height:1.45;color:var(--faint);opacity:0;max-height:0;overflow:hidden;transition:opacity .25s,max-height .3s}
-.kw-p:hover b{color:var(--muted)}
+@media (hover:hover){.kw-p:hover b{color:var(--muted)}}
 .kw-p[aria-selected="true"] b{color:var(--fg)}
 .kw-p[aria-selected="true"] span{opacity:1;max-height:40px}
 .kw-p[aria-selected="true"] i{transform:scaleY(1)}
@@ -278,6 +280,36 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 .email{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .email code{font-family:var(--mono);font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);user-select:all;overflow-wrap:anywhere}
 .socials{display:flex;flex-wrap:wrap;gap:8px 20px;color:var(--muted);font-size:14px}
-.socials a:hover{color:var(--fg)}
+@media (hover:hover){.socials a:hover{color:var(--fg)}}
 footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:28px 48px;border-top:1px solid var(--line);margin-top:24px;color:var(--faint)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ------------------------------------------------------------------------------------------
+ * Mobile and touch refinements (post-handoff, 2026-11-04). Desktop renders exactly as the
+ * reference; everything below only changes small screens and touch input.
+ * ---------------------------------------------------------------------------------------- */
+/* Stop mobile browsers from inflating text on their own. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* The reference never reset the UA's 8px body margin, so phones got a 24px gutter instead of
+   the specified max(16px, safe-area). Only the side margin goes; the vertical rhythm stays. */
+body{margin-inline:0}
+/* Header: the name never breaks; on the narrowest phones the nav drops under it instead. */
+.brand{white-space:nowrap}
+header.top{flex-wrap:wrap;row-gap:10px}
+@media (max-width:360px){nav.links{gap:16px}}
+@media (max-width:640px){
+  /* "I design it, then I ship it." must stay on one line (spec). Below ~330px it can't at 26px,
+     so cap the size to what fits: the span is ~10.3em wide. No-op at 330px and up. */
+  .intro h1{font-size:min(26px,calc((100vw - 2 * max(16px, env(safe-area-inset-left,0px))) / 10.5))}
+}
+/* Kind words names: three columns wrap every name below ~480px; two columns keep them whole. */
+@media (max-width:480px){
+  .kw-people{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
+}
+/* Touch: give small text links a ~44px hit area without moving anything. Social rows get
+   enough row-gap that neighbouring hit areas don't overlap when the list wraps. */
+@media (pointer:coarse){
+  nav.links a,.socials a{padding-block:11px;margin-block:-11px}
+  .socials a{padding-inline:8px;margin-inline:-8px}
+  .socials{row-gap:22px}
+}
