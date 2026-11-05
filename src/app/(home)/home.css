@@ -88,18 +88,18 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 .thumb>.win,.thumb>.ph-stage{z-index:1}
 .win{--frame-shadow:0 1px 2px rgba(0,0,0,.05),0 22px 44px -20px var(--sh),0 8px 16px -10px var(--sh)}
 /* each tile takes its colour from the product it frames */
-[data-play="carmen"]{--base:#e4ebfa;--hi:#f8faff;--mid:#d9e3fb;--deep:#bccdf6;--sh:rgba(46,84,178,.38);--edge:rgba(46,84,178,.08);--lip:rgba(255,255,255,.7)}
-[data-play="air"]{--base:#ece9e3;--hi:#faf8f4;--mid:#f1e6d6;--deep:#d8dfec;--sh:rgba(70,62,48,.30);--edge:rgba(70,62,48,.07);--lip:rgba(255,255,255,.7)}
-[data-play="dexla"]{--base:#e9e6f3;--hi:#f8f7fc;--mid:#e3dcf3;--deep:#cdc4ec;--sh:rgba(79,70,229,.30);--edge:rgba(79,70,229,.07);--lip:rgba(255,255,255,.7)}
-[data-play="arctic"]{--base:#0a1117;--hi:#1b3550;--mid:#0e1b26;--deep:#10263a;--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.06);--grain:.35}
+[data-play="carmen"],[data-tile="carmen"]{--base:#e4ebfa;--hi:#f8faff;--mid:#d9e3fb;--deep:#bccdf6;--sh:rgba(46,84,178,.38);--edge:rgba(46,84,178,.08);--lip:rgba(255,255,255,.7)}
+[data-play="air"],[data-tile="air"]{--base:#ece9e3;--hi:#faf8f4;--mid:#f1e6d6;--deep:#d8dfec;--sh:rgba(70,62,48,.30);--edge:rgba(70,62,48,.07);--lip:rgba(255,255,255,.7)}
+[data-play="dexla"],[data-tile="dexla"]{--base:#e9e6f3;--hi:#f8f7fc;--mid:#e3dcf3;--deep:#cdc4ec;--sh:rgba(79,70,229,.30);--edge:rgba(79,70,229,.07);--lip:rgba(255,255,255,.7)}
+[data-play="arctic"],[data-tile="arctic"]{--base:#0a1117;--hi:#1b3550;--mid:#0e1b26;--deep:#10263a;--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.06);--grain:.35}
 @media (prefers-color-scheme:dark){
-:root:not([data-theme="light"]) [data-play="carmen"]{--base:#151a26;--hi:#243453;--mid:#18213a;--deep:#1d2c52;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
-:root:not([data-theme="light"]) [data-play="air"]{--base:#191816;--hi:#2c2924;--mid:#221f1b;--deep:#1f2430;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
-:root:not([data-theme="light"]) [data-play="dexla"]{--base:#18161f;--hi:#2c2742;--mid:#201c30;--deep:#28215a;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
+:root:not([data-theme="light"]) [data-play="carmen"],:root:not([data-theme="light"]) [data-tile="carmen"]{--base:#151a26;--hi:#243453;--mid:#18213a;--deep:#1d2c52;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
+:root:not([data-theme="light"]) [data-play="air"],:root:not([data-theme="light"]) [data-tile="air"]{--base:#191816;--hi:#2c2924;--mid:#221f1b;--deep:#1f2430;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
+:root:not([data-theme="light"]) [data-play="dexla"],:root:not([data-theme="light"]) [data-tile="dexla"]{--base:#18161f;--hi:#2c2742;--mid:#201c30;--deep:#28215a;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
 }
-:root[data-theme="dark"] [data-play="carmen"]{--base:#151a26;--hi:#243453;--mid:#18213a;--deep:#1d2c52;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
-:root[data-theme="dark"] [data-play="air"]{--base:#191816;--hi:#2c2924;--mid:#221f1b;--deep:#1f2430;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
-:root[data-theme="dark"] [data-play="dexla"]{--base:#18161f;--hi:#2c2742;--mid:#201c30;--deep:#28215a;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
+:root[data-theme="dark"] [data-play="carmen"],:root[data-theme="dark"] [data-tile="carmen"]{--base:#151a26;--hi:#243453;--mid:#18213a;--deep:#1d2c52;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
+:root[data-theme="dark"] [data-play="air"],:root[data-theme="dark"] [data-tile="air"]{--base:#191816;--hi:#2c2924;--mid:#221f1b;--deep:#1f2430;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
+:root[data-theme="dark"] [data-play="dexla"],:root[data-theme="dark"] [data-tile="dexla"]{--base:#18161f;--hi:#2c2742;--mid:#201c30;--deep:#28215a;--sh:rgba(0,0,0,.6);--edge:rgba(255,255,255,.06);--lip:rgba(255,255,255,.05)}
 .win{position:absolute;left:6%;right:6%;top:50%;transform:translateY(-50%);border-radius:8px;overflow:hidden;
   background:var(--chrome);box-shadow:var(--frame-shadow);outline:1px solid var(--frame-line);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 @media (hover:hover){.project:hover .win{transform:translateY(calc(-50% - 3px))}}
