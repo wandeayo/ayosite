@@ -315,16 +315,16 @@ body{margin-inline:0}
 /* ------------------------------------------------------------------------------------------
  * Floating nav pill and theme toggle, shared with the case studies (floating-nav.tsx,
  * theme-toggle.tsx). Values are verbatim from waande-case-handoff/reference (.fnav,
- * .theme-t), adopted on the home page too at Ayo's request, 2026-11-05. Deliberate additions:
- * the 44px touch targets below, and data-proto-open (set by the prototype frame).
+ * .theme-t), adopted on the home page too at Ayo's request, 2026-11-05. Deliberate differences:
+ * the pill is always visible (the reference hid it until the hero had scrolled away; Ayo,
+ * 2026-11-05), the 44px touch targets below, and data-proto-open (set by the prototype frame).
  * ---------------------------------------------------------------------------------------- */
 :root{--nav-bg:rgba(20,20,19,.92);--nav-fg:#f7f7f5;--nav-line:transparent}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--nav-bg:rgba(34,34,33,.92);--nav-fg:#ededea;--nav-line:rgba(255,255,255,.08)}}
 :root[data-theme="dark"]{--nav-bg:rgba(34,34,33,.92);--nav-fg:#ededea;--nav-line:rgba(255,255,255,.08)}
 .fnav{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:200;display:flex;gap:2px;padding:5px;border-radius:99px;
   background:var(--nav-bg);box-shadow:inset 0 0 0 1px var(--nav-line),0 12px 30px -12px rgba(0,0,0,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  transform:translate(-50%,calc(100% + 30px));opacity:0;transition:transform .45s cubic-bezier(.2,.7,.2,1),opacity .3s}
-.fnav.show{transform:translate(-50%,0);opacity:1}
+  transform:translateX(-50%)}
 .fnav a{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--nav-fg) 62%,transparent);padding:10px 16px;border-radius:99px;white-space:nowrap;transition:color .15s,background .15s}
 @media (hover:hover){.fnav a:hover{color:var(--nav-fg)}}
 .fnav a[aria-current]{background:color-mix(in srgb,var(--nav-fg) 14%,transparent);color:var(--nav-fg)}
