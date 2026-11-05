@@ -95,9 +95,13 @@ export const KIND_WORDS: readonly KindWord[] = [
 ];
 
 /** JSON-LD Person for the landing page (handoff section 8). */
+/** Stable id, so the case studies' CreativeWork `author` points at this same Person. */
+export const PERSON_ID = `${LANDING.url}/#person`;
+
 export const PERSON_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": PERSON_ID,
   name: LANDING.name,
   url: LANDING.url,
   jobTitle: "Product Designer",

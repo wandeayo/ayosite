@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { CASE_STUDIES } from "@/components/case-study/registry";
+import { isCaseSlug } from "@/components/case/cases";
 import type { Project } from "@/lib/projects";
 import { WorkThumb } from "./work-thumb";
 
@@ -12,7 +12,7 @@ interface WorkRowProps {
 
 export function WorkRow({ project, index, isLast }: WorkRowProps) {
   const flipLayout = index % 2 !== 0;
-  const hasCaseStudy = project.slug in CASE_STUDIES;
+  const hasCaseStudy = isCaseSlug(project.slug);
 
   const thumbnail = (
     <div
