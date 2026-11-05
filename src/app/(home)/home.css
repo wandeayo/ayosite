@@ -9,7 +9,9 @@
  *  - the Background section (and its .list/.item styles) is removed, at Ayo's
  *    request, 2026-11-04;
  *  - hover effects only apply on devices that can hover (no sticky hover on touch),
- *    and a block of mobile/touch refinements sits at the end of this file.
+ *    and a block of mobile/touch refinements sits at the end of this file;
+ *  - the section nav is a floating pill at the bottom of the viewport (bottom-nav.tsx),
+ *    not links in the header, at Ayo's request, 2026-11-05.
  * Otherwise keep values in sync with the reference rather than "improving" them. */
 /* Layout: one quiet 880px column. Every project shot sits in the same frame, at the same scale, with equal margins. */
 :root{
@@ -41,9 +43,6 @@ h2.label{margin:0;font-weight:inherit}
 
 header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:28px}
 .brand{font-weight:500;letter-spacing:-.01em}
-nav.links{display:flex;gap:20px;color:var(--muted);font-size:14px}
-nav.links a{transition:color .15s}
-@media (hover:hover){nav.links a:hover{color:var(--fg)}}
 
 .intro{padding-block:72px 64px;display:grid;gap:22px}
 .intro h1{font-size:clamp(26px,4.4vw,34px);line-height:1.2;font-weight:500;letter-spacing:-.025em;margin:0;text-wrap:balance;max-width:23ch}
@@ -293,10 +292,8 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 /* The reference never reset the UA's 8px body margin, so phones got a 24px gutter instead of
    the specified max(16px, safe-area). Only the side margin goes; the vertical rhythm stays. */
 body{margin-inline:0}
-/* Header: the name never breaks; on the narrowest phones the nav drops under it instead. */
+/* Header: the name never breaks. */
 .brand{white-space:nowrap}
-header.top{flex-wrap:wrap;row-gap:10px}
-@media (max-width:360px){nav.links{gap:16px}}
 @media (max-width:640px){
   /* "I design it, then I ship it." must stay on one line (spec). Below ~330px it can't at 26px,
      so cap the size to what fits: the span is ~10.3em wide. No-op at 330px and up. */
@@ -306,10 +303,35 @@ header.top{flex-wrap:wrap;row-gap:10px}
 @media (max-width:480px){
   .kw-people{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
 }
-/* Touch: give small text links a ~44px hit area without moving anything. Social rows get
+/* Touch: give the social links a ~44px hit area without moving anything. Their rows get
    enough row-gap that neighbouring hit areas don't overlap when the list wraps. */
 @media (pointer:coarse){
-  nav.links a,.socials a{padding-block:11px;margin-block:-11px}
-  .socials a{padding-inline:8px;margin-inline:-8px}
+  .socials a{padding:11px 8px;margin:-11px -8px}
   .socials{row-gap:22px}
 }
+
+/* ------------------------------------------------------------------------------------------
+ * Bottom nav (post-handoff, 2026-11-05): the section links live in a floating pill pinned to
+ * the bottom of the viewport instead of the header. Same mono label voice as the section
+ * labels. 92% surface: the lowest opacity that keeps the muted labels AA (4.5:1) even with
+ * the darkest content (black buttons, the Arctic Edge tile) scrolling under it.
+ * ---------------------------------------------------------------------------------------- */
+.bnav{position:fixed;z-index:100;left:50%;bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 8px));transform:translateX(-50%);
+  display:flex;gap:2px;padding:5px;border-radius:999px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px -12px rgba(20,20,19,.22)}
+.bnav a{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;line-height:12px;color:var(--muted);
+  padding:12px 16px;border-radius:999px;white-space:nowrap;transition:color .15s,background-color .2s}
+.bnav a[aria-current]{color:var(--fg);background:color-mix(in srgb,var(--fg) 7%,transparent)}
+@media (hover:hover){.bnav a:hover{color:var(--fg)}}
+.bnav a:focus-visible{outline-offset:-2px;border-radius:999px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bnav{box-shadow:0 12px 32px -12px rgba(0,0,0,.7)}}
+:root[data-theme="dark"] .bnav{box-shadow:0 12px 32px -12px rgba(0,0,0,.7)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.bnav{background:var(--surface)}}
+/* Room at the end of the page so the pill never sits on the footer. */
+footer{padding-bottom:calc(48px + 64px + env(safe-area-inset-bottom,0px))}
+/* Jumping to a section lands with breathing room; smooth unless reduced motion is set. */
+section[id]{scroll-margin-top:24px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (pointer:coarse){.bnav a{padding-block:16px}} /* 44px thumb targets on touch screens */
+@media (max-width:360px){.bnav a{padding-inline:13px}}

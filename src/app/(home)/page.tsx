@@ -1,3 +1,4 @@
+import { BottomNav } from "@/components/landing/bottom-nav";
 import { LINKS, PERSON_JSON_LD, SERVICES, SOCIALS } from "@/components/landing/content";
 import { EmailRow } from "@/components/landing/email-row";
 import { KindWords } from "@/components/landing/kind-words";
@@ -47,11 +48,6 @@ export default function HomePage() {
         <a className="brand" href="#top" id="top">
           Ayowande Olubo
         </a>
-        <nav className="links" aria-label="Sections">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </nav>
       </header>
 
       {/* header and footer stay outside main, as the banner and contentinfo landmarks */}
@@ -169,6 +165,8 @@ export default function HomePage() {
         <span>© 2026 Ayowande Olubo</span>
         <span>Designed and built by hand, mostly</span>
       </footer>
+
+      <BottomNav />
     </div>
   );
 }
