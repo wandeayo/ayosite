@@ -11,7 +11,8 @@
  *  - hover effects only apply on devices that can hover (no sticky hover on touch),
  *    and a block of mobile/touch refinements sits at the end of this file;
  *  - the section nav is a floating pill at the bottom of the viewport (bottom-nav.tsx),
- *    not links in the header, at Ayo's request, 2026-11-05.
+ *    not links in the header, at Ayo's request, 2026-11-05;
+ *  - a light/dark toggle sits top right of the header (theme-toggle.tsx), 2026-11-05.
  * Otherwise keep values in sync with the reference rather than "improving" them. */
 /* Layout: one quiet 880px column. Every project shot sits in the same frame, at the same scale, with equal margins. */
 :root{
@@ -335,3 +336,26 @@ section[id]{scroll-margin-top:24px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 @media (pointer:coarse){.bnav a{padding-block:16px}} /* 44px thumb targets on touch screens */
 @media (max-width:360px){.bnav a{padding-inline:13px}}
+
+/* ------------------------------------------------------------------------------------------
+ * Theme toggle (post-handoff, 2026-11-05), top right of the header. Shows a moon in light
+ * mode and a sun in dark mode, chosen by CSS so it's right before hydration. The button is
+ * 32px; negative block margins keep the header at its original height.
+ * ---------------------------------------------------------------------------------------- */
+.tt{position:relative;display:grid;place-items:center;width:32px;height:32px;margin-block:-4px;padding:0;
+  border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);cursor:pointer;
+  transition:color .15s,border-color .15s}
+@media (hover:hover){.tt:hover{color:var(--fg);border-color:var(--faint)}}
+.tt:focus-visible{border-radius:999px}
+.tt svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.tt .i-sun{display:none}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .tt .i-sun{display:block}
+  :root:not([data-theme="light"]) .tt .i-moon{display:none}
+}
+:root[data-theme="dark"] .tt .i-sun{display:block}
+:root[data-theme="dark"] .tt .i-moon{display:none}
+/* 44px hit area on touch screens without changing the 32px button. */
+@media (pointer:coarse){.tt::after{content:"";position:absolute;inset:-6px}}
+/* While switching themes, every colour changes in one frame instead of fading at different speeds. */
+.theme-switching,.theme-switching *,.theme-switching *::before,.theme-switching *::after{transition:none!important}

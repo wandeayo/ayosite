@@ -3,6 +3,7 @@ import { LINKS, PERSON_JSON_LD, SERVICES, SOCIALS } from "@/components/landing/c
 import { EmailRow } from "@/components/landing/email-row";
 import { KindWords } from "@/components/landing/kind-words";
 import { LocalClock } from "@/components/landing/local-clock";
+import { ThemeToggle } from "@/components/landing/theme-toggle";
 import { FIT_STAGES_INLINE } from "@/components/landing/thumbs/fit-stages";
 import { AirstrideThumb, ArcticThumb, CarmenThumb, DexlaThumb } from "@/components/landing/thumbs/thumbs";
 import { WorkGrid } from "@/components/landing/work-grid";
@@ -48,6 +49,7 @@ export default function HomePage() {
         <a className="brand" href="#top" id="top">
           Ayowande Olubo
         </a>
+        <ThemeToggle />
       </header>
 
       {/* header and footer stay outside main, as the banner and contentinfo landmarks */}

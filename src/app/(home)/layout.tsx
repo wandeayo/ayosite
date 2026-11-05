@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { LANDING } from "@/components/landing/content";
+import { THEME_INIT_SCRIPT } from "@/components/landing/theme";
 
 import "./home.css";
 
@@ -56,7 +57,12 @@ export const viewport: Viewport = {
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+    // suppressHydrationWarning: the head script may set data-theme before React hydrates.
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Apply a saved theme before first paint, so it never flashes the other one. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>{children}</body>
     </html>
   );
