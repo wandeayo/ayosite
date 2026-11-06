@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>Not Shipped · Ayowande Olubo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="404: this page was designed, but never shipped.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the site's 880px column; the 404 is a Figma frame that never shipped, and "Ship it anyway" tries to deploy it. */
+:root{--bg:#f7f7f5;--surface:#fff;--fg:#141413;--muted:#6b6a65;--faint:#a19f99;--line:#e6e5e0;--accent:#3d5bd9;--ok:#2f8a57;--err:#c2412d;
+  --canvas:#efeee9;--grid:#d9d7d0;--skel:#e7e6e1;--skel2:#f1f0ec;--term:#121211;--termfg:#e8e7e2;--termmut:#8b8a84;
+  --sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f0f0e;--surface:#171716;--fg:#ededea;--muted:#9a9993;--faint:#64635e;--line:#262624;--accent:#8c9cff;--ok:#5cc28a;--err:#f07a63;
+  --canvas:#151514;--grid:#2a2a28;--skel:#232322;--skel2:#1c1c1b;--term:#0a0a09;--termfg:#e8e7e2;--termmut:#7c7b75;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f0f0e;--surface:#171716;--fg:#ededea;--muted:#9a9993;--faint:#64635e;--line:#262624;--accent:#8c9cff;--ok:#5cc28a;--err:#f07a63;
+  --canvas:#151514;--grid:#2a2a28;--skel:#232322;--skel2:#1c1c1b;--term:#0a0a09;--termfg:#e8e7e2;--termmut:#7c7b75;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:880px;margin:0 auto}
+.mono{font-family:var(--mono)}
+.label{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:28px}
+.brand{font-weight:500;letter-spacing:-.01em}
+.theme-t{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--fg);display:grid;place-items:center;cursor:pointer}
+.theme-t svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.theme-t .i-sun{display:none}
+:root[data-theme="dark"] .theme-t .i-moon{display:none}:root[data-theme="dark"] .theme-t .i-sun{display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .theme-t .i-moon{display:none}:root:not([data-theme="light"]) .theme-t .i-sun{display:block}}
+
+.hero{padding-block:48px 28px;display:grid;gap:16px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,46px);line-height:1.1;font-weight:500;letter-spacing:-.03em;text-wrap:balance;max-width:17ch}
+.hero h1 span{color:var(--muted)}
+.hero p{margin:0;color:var(--muted);font-size:16.5px;max-width:52ch}
+.hero p code{font-family:var(--mono);font-size:.9em;color:var(--fg);background:var(--surface);border:1px solid var(--line);padding:1px 6px;border-radius:5px;white-space:nowrap}
+
+/* the canvas */
+.stage{position:relative;border-radius:16px;overflow:hidden;background:var(--canvas) radial-gradient(var(--grid) 1px,transparent 1.2px) 0 0/20px 20px;
+  box-shadow:inset 0 0 0 1px var(--line);aspect-ratio:16/9;min-height:300px}
+.zoom{position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:11px;color:var(--faint);display:flex;gap:14px}
+.view{position:absolute;inset:0;transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.view.off{opacity:0;transform:scale(.985);pointer-events:none}
+.frame{position:absolute;left:50%;top:52%;width:62%;aspect-ratio:1440/860;transform:translate(-50%,-50%)}
+.frame-in{position:absolute;inset:0;background:var(--surface);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 20px 40px -24px rgba(0,0,0,.35);overflow:hidden;padding:5% 6%;display:grid;grid-template-rows:auto auto 1fr;gap:7%}
+.sk{background:var(--skel);border-radius:4px}
+.sk.r{display:flex;justify-content:space-between;align-items:center;background:none}
+.sk.r i{display:block;height:9px;border-radius:5px;background:var(--skel)}
+.sk-h{display:grid;gap:6%}
+.sk-h i{display:block;height:14px;border-radius:6px;background:var(--skel)}
+.sk-g{display:grid;grid-template-columns:repeat(3,1fr);gap:5%}
+.sk-g i{display:block;border-radius:6px;background:var(--skel2);box-shadow:inset 0 0 0 1px var(--skel)}
+.big404{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:clamp(64px,15vw,150px);letter-spacing:-.05em;color:var(--skel);opacity:.9;pointer-events:none;user-select:none}
+.sel{position:absolute;inset:-1px;border:1.5px solid var(--accent);pointer-events:none}
+.sel b{position:absolute;width:9px;height:9px;background:var(--surface);border:1.5px solid var(--accent)}
+.sel b:nth-child(1){left:-5px;top:-5px}.sel b:nth-child(2){right:-5px;top:-5px}.sel b:nth-child(3){left:-5px;bottom:-5px}.sel b:nth-child(4){right:-5px;bottom:-5px}
+.ftag{position:absolute;left:-1px;top:-24px;font-family:var(--mono);font-size:11px;color:#fff;background:var(--accent);padding:2px 7px;border-radius:3px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.dims{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:#fff;background:var(--accent);padding:2px 7px;border-radius:3px;white-space:nowrap}
+/* comment pin + multiplayer cursor */
+.pin{position:absolute;left:78%;top:14%;display:flex;align-items:flex-start;gap:8px;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .35s,transform .45s cubic-bezier(.2,.9,.3,1.2);pointer-events:none;z-index:3}
+.pin.on{opacity:1;transform:none}
+.pin i{flex:none;width:26px;height:26px;border-radius:50% 50% 50% 4px;background:#f2a93b;color:#3b2500;font-style:normal;font-size:10px;font-weight:600;display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(0,0,0,.4)}
+.pin span{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:12.5px;line-height:1.35;box-shadow:0 10px 24px -14px rgba(0,0,0,.35);white-space:nowrap}
+.pin small{display:block;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.cur{position:absolute;left:0;top:0;z-index:4;pointer-events:none;transition:transform 1.3s cubic-bezier(.45,0,.2,1);will-change:transform}
+.cur svg{width:20px;height:20px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.cur em{position:absolute;left:14px;top:16px;font-style:normal;font-size:11px;font-weight:500;color:#fff;background:#e2603a;padding:2px 7px;border-radius:4px 10px 10px 10px;white-space:nowrap}
+/* terminal */
+.term{position:absolute;inset:6%;background:var(--term);border-radius:12px;box-shadow:0 30px 60px -28px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden}
+.tbar{height:30px;flex:none;display:flex;align-items:center;gap:7px;padding-left:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.tbar i{width:9px;height:9px;border-radius:50%;background:#3a3a38}
+.tbar span{margin-left:auto;margin-right:12px;font-family:var(--mono);font-size:10.5px;color:var(--termmut)}
+.tlog{flex:1;overflow:auto;padding:16px 18px;font-family:var(--mono);font-size:13px;line-height:1.85;color:var(--termfg)}
+.tlog div{white-space:pre-wrap;overflow-wrap:anywhere}
+.tlog .m{color:var(--termmut)}.tlog .e{color:#f07a63}.tlog .g{color:#5cc28a}.tlog .p{color:#8c9cff}
+.tlog a{color:var(--termfg);border-bottom:1px dashed #555;transition:color .15s,border-color .15s}
+.tlog a:hover{color:#fff;border-color:#fff}
+.caret{display:inline-block;width:7px;height:14px;background:var(--termfg);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{to{opacity:0}}
+/* actions */
+.act{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-block:22px 64px}
+.btn{font:inherit;font-size:14px;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;transition:border-color .15s,opacity .15s}
+.btn:hover{border-color:var(--faint)}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.primary:hover{opacity:.86}
+.btn:disabled{opacity:.5;cursor:default}
+.hint{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-left:4px}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:24px 40px;border-top:1px solid var(--line);color:var(--faint);font-family:var(--mono);font-size:12px}
+@media (max-width:640px){
+  .stage{aspect-ratio:4/5}
+  .frame{width:84%;top:56%}
+  .hero p code{white-space:normal;overflow-wrap:anywhere}
+  .pin{left:auto;right:6%;top:8%}
+  .pin span{white-space:normal;max-width:150px}
+  .term{inset:4%}
+  .tlog{font-size:12px;padding:14px}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="https://waande.com">Ayowande Olubo</a>
+    <button class="theme-t" id="theme-t" type="button" aria-label="Switch theme"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="label">Error 404 · Not shipped</span>
+      <h1>I designed this page. <span>I just never shipped it.</span></h1>
+      <p>You found a frame that never left Figma. Nothing lives at <code id="path">/this-page</code> yet, either the link is old or it’s still on my list.</p>
+    </section>
+
+    <div class="stage" id="stage" aria-label="A design canvas with an empty, unshipped page frame">
+      <div class="zoom" aria-hidden="true"><span>Page 404</span><span>100%</span></div>
+
+      <div class="view" id="v-design">
+        <div class="frame" id="frame">
+          <div class="frame-in" aria-hidden="true">
+            <div class="sk r"><i style="width:18%"></i><i style="width:28%"></i></div>
+            <div class="sk-h"><i style="width:62%"></i><i style="width:40%;height:9px"></i></div>
+            <div class="sk-g"><i></i><i></i><i></i></div>
+          </div>
+          <div class="big404" aria-hidden="true">404</div>
+          <div class="sel" aria-hidden="true"><b></b><b></b><b></b><b></b></div>
+          <span class="ftag" id="ftag">Frame · /this-page</span>
+          <span class="dims" aria-hidden="true">1440 × 404</span>
+        </div>
+        <div class="pin" id="pin" aria-hidden="true"><i>AO</i><span>Still on my to-do list.<small>Ayo · just now</small></span></div>
+        <div class="cur" id="cur" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3l14 8.2-6.2 1.3L10 19z" fill="#e2603a" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg><em>Ayo</em></div>
+      </div>
+
+      <div class="view off" id="v-term" aria-live="polite">
+        <div class="term"><div class="tbar"><i></i><i></i><i></i><span>~/waande.com</span></div><div class="tlog" id="tlog"></div></div>
+      </div>
+    </div>
+
+    <div class="act">
+      <button class="btn primary" id="ship" type="button">Ship it anyway</button>
+      <a class="btn" href="https://waande.com">Take me home</a>
+      <span class="hint">or press S</span>
+    </div>
+  </main>
+
+  <footer><span>© 2026 Ayowande Olubo</span><span>Designed and built by hand, mostly</span></footer>
+</div>
+
+<script>
+(function(){
+  // theme
+  const root=document.documentElement,tb=document.getElementById('theme-t');
+  const sys=()=>matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  try{const s=localStorage.getItem('theme');if(s)root.setAttribute('data-theme',s)}catch(e){}
+  tb.addEventListener('click',()=>{const n=(root.getAttribute('data-theme')||sys())==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}});
+
+  // the path the visitor asked for
+  let p=location.pathname||'/';
+  if(p==='/'||p.endsWith('.html')||p.includes('/artifact/'))p='/this-page';
+  p=p.length>40?p.slice(0,38)+'…':p;
+  document.getElementById('path').textContent=p;
+  document.getElementById('ftag').textContent='Frame · '+p;
+
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stage=document.getElementById('stage'),cur=document.getElementById('cur'),pin=document.getElementById('pin');
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+  // Ayo's cursor drifts around the frame and leaves a comment
+  let looping=!reduce,playing=true;
+  async function loop(){
+    const pts=[[.30,.32],[.62,.46],[.44,.70],[.76,.20]];
+    while(looping){
+      for(const [x,y] of pts){
+        if(!looping)return;
+        const r=stage.getBoundingClientRect();
+        cur.style.transform=`translate(${x*r.width}px,${y*r.height}px)`;
+        await sleep(1500);
+        if(x===.76){pin.classList.add('on');await sleep(2600);pin.classList.remove('on')}
+      }
+    }
+  }
+  if(reduce){pin.classList.add('on');cur.style.display='none'}
+  else{
+    new IntersectionObserver(es=>{const v=es[0].isIntersecting;if(v&&!playing){playing=true;looping=true;loop()}if(!v){looping=false;playing=false}},{threshold:.3}).observe(stage);
+    loop();
+  }
+
+  // "Ship it anyway": try to deploy the page that doesn't exist
+  const ship=document.getElementById('ship'),vd=document.getElementById('v-design'),vt=document.getElementById('v-term'),log=document.getElementById('tlog');
+  let shipped=false;
+  const line=(html,cls='')=>{const d=document.createElement('div');if(cls)d.className=cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d};
+  const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  async function type(el,text,ms){for(const ch of text){el.textContent+=ch;await sleep(ms)}}
+  async function run(){
+    if(shipped){reset();return}
+    shipped=true;ship.disabled=true;looping=false;pin.classList.remove('on');
+    vd.classList.add('off');vt.classList.remove('off');log.innerHTML='';
+    const t=reduce?0:1;
+    const cmd=line('<span class="p">$</span> <span id="c"></span><span class="caret"></span>');
+    await type(cmd.querySelector('#c'),'ship '+p,reduce?0:38);cmd.querySelector('.caret').remove();
+    await sleep(350*t);line('▸ exporting frame from Figma…','m');
+    await sleep(650*t);line('▸ building route '+esc(p)+'…','m');
+    await sleep(800*t);line('✕ build failed: frame is empty','e');
+    await sleep(300*t);line('  0 components · 0 copy · 1 very optimistic designer','m');
+    await sleep(700*t);line('↳ nothing to ship here. try one of these instead:','g');
+    await sleep(250*t);
+    [['Home','https://waande.com'],['Carmen, an AI agent people trust','https://waande.com/work/carmen-ai'],['Airstride, six modules, one designer','https://waande.com/work/airstride'],['About me','https://waande.com/about']]
+      .forEach(([n,h],i)=>setTimeout(()=>line(`  → <a href="${h}">${n}</a>`),i*160*t));
+    await sleep(800*t);ship.disabled=false;ship.textContent='Back to the canvas';
+    const a=log.querySelector('a');a&&a.focus({preventScroll:true});
+  }
+  function reset(){shipped=false;vt.classList.add('off');vd.classList.remove('off');ship.textContent='Ship it anyway';if(!reduce){looping=true;loop()}}
+  ship.addEventListener('click',run);
+  addEventListener('keydown',e=>{if((e.key==='s'||e.key==='S')&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&!/input|textarea/i.test(e.target.tagName)){e.preventDefault();run()}});
+})();
+</script>
+</body></html>

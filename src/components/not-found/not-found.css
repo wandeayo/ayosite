@@ -1,0 +1,82 @@
+/* 404 ("Not shipped"). Ported from waande-404-handoff/reference/404.html; keep values in sync
+ * with the reference rather than "improving" them. Tokens, .wrap, header, .label, .btn, the
+ * theme toggle and the footer come from app/home.css, as on every other page.
+ * Deliberate, mechanical differences:
+ *  - every class is prefixed nf- (the reference's .stage, .view, .sk and .hide already mean
+ *    something else in home.css), and the hero is a div so home.css's section border stays off;
+ *  - the page's own colour tokens are scoped to .nf-page, so they can't reach another page;
+ *  - --faint is the site's darker AA value (home.css), not the reference's;
+ *  - :hover rules only apply on devices that can hover, as everywhere else on the site;
+ *  - the footer drops the room home.css leaves for the floating pill: this page has no pill;
+ *  - with reduced motion the cursor hides and the pin shows from first paint, before hydration. */
+.nf-page{--canvas:#efeee9;--grid:#d9d7d0;--skel:#e7e6e1;--skel2:#f1f0ec;--term:#121211;--termfg:#e8e7e2;--termmut:#8b8a84}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nf-page{--canvas:#151514;--grid:#2a2a28;--skel:#232322;--skel2:#1c1c1b;--term:#0a0a09;--termfg:#e8e7e2;--termmut:#7c7b75}}
+:root[data-theme="dark"] .nf-page{--canvas:#151514;--grid:#2a2a28;--skel:#232322;--skel2:#1c1c1b;--term:#0a0a09;--termfg:#e8e7e2;--termmut:#7c7b75}
+
+.nf-hero{padding-block:48px 28px;display:grid;gap:16px}
+.nf-hero h1{margin:0;font-size:clamp(30px,5vw,46px);line-height:1.1;font-weight:500;letter-spacing:-.03em;text-wrap:balance;max-width:17ch}
+.nf-hero h1 span{color:var(--muted)}
+.nf-hero p{margin:0;color:var(--muted);font-size:16.5px;max-width:52ch}
+.nf-hero p code{font-family:var(--mono);font-size:.9em;color:var(--fg);background:var(--surface);border:1px solid var(--line);padding:1px 6px;border-radius:5px;white-space:nowrap}
+
+/* the canvas */
+.nf-stage{position:relative;border-radius:16px;overflow:hidden;background:var(--canvas) radial-gradient(var(--grid) 1px,transparent 1.2px) 0 0/20px 20px;
+  box-shadow:inset 0 0 0 1px var(--line);aspect-ratio:16/9;min-height:300px}
+.nf-zoom{position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:11px;color:var(--faint);display:flex;gap:14px}
+.nf-view{position:absolute;inset:0;transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.nf-view.is-off{opacity:0;transform:scale(.985);pointer-events:none}
+.nf-frame{position:absolute;left:50%;top:52%;width:62%;aspect-ratio:1440/860;transform:translate(-50%,-50%)}
+.nf-frame-in{position:absolute;inset:0;background:var(--surface);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 20px 40px -24px rgba(0,0,0,.35);overflow:hidden;padding:5% 6%;display:grid;grid-template-rows:auto auto 1fr;gap:7%}
+.nf-sk-r{display:flex;justify-content:space-between;align-items:center;border-radius:4px}
+.nf-sk-r i{display:block;height:9px;border-radius:5px;background:var(--skel)}
+.nf-sk-h{display:grid;gap:6%}
+.nf-sk-h i{display:block;height:14px;border-radius:6px;background:var(--skel)}
+.nf-sk-g{display:grid;grid-template-columns:repeat(3,1fr);gap:5%}
+.nf-sk-g i{display:block;border-radius:6px;background:var(--skel2);box-shadow:inset 0 0 0 1px var(--skel)}
+.nf-big{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:clamp(64px,15vw,150px);letter-spacing:-.05em;color:var(--skel);opacity:.9;pointer-events:none;user-select:none}
+.nf-sel{position:absolute;inset:-1px;border:1.5px solid var(--accent);pointer-events:none}
+.nf-sel b{position:absolute;width:9px;height:9px;background:var(--surface);border:1.5px solid var(--accent)}
+.nf-sel b:nth-child(1){left:-5px;top:-5px}.nf-sel b:nth-child(2){right:-5px;top:-5px}.nf-sel b:nth-child(3){left:-5px;bottom:-5px}.nf-sel b:nth-child(4){right:-5px;bottom:-5px}
+.nf-ftag{position:absolute;left:-1px;top:-24px;font-family:var(--mono);font-size:11px;color:#fff;background:var(--accent);padding:2px 7px;border-radius:3px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.nf-dims{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:#fff;background:var(--accent);padding:2px 7px;border-radius:3px;white-space:nowrap}
+/* comment pin + multiplayer cursor */
+.nf-pin{position:absolute;left:78%;top:14%;display:flex;align-items:flex-start;gap:8px;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .35s,transform .45s cubic-bezier(.2,.9,.3,1.2);pointer-events:none;z-index:3}
+.nf-pin.is-on{opacity:1;transform:none}
+.nf-pin i{flex:none;width:26px;height:26px;border-radius:50% 50% 50% 4px;background:#f2a93b;color:#3b2500;font-style:normal;font-size:10px;font-weight:600;display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(0,0,0,.4)}
+.nf-pin span{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:12.5px;line-height:1.35;box-shadow:0 10px 24px -14px rgba(0,0,0,.35);white-space:nowrap}
+.nf-pin small{display:block;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.nf-cur{position:absolute;left:0;top:0;z-index:4;pointer-events:none;transition:transform 1.3s cubic-bezier(.45,0,.2,1);will-change:transform}
+.nf-cur svg{width:20px;height:20px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.nf-cur em{position:absolute;left:14px;top:16px;font-style:normal;font-size:11px;font-weight:500;color:#fff;background:#e2603a;padding:2px 7px;border-radius:4px 10px 10px 10px;white-space:nowrap}
+/* terminal */
+.nf-term{position:absolute;inset:6%;background:var(--term);border-radius:12px;box-shadow:0 30px 60px -28px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden}
+.nf-tbar{height:30px;flex:none;display:flex;align-items:center;gap:7px;padding-left:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.nf-tbar i{width:9px;height:9px;border-radius:50%;background:#3a3a38}
+.nf-tbar span{margin-left:auto;margin-right:12px;font-family:var(--mono);font-size:10.5px;color:var(--termmut)}
+.nf-tlog{flex:1;overflow:auto;padding:16px 18px;font-family:var(--mono);font-size:13px;line-height:1.85;color:var(--termfg)}
+.nf-tlog div{white-space:pre-wrap;overflow-wrap:anywhere}
+.nf-tlog .m{color:var(--termmut)}.nf-tlog .e{color:#f07a63}.nf-tlog .g{color:#5cc28a}.nf-tlog .p{color:#8c9cff}
+.nf-tlog a{color:var(--termfg);border-bottom:1px dashed #555;transition:color .15s,border-color .15s}
+@media (hover:hover){.nf-tlog a:hover{color:#fff;border-color:#fff}}
+.nf-caret{display:inline-block;width:7px;height:14px;background:var(--termfg);vertical-align:-2px;animation:nf-blink 1s steps(2) infinite}
+@keyframes nf-blink{to{opacity:0}}
+/* actions (.btn and .btn.primary are home.css's, identical to the reference's) */
+.nf-act{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-block:22px 64px}
+.nf-act .btn:disabled,.nf-act .btn:disabled:hover{opacity:.5;cursor:default}
+.nf-hint{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-left:4px}
+/* screen-reader-only text: the whole command, announced once instead of letter by letter */
+.nf-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+/* No floating pill on this page, so no room for it under the footer. */
+.nf-page>footer{padding-bottom:calc(48px + env(safe-area-inset-bottom,0px))}
+@media (max-width:640px){
+  .nf-stage{aspect-ratio:4/5}
+  .nf-frame{width:84%;top:56%}
+  .nf-hero p code{white-space:normal;overflow-wrap:anywhere}
+  .nf-pin{left:auto;right:6%;top:8%}
+  .nf-pin span{white-space:normal;max-width:150px}
+  .nf-term{inset:4%}
+  .nf-tlog{font-size:12px;padding:14px}
+  .nf-hint{display:none}
+}
+/* home.css already turns transitions and animations off for reduced motion. */
+@media (prefers-reduced-motion:reduce){.nf-cur{display:none}.nf-pin{opacity:1;transform:none}}

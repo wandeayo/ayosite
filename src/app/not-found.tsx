@@ -1,45 +1,36 @@
 import type { Metadata } from "next";
 
-import { ContactSection, SiteFooter, SiteHeader } from "@/components/landing/chrome";
-import { FloatingNav } from "@/components/landing/floating-nav";
+import { SiteFooter, SiteHeader } from "@/components/landing/chrome";
+import { NotShipped } from "@/components/not-found/not-shipped";
+import { PATH_INIT_SCRIPT } from "@/components/not-found/path";
+
+import "@/components/not-found/not-found.css";
 
 /*
- * 404 for every unmatched URL, in the home page's design: its header, intro block, buttons,
- * contact section, footer and pill, all styled by home.css. Next.js marks it noindex.
+ * 404 for every unmatched URL (and every notFound()), from waande-404-handoff/reference/404.html.
+ * The site's live header, theme toggle and footer; no floating pill, since the terminal's links
+ * do its job (404.md, section 1). Next.js serves it with a 404 status and marks it noindex.
  */
 
 export const metadata: Metadata = {
-  title: { absolute: "Not found · Ayowande Olubo" },
+  title: { absolute: "Not Shipped · Ayowande Olubo" },
+  description: "404: this page was designed, but never shipped.",
   alternates: { canonical: null },
 };
 
 export default function NotFound() {
   return (
-    <div className="wrap">
+    <div className="wrap nf-page">
       <SiteHeader />
 
+      {/* header and footer stay outside main, as the banner and contentinfo landmarks */}
       <main>
-        <div className="intro">
-          <h1>
-            This page doesn’t exist. <span>It may have moved.</span>
-          </h1>
-          <p>The link might be broken, or it pointed at a page from the old site. Everything I’ve made is on the home page.</p>
-          <div className="cta">
-            <a className="btn primary" href="/">
-              Back home
-            </a>
-            <a className="btn" href="/#work">
-              See the work
-            </a>
-          </div>
-        </div>
-
-        <ContactSection />
+        <NotShipped />
+        {/* The page is prerendered, so the real path is written in before first paint (path.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: PATH_INIT_SCRIPT }} />
       </main>
 
       <SiteFooter />
-
-      <FloatingNav variant="page" />
     </div>
   );
 }
