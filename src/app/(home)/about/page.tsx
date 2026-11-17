@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { ChessSection } from "@/components/about/chess-section";
 import { Engineers } from "@/components/about/engineers";
 import { ContactSection, SiteFooter, SiteHeader } from "@/components/landing/chrome";
 import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, LANDING, PERSON, WEBSITE_ID } from "@/components/landing/content";
@@ -150,6 +151,8 @@ export default function AboutPage() {
             ))}
           </div>
         </section>
+
+        <ChessSection />
 
         <ContactSection
           heading="Let’s build something good."

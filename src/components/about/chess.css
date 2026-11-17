@@ -1,0 +1,60 @@
+/* Chess section of /about: a diagram from a chess book you can actually play. Ported from
+ * waande-chess-handoff/about-reference.html (the CSS after "chess: a diagram from a chess
+ * book…"). Every selector is scoped to .ab-chess so nothing leaks into the rest of the site.
+ * Deliberate, mechanical differences from the reference:
+ *  - --paper/--ink/--hl are set on .ab-chess, not :root;
+ *  - :hover rules only apply on devices that can hover, as everywhere else on the site;
+ *  - .cp-sprite is left out: the sprite is public/about/chess-pieces.svg, used by URL. */
+.ab-chess{--paper:#f7f7f5;--ink:#1b1a18;--hl:rgba(242,196,64,.55)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ab-chess{--paper:#e9e5dc;--hl:rgba(236,186,46,.6)}}
+:root[data-theme="dark"] .ab-chess{--paper:#e9e5dc;--hl:rgba(236,186,46,.6)}
+.ab-chess .ch{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:56px;align-items:center}
+.ab-chess .ch h2{margin:0;font-size:clamp(28px,4vw,38px);line-height:1.12;font-weight:500;letter-spacing:-.03em;text-wrap:balance}
+.ab-chess .ch-n{font-variant-numeric:tabular-nums}
+.ab-chess .ch-copy>p{margin:14px 0 0;color:var(--muted);font-size:16px;line-height:1.7;max-width:44ch}
+.ab-chess .ch-line{max-width:none!important;font-size:12.5px!important;letter-spacing:.02em;color:var(--faint)!important;padding-top:14px;border-top:1px solid var(--line)}
+.ab-chess .ch-line span{white-space:nowrap}
+.ab-chess .ch-nudge{color:var(--fg)!important}
+.ab-chess .ch-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* the printed diagram. On the dark theme it becomes a page torn out of the book */
+.ab-chess .dg{margin:0;background:var(--paper);color:var(--ink);padding:18px 20px 16px;border-radius:3px}
+:root[data-theme="dark"] .ab-chess .dg{box-shadow:0 1px 0 rgba(255,255,255,.04),0 30px 60px -30px rgba(0,0,0,.8);transform:rotate(-.6deg)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ab-chess .dg{box-shadow:0 1px 0 rgba(255,255,255,.04),0 30px 60px -30px rgba(0,0,0,.8);transform:rotate(-.6deg)}}
+.ab-chess .dg-head{display:flex;justify-content:space-between;gap:12px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 12px 18px;opacity:.7}
+.ab-chess .dg-board{display:grid;grid-template-columns:12px minmax(0,1fr);grid-template-rows:auto 14px;column-gap:6px;row-gap:5px}
+.ab-chess .dg-rk{display:grid;grid-template-rows:repeat(8,1fr);align-items:center;font-size:10px;opacity:.6}
+.ab-chess .dg-fl{grid-column:2;display:grid;grid-template-columns:repeat(8,1fr);text-align:center;font-size:10px;opacity:.6}
+.ab-chess .dg-rk i,.ab-chess .dg-fl i{font-style:normal}
+/* double rule around the board, like the frame on a printed diagram */
+.ab-chess .bd{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));aspect-ratio:1;border:1.5px solid var(--ink);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--ink);margin:4px}
+.ab-chess .dg-rk{margin:4px 0}.ab-chess .dg-fl{margin:0 4px}
+.ab-chess .sq{all:unset;box-sizing:border-box;position:relative;display:grid;place-items:center;aspect-ratio:1;cursor:default}
+/* dark squares are hatched, the way chess books print them */
+.ab-chess .sq.d{background:repeating-linear-gradient(-45deg,rgba(27,26,24,.42) 0 1px,transparent 1px 4px)}
+.ab-chess .sq.last,.ab-chess .sq.sel{background-color:var(--hl)}
+.ab-chess .sq.can,.ab-chess .sq.tgt{cursor:pointer}
+.ab-chess .sq.tgt::after{content:"";position:absolute;width:24%;height:24%;border-radius:50%;border:1.5px solid var(--ink);background:var(--paper)}
+.ab-chess .sq:focus-visible{outline:2px solid var(--ink);outline-offset:-3px;z-index:2}
+.ab-chess .pc{position:relative;z-index:1;width:92%;height:92%;transition:transform .34s cubic-bezier(.2,.8,.2,1);will-change:transform}
+@media (hover:hover){.ab-chess .sq.can:hover .pc{transform:translateY(-2px)}}
+.ab-chess .sq.sel .pc{transform:translateY(-2px)}
+.ab-chess .dg-foot{margin:12px 0 0 18px;font-size:14px;line-height:1.5;min-height:21px}
+.ab-chess .dg-foot .mono{font-size:13px;margin-right:8px;font-weight:500}
+.ab-chess .dg-foot em{font-style:italic}
+.ab-chess .bd-wrap{position:relative;min-width:0}
+/* end of the line: a paper wash over the board with the hand-off to chess.com */
+.ab-chess .dg-after{position:absolute;inset:4px;z-index:5;display:grid;place-content:center;justify-items:center;gap:14px;padding:20px;text-align:center;
+  background:color-mix(in srgb,var(--paper) 80%,transparent);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);animation:ab-chess-in .4s ease}
+.ab-chess .dg-after[hidden]{display:none}
+.ab-chess .dg-after p{margin:0;font-size:14px;line-height:1.55;font-style:italic;max-width:30ch;text-wrap:balance}
+.ab-chess .dg-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.ab-chess .dg .btn{background:var(--paper);color:var(--ink);border-color:var(--ink);box-shadow:none}
+.ab-chess .dg .btn.primary{background:var(--ink);color:var(--paper)}
+@media (hover:hover){
+  .ab-chess .dg .btn:hover{opacity:1;background:color-mix(in srgb,var(--ink) 7%,var(--paper))}
+  .ab-chess .dg .btn.primary:hover{opacity:1;background:#000}
+}
+@keyframes ab-chess-in{from{opacity:0}}
+@media (max-width:760px){.ab-chess .ch{grid-template-columns:1fr;gap:32px}.ab-chess .dg{max-width:420px;transform:none!important}.ab-chess .dg{padding:14px 14px 12px}}
+@media (prefers-reduced-motion:reduce){.ab-chess .pc{transition:none}.ab-chess .dg-after{animation:none}}
