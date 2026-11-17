@@ -8,7 +8,9 @@
  *  - --faint is the site's darker AA value (home.css), not the reference's;
  *  - :hover rules only apply on devices that can hover, as everywhere else on the site;
  *  - the footer drops the room home.css leaves for the floating pill: this page has no pill;
- *  - with reduced motion the cursor hides and the pin shows from first paint, before hydration. */
+ *  - with reduced motion the cursor hides and the pin shows from first paint, before hydration.
+ * Added after the handoff (prototype, feat/404-extras): the frame skeleton per kind of page,
+ * the "You" cursor and Ayo's cursor chat, "did you mean", and the terminal's command line. */
 .nf-page{--canvas:#efeee9;--grid:#d9d7d0;--skel:#e7e6e1;--skel2:#f1f0ec;--term:#121211;--termfg:#e8e7e2;--termmut:#8b8a84}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nf-page{--canvas:#151514;--grid:#2a2a28;--skel:#232322;--skel2:#1c1c1b;--term:#0a0a09;--termfg:#e8e7e2;--termmut:#7c7b75}}
 :root[data-theme="dark"] .nf-page{--canvas:#151514;--grid:#2a2a28;--skel:#232322;--skel2:#1c1c1b;--term:#0a0a09;--termfg:#e8e7e2;--termmut:#7c7b75}
@@ -26,13 +28,54 @@
 .nf-view{position:absolute;inset:0;transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .nf-view.is-off{opacity:0;transform:scale(.985);pointer-events:none}
 .nf-frame{position:absolute;left:50%;top:52%;width:62%;aspect-ratio:1440/860;transform:translate(-50%,-50%)}
-.nf-frame-in{position:absolute;inset:0;background:var(--surface);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 20px 40px -24px rgba(0,0,0,.35);overflow:hidden;padding:5% 6%;display:grid;grid-template-rows:auto auto 1fr;gap:7%}
+.nf-frame-in{position:absolute;inset:0;background:var(--surface);border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 20px 40px -24px rgba(0,0,0,.35);overflow:hidden;padding:5% 6%}
+/* One skeleton per kind of page (skeletons.tsx); the frame's data-kind picks which shows.
+   "page" is the reference's: a nav bar, a heading and three cards. */
+.nf-sk{display:none;height:100%;min-height:0}
+.nf-frame[data-kind="page"] .nf-sk-page,.nf-frame[data-kind="article"] .nf-sk-article,.nf-frame[data-kind="case"] .nf-sk-case,
+.nf-frame[data-kind="shop"] .nf-sk-shop,.nf-frame[data-kind="form"] .nf-sk-form,.nf-frame[data-kind="dashboard"] .nf-sk-dashboard{display:grid}
+.nf-sk-page{grid-template-rows:auto auto 1fr;gap:7%}
 .nf-sk-r{display:flex;justify-content:space-between;align-items:center;border-radius:4px}
 .nf-sk-r i{display:block;height:9px;border-radius:5px;background:var(--skel)}
 .nf-sk-h{display:grid;gap:6%}
 .nf-sk-h i{display:block;height:14px;border-radius:6px;background:var(--skel)}
 .nf-sk-g{display:grid;grid-template-columns:repeat(3,1fr);gap:5%}
-.nf-sk-g i{display:block;border-radius:6px;background:var(--skel2);box-shadow:inset 0 0 0 1px var(--skel)}
+.nf-sk-g i,.nf-sk-tile,.nf-sk-col i.img,.nf-sk-p i,.nf-sk-stats i{display:block;border-radius:6px;background:var(--skel2);box-shadow:inset 0 0 0 1px var(--skel);min-height:0}
+/* article: one reading column */
+.nf-sk-article{grid-template-rows:auto 1fr;gap:7%}
+.nf-sk-col{width:52%;margin-inline:auto;display:flex;flex-direction:column;gap:6px;min-height:0}
+.nf-sk-col i{flex:none;display:block;height:5px;border-radius:3px;background:var(--skel)}
+.nf-sk-col i.t{height:12px;width:86%;border-radius:6px}
+.nf-sk-col i.s{width:34%;margin-bottom:4px}
+.nf-sk-col i.img{flex:1;height:auto;margin-bottom:4px}
+/* case study: label, H1, hero tile */
+.nf-sk-case{grid-template-rows:auto auto 1fr;gap:6%}
+/* shop: a product grid */
+.nf-sk-shop{grid-template-rows:auto 1fr;gap:7%}
+.nf-sk-p{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:8px 4%;min-height:0}
+.nf-sk-p div{display:flex;flex-direction:column;gap:3px;min-height:0}
+.nf-sk-p i{flex:1;border-radius:5px}
+.nf-sk-p b{flex:none;display:block;height:4px;width:70%;border-radius:2px;background:var(--skel)}
+.nf-sk-p b+b{width:36%}
+/* form: a card of fields (contact, sign-in, sign-up) */
+.nf-sk-form{grid-template-rows:auto 1fr;gap:7%}
+.nf-sk-f{width:38%;margin-inline:auto;display:flex;flex-direction:column;gap:7px;padding:5% 6%;min-height:0;border-radius:6px;background:var(--skel2);box-shadow:inset 0 0 0 1px var(--skel)}
+.nf-sk-f i{flex:none;display:block;border-radius:5px;background:var(--skel)}
+.nf-sk-f i.t{height:10px;width:58%;margin-bottom:3px}
+.nf-sk-f b{flex:1;display:block;max-height:18px;min-height:6px;border-radius:4px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--skel)}
+.nf-sk-f b.tall{flex:2;max-height:38px}
+.nf-sk-f i.btn{height:14px;width:42%;align-self:flex-end;margin-top:3px}
+/* dashboard: sidebar, stats, chart */
+.nf-sk-dashboard{grid-template-columns:15% 1fr;gap:5%}
+.nf-sk-side{display:flex;flex-direction:column;gap:9px;padding-right:18%;box-shadow:1px 0 0 var(--skel)}
+.nf-sk-side i{display:block;height:5px;border-radius:3px;background:var(--skel)}
+.nf-sk-side i:first-child{height:11px;width:60%;margin-bottom:6px}
+.nf-sk-main{display:grid;grid-template-rows:auto auto 1fr;gap:10px;min-height:0}
+.nf-sk-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5%}
+.nf-sk-stats i{aspect-ratio:2/1}
+.nf-sk-tile svg{display:block;width:100%;height:100%}
+.nf-sk-tile polyline{fill:none;stroke:var(--skel);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.nf-sk-dashboard .nf-sk-tile{padding:6% 4%}
 .nf-big{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:clamp(64px,15vw,150px);letter-spacing:-.05em;color:var(--skel);opacity:.9;pointer-events:none;user-select:none}
 .nf-sel{position:absolute;inset:-1px;border:1.5px solid var(--accent);pointer-events:none}
 .nf-sel b{position:absolute;width:9px;height:9px;background:var(--surface);border:1.5px solid var(--accent)}
@@ -48,6 +91,17 @@
 .nf-cur{position:absolute;left:0;top:0;z-index:4;pointer-events:none;transition:transform 1.3s cubic-bezier(.45,0,.2,1);will-change:transform}
 .nf-cur svg{width:20px;height:20px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
 .nf-cur em{position:absolute;left:14px;top:16px;font-style:normal;font-size:11px;font-weight:500;color:#fff;background:#e2603a;padding:2px 7px;border-radius:4px 10px 10px 10px;white-space:nowrap}
+/* Ayo follows a visitor's cursor a little quicker than he drifts, and talks over cursor chat. */
+.nf-cur.is-follow{transition:transform .9s cubic-bezier(.3,.7,.3,1)}
+.nf-chat{position:absolute;left:14px;top:38px;font-size:12.5px;line-height:1.35;color:#fff;background:#e2603a;padding:5px 10px;border-radius:4px 12px 12px 12px;white-space:nowrap;
+  box-shadow:0 8px 18px -10px rgba(0,0,0,.45);transform-origin:0 0;animation:nf-pop .28s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes nf-pop{from{opacity:0;transform:scale(.85)}}
+/* the visitor's own cursor, standing in for the system one while it's over the canvas */
+.nf-stage.is-you{cursor:none}
+.nf-you{position:absolute;left:0;top:0;z-index:5;pointer-events:none}
+.nf-you[hidden]{display:none}
+.nf-you svg{width:20px;height:20px;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.nf-you em{position:absolute;left:14px;top:16px;font-style:normal;font-size:11px;font-weight:500;color:#fff;background:#7b61ff;padding:2px 7px;border-radius:4px 10px 10px 10px;white-space:nowrap}
 /* terminal */
 .nf-term{position:absolute;inset:6%;background:var(--term);border-radius:12px;box-shadow:0 30px 60px -28px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden}
 .nf-tbar{height:30px;flex:none;display:flex;align-items:center;gap:7px;padding-left:12px;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -65,6 +119,17 @@
 .nf-act .btn:disabled,.nf-act .btn:disabled:hover{opacity:.5;cursor:default}
 .nf-hint{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-left:4px}
 /* screen-reader-only text: the whole command, announced once instead of letter by letter */
+/* "did you mean": the closest real page, beside the hint */
+.nf-dym{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-left:4px}
+.nf-dym a{color:var(--fg);border-bottom:1px solid var(--line);transition:border-color .15s}
+@media (hover:hover){.nf-dym a:hover{border-color:var(--fg)}}
+/* the hidden command line, once the log has printed */
+.nf-tlog .nf-prompt{display:flex;align-items:baseline;gap:1ch;margin:2px -6px 0;padding:0 6px;border-radius:4px;white-space:normal}
+.nf-prompt:focus-within{background:rgba(255,255,255,.05)}
+.nf-prompt input{flex:1;min-width:0;font:inherit;color:var(--termfg);background:none;border:0;padding:0;margin:0;outline:none;caret-color:var(--termfg)}
+.nf-prompt input::placeholder{color:var(--termmut);opacity:1}
+/* 16px keeps iOS from zooming in on focus */
+@media (pointer:coarse){.nf-prompt input{font-size:16px}}
 .nf-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 /* No floating pill on this page, so no room for it under the footer. */
 .nf-page>footer{padding-bottom:calc(48px + env(safe-area-inset-bottom,0px))}
@@ -77,6 +142,7 @@
   .nf-term{inset:4%}
   .nf-tlog{font-size:12px;padding:14px}
   .nf-hint{display:none}
+  .nf-dym{flex-basis:100%;margin:4px 0 0}
 }
 /* home.css already turns transitions and animations off for reduced motion. */
-@media (prefers-reduced-motion:reduce){.nf-cur{display:none}.nf-pin{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.nf-cur,.nf-you{display:none}.nf-pin{opacity:1;transform:none}}
