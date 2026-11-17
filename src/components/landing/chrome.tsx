@@ -5,6 +5,7 @@
  */
 import { SOCIALS } from "./content";
 import { EmailRow } from "./email-row";
+import { LocalClock } from "./local-clock";
 import { ThemeToggle } from "./theme-toggle";
 
 /** On home the name jumps to the top; on case pages it links home. */
@@ -14,7 +15,12 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
       <a className="brand" href={home ? "#top" : "/"} id="top">
         Ayowande Olubo
       </a>
-      <ThemeToggle />
+      <div className="top-r">
+        <span className="mono">
+          <LocalClock />
+        </span>
+        <ThemeToggle />
+      </div>
     </header>
   );
 }

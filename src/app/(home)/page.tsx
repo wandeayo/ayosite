@@ -3,7 +3,6 @@ import { HOME_JSON_LD, LINKS, SERVICES } from "@/components/landing/content";
 import { FloatingNav } from "@/components/landing/floating-nav";
 import { JsonLd } from "@/components/landing/json-ld";
 import { KindWords } from "@/components/landing/kind-words";
-import { LocalClock } from "@/components/landing/local-clock";
 import { FIT_STAGES_INLINE } from "@/components/landing/thumbs/fit-stages";
 import { AirstrideThumb, ArcticThumb, CarmenThumb, DexlaThumb } from "@/components/landing/thumbs/thumbs";
 import { WorkGrid } from "@/components/landing/work-grid";
@@ -60,9 +59,7 @@ export default function HomePage() {
               <span className="dot" />
               Open to founding designer and design engineer roles
             </span>
-            <span>
-              Abuja, Nigeria · <LocalClock />
-            </span>
+            <span>Abuja, Nigeria</span>
           </div>
           <div className="cta">
             <a className="btn primary" href={LINKS.calendly} target="_blank" rel="noopener">
