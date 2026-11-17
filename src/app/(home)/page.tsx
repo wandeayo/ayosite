@@ -59,7 +59,6 @@ export default function HomePage() {
               <span className="dot" />
               Open to founding designer and design engineer roles
             </span>
-            <span>Abuja, Nigeria</span>
           </div>
           <div className="cta">
             <a className="btn primary" href={LINKS.calendly} target="_blank" rel="noopener">
