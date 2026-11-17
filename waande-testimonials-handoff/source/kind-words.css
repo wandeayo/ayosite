@@ -1,0 +1,86 @@
+/* Kind words: sticky notes on the desk. Drag them, throw them, tidy them, or leave your own. */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kw2 h2.label{margin:0;font-weight:400}
+.kw-ctl{display:flex;align-items:baseline;gap:14px}
+.kw-n{color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+.kw-n[hidden]{display:none}
+.kw-tidy{all:unset;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px dashed var(--faint);padding-bottom:1px;transition:color .15s,border-color .15s}
+.kw-tidy[hidden]{display:none}
+.kw-tidy:hover{color:var(--fg);border-bottom-color:var(--fg)}
+.kw-tidy:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+
+/* paper colours stay the same in both themes: they're objects on the desk */
+.note{--pc:#fbf1a6;--ink:#1d1c19;--ink2:#5b584c}
+.note[data-c="b"]{--pc:#d3e6f7}.note[data-c="g"]{--pc:#d9efc8}.note[data-c="p"]{--pc:#fad5dc}
+.note[data-c="o"]{--pc:#fde1ba}.note[data-c="l"]{--pc:#e4dcf6}.note[data-c="w"]{--pc:#fdfcf7}
+
+/* no JS: a plain readable grid */
+.kw-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.note{margin:0;position:relative;outline:none}
+.paper{position:relative;z-index:1;background:var(--pc);color:var(--ink);padding:20px 20px 18px;border-radius:2px;display:grid;gap:14px;align-content:start;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.22),transparent 18%),linear-gradient(0deg,rgba(0,0,0,.045),transparent 22%);
+  box-shadow:0 1px 1px rgba(0,0,0,.08),0 6px 10px -6px rgba(0,0,0,.28);
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s}
+/* the bottom edge lifts off the desk a little, like a real sticky note */
+.note::before{content:"";position:absolute;z-index:0;right:10px;bottom:6px;width:46%;height:16px;border-radius:50%;
+  box-shadow:0 10px 12px rgba(0,0,0,.28);transform:rotate(3deg);transition:box-shadow .22s}
+.paper blockquote{margin:0;font-size:14px;line-height:1.55;letter-spacing:-.005em;text-indent:-.4em}
+.paper figcaption{display:grid;gap:1px}
+.paper figcaption b{font-weight:500;font-size:13.5px}
+.paper figcaption span{font-family:var(--mono);font-size:10.5px;color:var(--ink2)}
+
+/* with JS: a desk you can mess up */
+.kw-board.js{display:block;position:relative;touch-action:pan-y}
+.kw-board.js .note{position:absolute;left:0;top:0;width:var(--nw,264px);will-change:transform;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none}
+.kw-board.js .note.pre{opacity:0}
+.kw-board.js.deck{overflow-x:clip;overflow-clip-margin:24px}
+.kw-board.js.deck .note{touch-action:pan-y}
+.kw-board.js .note.ease{transition:transform .65s cubic-bezier(.2,.85,.25,1),opacity .4s}
+.kw-board.js .note:hover .paper{transform:translateY(-2px)}
+.kw-board.js .note.held{cursor:grabbing}
+.kw-board.js .note.held .paper{transform:scale(1.04);box-shadow:0 1px 1px rgba(0,0,0,.08),0 22px 30px -14px rgba(0,0,0,.42)}
+.kw-board.js .note.held::before{box-shadow:0 26px 22px rgba(0,0,0,.22)}
+.note:focus-visible .paper{outline:2px solid var(--accent);outline-offset:3px}
+:root[data-theme="dark"] .paper{box-shadow:0 1px 1px rgba(0,0,0,.3),0 10px 16px -8px rgba(0,0,0,.7)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .paper{box-shadow:0 1px 1px rgba(0,0,0,.3),0 10px 16px -8px rgba(0,0,0,.7)}}
+
+/* the pad of blank notes */
+.pad{display:none}
+.kw-board.js .pad{all:unset;display:block;position:absolute;width:150px;height:132px;cursor:pointer;transform:rotate(4deg);transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.pad::before{content:"";position:absolute;inset:0;background:#f1efe8;border-radius:2px;
+  box-shadow:0 2px 0 #e9e7df,0 4px 0 #e1dfd6,0 6px 0 #d9d6cd,0 8px 0 #d0cdc3,0 14px 16px -6px rgba(0,0,0,.35)}
+.pad-top{position:absolute;inset:0;background:#fdfcf7;border-radius:2px;color:#1d1c19;display:grid;align-content:end;gap:2px;padding:14px;text-align:left;
+  transform-origin:50% 0;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.pad-top b{font-weight:500;font-size:14px}
+.pad-top .mono{font-size:10.5px;color:#5b584c}
+.pad:hover{transform:rotate(2deg) translateY(-2px)}
+.pad:hover .pad-top{transform:perspective(500px) rotateX(-14deg)}
+.pad:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+
+/* your own note */
+.note.mine textarea{all:unset;display:block;width:100%;min-height:96px;font:inherit;font-size:14px;line-height:1.55;color:var(--ink);cursor:text;user-select:text;-webkit-user-select:text;white-space:pre-wrap}
+.note.mine textarea::placeholder{color:color-mix(in srgb,var(--ink) 45%,transparent)}
+.mine-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mine-foot b{font-weight:500;font-size:13.5px}
+.mine-btns{display:flex;gap:6px}
+.mine-btns button{all:unset;cursor:pointer;font-family:var(--mono);font-size:11px;padding:6px 10px;border-radius:5px;border:1px solid var(--ink);color:var(--ink);line-height:1.2}
+.mine-btns .send{background:var(--ink);color:var(--pc)}
+.mine-btns .send:disabled{opacity:.35;cursor:default}
+.note.mine .mine-mail{all:unset;display:block;width:100%;box-sizing:border-box;font-family:var(--mono);font-size:11px;color:var(--ink);padding:6px 0 5px;border-bottom:1px dashed color-mix(in srgb,var(--ink) 35%,transparent);cursor:text;user-select:text;-webkit-user-select:text}
+.note.mine .mine-mail::placeholder{color:color-mix(in srgb,var(--ink) 45%,transparent)}
+.kw-trap{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.mine-msg{margin:0;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.mine-msg:empty{display:none}
+.mine-msg a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.note.mine.err .mine-msg{color:#9b2c1f}
+.note.mine.sending .paper{opacity:.85}
+.note.mine.sent .mine-foot{display:none}
+.note.mine.sent .mine-msg{font-size:12.5px;color:var(--ink);font-weight:500}
+.mine-btns :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.kw-hint{display:none}
+.kw-board.js .kw-hint{display:block;position:absolute;margin:0;color:var(--faint);font-size:12px;transition:opacity .5s}
+.kw-hint.gone{opacity:0}
+.kw-board.js.deck .pad{width:128px;height:112px;transform:rotate(-3deg)}
+
+@media (prefers-reduced-motion:reduce){.paper,.pad,.pad-top,.kw-board.js .note.ease{transition:none!important}}

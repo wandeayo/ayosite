@@ -1,8 +1,7 @@
 /* waande.com landing page. Ported verbatim from waande-handoff/reference/index.html
  * (the approved design). Deliberate differences from the reference:
  *  - font-family tokens point at next/font (not visible);
- *  - section labels are h2s and the Kind words tabpanel wraps its figure
- *    (accessibility; not visible, see the notes at each rule);
+ *  - section labels are h2s (accessibility; not visible, see the note at the rule);
  *  - --faint is darker in both themes so small text meets WCAG AA (4.5:1).
  *    Reference: light #a19f99 (2.47:1), dark #64635e (3.19:1). Approved by Ayo,
  *    2026-11-04. Values are the first AA pass on the line toward --muted;
@@ -240,42 +239,6 @@ section{padding-block:40px;border-top:1px solid var(--line)}
 .cols h3{margin:0 0 4px;font-size:14px;font-weight:500}
 .cols p{margin:0;color:var(--muted);font-size:14px}
 
-.kw{display:grid;grid-template-columns:220px minmax(0,1fr);gap:64px;align-items:start}
-.kw-people{display:grid;gap:2px;position:relative}
-.kw-p{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:1px;padding:10px 0 10px 18px;position:relative;border-radius:4px}
-.kw-p::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:1.5px;background:var(--line)}
-.kw-p i{position:absolute;left:0;top:8px;bottom:8px;width:1.5px;background:var(--fg);transform:scaleY(0);transform-origin:top}
-.kw-p b{font-weight:500;font-size:14px;color:var(--faint);transition:color .2s}
-.kw-p span{font-family:var(--mono);font-size:11px;line-height:1.45;color:var(--faint);opacity:0;max-height:0;overflow:hidden;transition:opacity .25s,max-height .3s}
-@media (hover:hover){.kw-p:hover b{color:var(--muted)}}
-.kw-p[aria-selected="true"] b{color:var(--fg)}
-.kw-p[aria-selected="true"] span{opacity:1;max-height:40px}
-.kw-p[aria-selected="true"] i{transform:scaleY(1)}
-.kw.auto .kw-p[aria-selected="true"] i{animation:kwfill var(--kwdur,9s) linear forwards}
-.kw.paused .kw-p[aria-selected="true"] i{animation-play-state:paused}
-@keyframes kwfill{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-.kw-stage{display:grid;min-width:0}
-.kw-q{grid-area:1/1;margin:0;display:grid;gap:22px;align-content:start;opacity:0;transform:translateY(6px);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
-/* The tabpanel is a div wrapping the figure (ARIA disallows role=tabpanel on <figure>); contents keeps the grid identical. */
-.kw-q>figure{display:contents}
-.kw-q.on{opacity:1;transform:none;pointer-events:auto}
-.kw-q blockquote{margin:0;font-size:clamp(18px,2.5vw,21px);line-height:1.5;letter-spacing:-.015em;text-indent:-.42em}
-.kw-q figcaption{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;color:var(--muted);font-size:14px}
-.kw-q figcaption b{font-weight:500;color:var(--fg)}
-.kw-q figcaption span{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
-.kw-count{font-family:var(--mono);font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
-@media (max-width:640px){
-  .kw{grid-template-columns:1fr;gap:28px}
-  .kw-people{order:2;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-  .kw-p{padding:10px 0 0;}
-  .kw-p::before,.kw-p i{left:0;right:0;top:0;bottom:auto;width:auto;height:1.5px}
-  .kw-p i{transform:scaleX(0);transform-origin:left}
-  .kw-p[aria-selected="true"] i{transform:scaleX(1)}
-  @keyframes kwfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-  .kw-p b{font-size:13px}
-  .kw-p span{display:none}
-}
-
 .contact{display:grid;gap:18px}
 .contact h2{margin:0;font-size:clamp(22px,3.4vw,26px);font-weight:500;letter-spacing:-.02em;text-wrap:balance;max-width:24ch}
 .email{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -300,10 +263,6 @@ body{margin-inline:0}
   /* "I design it, then I ship it." must stay on one line (spec). Below ~330px it can't at 26px,
      so cap the size to what fits: the span is ~10.3em wide. No-op at 330px and up. */
   .intro h1{font-size:min(26px,calc((100vw - 2 * max(16px, env(safe-area-inset-left,0px))) / 10.5))}
-}
-/* Kind words names: three columns wrap every name below ~480px; two columns keep them whole. */
-@media (max-width:480px){
-  .kw-people{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
 }
 /* Touch: give the social links a ~44px hit area without moving anything. Their rows get
    enough row-gap that neighbouring hit areas don't overlap when the list wraps. */

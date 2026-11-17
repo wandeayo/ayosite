@@ -1,183 +1,58 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
 import { KIND_WORDS } from "./content";
-
-const DUR = 6000;
-const VISIBLE_AT = 0.4;
-const pad = (n: number) => String(n).padStart(2, "0");
+import s from "./kind-words.module.css";
+import { useKindWordsBoard } from "./use-kind-words-board";
 
 /**
- * Kind words: one voice at a time. Port of the prototype's testimonial block.
- * Auto-advances every 6s while ≥40% in view; pauses on hover and while the tab
- * is hidden, and resumes with the time that was left. Click or arrow keys to
- * switch. No auto-advance with reduced motion. All quotes share one grid cell,
- * so the height is the longest quote's and nothing shifts.
+ * Kind words: the testimonials as sticky notes on a desk. Ported from
+ * waande-testimonials-handoff (the approved design). The notes are server-rendered figures, so
+ * without JS they're a plain readable grid; useKindWordsBoard turns them into a board you can
+ * drag, throw and tidy (a flickable stack on phones), with a pad for leaving Ayo a note, which
+ * POSTs to /api/note.
  */
 export function KindWords() {
-  const total = KIND_WORDS.length;
-  const [cur, setCur] = useState(0);
-  // Bumped on every show() so each progress bar remounts and restarts its fill.
-  const [cycle, setCycle] = useState(0);
-  // Null until mounted, so the server markup matches the reference before its script runs.
-  const [mode, setMode] = useState<{ auto: boolean; paused: boolean } | null>(null);
-
-  const rootRef = useRef<HTMLDivElement>(null);
-  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const t = useRef({
-    cur: 0,
-    timer: null as ReturnType<typeof setTimeout> | null,
-    start: 0,
-    left: DUR,
-    vis: false,
-    hovering: false,
-    reduce: false,
-  });
-
-  // These only touch refs and state setters, so they're safe to recreate per render.
-  function schedule() {
-    const s = t.current;
-    if (s.timer) clearTimeout(s.timer);
-    s.timer = null;
-    const running = !s.reduce && s.vis && !s.hovering && !document.hidden;
-    setMode({ auto: !s.reduce, paused: !running });
-    if (running) {
-      s.start = performance.now();
-      s.timer = setTimeout(() => show(t.current.cur + 1), s.left);
-    }
-  }
-
-  function pause() {
-    const s = t.current;
-    if (s.timer) {
-      clearTimeout(s.timer);
-      s.timer = null;
-      s.left = Math.max(0, s.left - (performance.now() - s.start));
-    }
-    setMode((m) => ({ auto: m?.auto ?? !s.reduce, paused: true }));
-  }
-
-  function show(n: number) {
-    const s = t.current;
-    s.cur = (n + total) % total;
-    s.left = DUR;
-    setCur(s.cur);
-    setCycle((c) => c + 1);
-    schedule();
-  }
-
-  // Keep the latest closures for listeners registered once.
-  const api = useRef({ schedule, pause });
-  api.current = { schedule, pause };
-
-  useEffect(() => {
-    const s = t.current;
-    s.reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    api.current.schedule();
-
-    const onVisibility = () => (document.hidden ? api.current.pause() : api.current.schedule());
-    document.addEventListener("visibilitychange", onVisibility);
-
-    let io: IntersectionObserver | undefined;
-    if ("IntersectionObserver" in window && rootRef.current) {
-      io = new IntersectionObserver(
-        (entries) => {
-          s.vis = entries[0]?.isIntersecting ?? false;
-          if (s.vis) api.current.schedule();
-          else api.current.pause();
-        },
-        { threshold: VISIBLE_AT },
-      );
-      io.observe(rootRef.current);
-    }
-
-    return () => {
-      document.removeEventListener("visibilitychange", onVisibility);
-      io?.disconnect();
-      if (s.timer) clearTimeout(s.timer);
-      s.timer = null;
-    };
-  }, []);
-
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    let next: number | null = null;
-    if (e.key === "ArrowDown" || e.key === "ArrowRight") next = t.current.cur + 1;
-    if (e.key === "ArrowUp" || e.key === "ArrowLeft") next = t.current.cur - 1;
-    if (next === null) return;
-    e.preventDefault();
-    show(next);
-    tabRefs.current[t.current.cur]?.focus();
-  };
-
-  const className = ["kw", mode?.auto && "auto", mode?.paused && "paused"].filter(Boolean).join(" ");
+  const { boardRef, tidyRef, countRef, padRef, padLabelRef, hintRef } = useKindWordsBoard();
 
   return (
-    <section>
+    <section id="kind-words" className={s.root} aria-labelledby="kw-h">
       <div className="sec-head">
-        <h2 className="label">Kind words</h2>
-        <span className="kw-count" id="kw-count">
-          {pad(cur + 1)} / {pad(total)}
-        </span>
+        <h2 className="label" id="kw-h">
+          Kind words
+        </h2>
+        <div className={s.ctl}>
+          <span className={`${s.count} mono`} ref={countRef} hidden>
+            {`01 / ${String(KIND_WORDS.length).padStart(2, "0")}`}
+          </span>
+          <button className={`${s.tidy} mono`} ref={tidyRef} type="button">
+            Tidy up
+          </button>
+        </div>
       </div>
-      <div
-        className={className}
-        id="kw"
-        ref={rootRef}
-        style={{ ["--kwdur" as string]: `${DUR}ms` }}
-        onKeyDown={onKeyDown}
-        onPointerEnter={() => {
-          t.current.hovering = true;
-          pause();
-        }}
-        onPointerLeave={() => {
-          t.current.hovering = false;
-          schedule();
-        }}
-      >
-        <div className="kw-people" role="tablist" aria-label="People">
-          {KIND_WORDS.map((p, i) => (
-            <button
-              key={p.name}
-              ref={(el) => {
-                tabRefs.current[i] = el;
-              }}
-              className="kw-p"
-              type="button"
-              role="tab"
-              id={`kwt${i}`}
-              aria-controls={`kwq${i}`}
-              aria-selected={i === cur}
-              tabIndex={i === cur ? 0 : -1}
-              onClick={() => show(i)}
-            >
-              <i key={cycle} />
-              <b>{p.name}</b>
-              <span>{p.role}</span>
-            </button>
-          ))}
-        </div>
-        <div className="kw-stage">
-          {KIND_WORDS.map((p, i) => (
-            // tabpanel isn't an allowed role on <figure>, so the panel wraps it.
-            // The figure is display: contents (home.css), so layout is unchanged.
-            <div
-              key={p.name}
-              className={i === cur ? "kw-q on" : "kw-q"}
-              role="tabpanel"
-              id={`kwq${i}`}
-              aria-labelledby={`kwt${i}`}
-            >
-              <figure>
-                <blockquote>{p.quote}</blockquote>
-                <figcaption>
-                  <b>{p.name}</b>
-                  <span>{p.role}</span>
-                </figcaption>
-              </figure>
+      <p className={s.srOnly} id="kw-help">
+        Each note can be dragged around the board, or moved with the arrow keys once focused.
+      </p>
+      <div className={s.board} ref={boardRef} aria-describedby="kw-help" data-endpoint="/api/note">
+        {KIND_WORDS.map((p) => (
+          <figure key={p.name} className={s.note} data-c={p.paper} tabIndex={0}>
+            <div className={s.paper}>
+              <blockquote>{p.quote}</blockquote>
+              <figcaption>
+                <b>{p.name}</b>
+                <span>{p.role}</span>
+              </figcaption>
             </div>
-          ))}
-        </div>
+          </figure>
+        ))}
+        <button className={s.pad} ref={padRef} type="button" aria-label="Write Ayo a note">
+          <span className={s.padTop}>
+            <b ref={padLabelRef}>Your turn.</b>
+            <span className="mono">Leave a note +</span>
+          </span>
+        </button>
+        <p className={`${s.hint} mono`} ref={hintRef} aria-hidden="true">
+          psst, they move.
+        </p>
       </div>
     </section>
   );
