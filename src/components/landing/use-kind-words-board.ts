@@ -118,6 +118,15 @@ export function useKindWordsBoard() {
       n.el.style.zIndex = String(++Z);
     };
     const ease = (list: Note[], yes: boolean) => list.forEach((n) => n.el.classList.toggle(s.ease, yes && !reduce));
+    // push pins: pop the pin out (loose), or push it back in with a small thunk (repin)
+    const loose = (n: Note) => n.el.classList.add(s.loose);
+    function repin(n: Note) {
+      const el = n.el;
+      el.classList.remove(s.loose, s.repin);
+      void el.offsetWidth;
+      el.classList.add(s.repin);
+      later(() => el.classList.remove(s.repin), 700);
+    }
     function measure() {
       W = board!.clientWidth;
       deck = W < 640;
@@ -256,6 +265,7 @@ export function useKindWordsBoard() {
             n.moving = false;
             n.r = n.base;
             paint(n);
+            repin(n);
           } else busy = true;
         }
       });
@@ -296,6 +306,7 @@ export function useKindWordsBoard() {
           drag.moved = true;
           n.drag = true;
           n.el.classList.add(s.held);
+          loose(n);
           try {
             n.el.setPointerCapture(e.pointerId);
           } catch {}
@@ -329,7 +340,11 @@ export function useKindWordsBoard() {
       drag = null;
       n.drag = false;
       n.el.classList.remove(s.held);
-      if (!moved) return;
+      if (!moved) {
+        // caught a sliding note without moving it: it stopped, so pin it where it is
+        if (n.el.classList.contains(s.loose)) repin(n);
+        return;
+      }
       if (deck) {
         const dx = n.x - (W - n.w) / 2;
         if (Math.abs(dx) > W * 0.25 || Math.abs(n.vx) > 9) toss(n, Math.sign(dx || n.vx));
@@ -337,11 +352,13 @@ export function useKindWordsBoard() {
           ease([n], true);
           layoutDeck();
           paint(n);
+          later(() => repin(n), 300);
         }
         return;
       }
       if (reduce) {
         n.vx = n.vy = 0;
+        repin(n);
         return;
       }
       n.base = clamp(n.base + clamp(n.vx * 0.3, -4, 4), -12, 12);
@@ -353,6 +370,7 @@ export function useKindWordsBoard() {
 
     // phone: flick the top note away and it goes to the back of the pile
     function toss(n: Note, dir: number) {
+      loose(n);
       ease([n], true);
       n.x = (W - n.w) / 2 + dir * (W + 40);
       n.r = dir * 18;
@@ -371,6 +389,7 @@ export function useKindWordsBoard() {
               ease(notes, true);
               layoutDeck();
               notes.forEach(paint);
+              later(() => repin(n), reduce ? 0 : 450);
             }),
           );
         },
@@ -425,10 +444,12 @@ export function useKindWordsBoard() {
         tidyBtn.textContent = mode === "tidy" ? "Mess it up" : "Tidy up";
         notes.forEach((n, i) => {
           n.moving = false;
+          loose(n);
           n.el.style.transitionDelay = reduce ? "0ms" : i * 45 + "ms";
         });
         layout(true);
         later(() => notes.forEach((n) => (n.el.style.transitionDelay = "")), 900);
+        notes.forEach((n, i) => later(() => repin(n), reduce ? 0 : 620 + i * 90));
       },
       on,
     );
@@ -463,11 +484,12 @@ export function useKindWordsBoard() {
           return;
         }
         const el = document.createElement("figure");
-        el.className = `${s.note} ${s.mine}`;
+        el.className = `${s.note} ${s.mine} ${s.loose}`;
         el.dataset.c = "w";
         el.tabIndex = 0;
         el.setAttribute("aria-label", "Your note to Ayo");
         el.innerHTML =
+          `<svg class="${s.pin}" aria-hidden="true" focusable="false"><use href="#pin-black"/></svg>` +
           `<form class="${s.paper}" novalidate><label class="${s.srOnly}" for="kw-msg">Your note to Ayo</label><textarea id="kw-msg" name="message" maxlength="500" required placeholder="Hi Ayo, …"></textarea>` +
           `<label class="${s.srOnly}" for="kw-from">Your email, if you want a reply</label><input class="${s.mineMail}" id="kw-from" name="email" type="email" autocomplete="email" maxlength="120" placeholder="Your email, if you want a reply">` +
           `<input class="${s.trap}" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">` +
@@ -548,6 +570,7 @@ export function useKindWordsBoard() {
           ease(notes, false);
           layoutDeck();
           notes.forEach(paint);
+          repin(m);
           ta.focus({ preventScroll: true });
           return;
         }
@@ -565,21 +588,28 @@ export function useKindWordsBoard() {
             m.y = clamp(H - m.h - 110, 0, H - m.h);
             m.base = m.r = -2.5;
             paint(m);
-            later(() => ta.focus({ preventScroll: true }), 350);
+            later(
+              () => {
+                ta.focus({ preventScroll: true });
+                repin(m);
+              },
+              reduce ? 0 : 600,
+            );
           }),
         );
       },
       on,
     );
-    // sent: a stamp lands on the note, then it flies off the desk to Ayo
+    // sent: it's pinned to Ayo's board, then the pin pops out and it flies off to Ayo
     function sent(el: HTMLElement) {
       const n = byEl.get(el)!;
       el.classList.remove(s.sending);
       el.classList.add(s.sent);
-      el.querySelector("p")!.textContent = "Stuck to Ayo’s desk ✓";
+      el.querySelector("p")!.textContent = "Pinned to Ayo’s board ✓";
       later(
         () => {
           if (!el.isConnected) return;
+          loose(n);
           ease([n], true);
           el.style.opacity = "0";
           n.y -= deck ? 0 : 60;
@@ -605,7 +635,7 @@ export function useKindWordsBoard() {
     let io: IntersectionObserver | undefined;
     if (!reduce && "IntersectionObserver" in window) {
       notes.forEach((n) => {
-        n.el.classList.add(s.pre);
+        n.el.classList.add(s.pre, s.loose);
         n.el.style.transform = `translate3d(${n.x}px,${n.y - 28}px,0) rotate(${n.r * 2}deg)`;
       });
       io = new IntersectionObserver(
@@ -618,6 +648,7 @@ export function useKindWordsBoard() {
             ease([n], true);
             n.el.classList.remove(s.pre);
             paint(n);
+            later(() => repin(n), 560 + i * 110);
           });
           later(
             () =>

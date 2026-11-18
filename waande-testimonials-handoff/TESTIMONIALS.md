@@ -1,4 +1,4 @@
-# Kind words (testimonials) section: sticky-note desk
+# Kind words (testimonials) section: sticky notes on a notice board
 
 ## Scope: read this first
 
@@ -33,7 +33,7 @@
 
 ## The idea
 
-The testimonials are sticky notes on a desk. They arrive loosely scattered and fully readable. Visitors can drag them, throw them, tidy them into a grid or mess them up. A pad of blank notes in the corner lets them write their own note to Ayo, which is emailed to him straight from the site.
+The testimonials are sticky notes pinned to a notice board. They arrive loosely scattered and fully readable. Visitors can drag them, throw them, tidy them into a grid or mess them up. A pad of blank notes in the corner lets them write their own note to Ayo, which is emailed to him straight from the site.
 
 ## Content
 
@@ -56,9 +56,20 @@ The testimonials are sticky notes on a desk. They arrive loosely scattered and f
 ## Look
 
 - **Notes:** paper colour, ink `#1d1c19`, radius 2px, padding 20px. Quote 14px/1.55 with a hanging opening quote mark (`text-indent:-.4em`). Name 13.5px weight 500. Role in mono 10.5px `#5b584c`.
-- **Same paper in both themes:** the notes are objects on the desk, so their colours don't change in dark mode. Only the shadows get deeper.
+- **Same paper in both themes:** the notes are objects on the board, so their colours don't change in dark mode. Only the shadows get deeper.
 - **Curl:** a soft shadow under the bottom-right edge (`.note::before`) makes the note look slightly lifted. Keep it; it's what makes them read as real paper.
-- **No tape and no pins.** That's deliberate.
+- **Push pins:** every note is held by a thumbtack drawn as inline SVG. The pin sprite (`<svg class="pin-sprite">`) sits at the top of the section markup, with one `<symbol>` per colour (`#pin-red`, `#pin-yellow`, `#pin-blue`, `#pin-green`, `#pin-black`).
+  - Each pin is drawn at a three-quarter angle: a flat top disc with a highlight, a narrow neck, a flared base, a glint of steel needle, and a soft two-part shadow falling down and to the right on the paper. Copy the sprite as-is; don't redraw it, and don't swap in an emoji or an icon font.
+  - Each note uses its pin as `<svg class="pin"><use href="#pin-red"/></svg>`, 30×35.5px, placed so the needle meets the paper about 9px below the note's top edge.
+  - **Colours, offsets and tilts per note** (`--px`, `--pr`): red −14px/−10°, yellow +10px/6°, blue −4px/−4°, green +16px/9°, blue −8px/−7°, red +6px/3°. The visitor's note gets a black pin.
+  - **The pin is part of the motion:**
+    - **Picking a note up:** the pin pops out (class `loose`: fades and rises 26px).
+    - **Dropping it, once it has stopped sliding:** the pin is pushed back in (class `repin`: drops in with a slight overshoot), and the paper gives a tiny "thunk" (scale .985).
+    - **Hover:** a pinned note swings 1.2° around its pin (`transform-origin` near the top) instead of lifting, because it's pinned.
+  - **Arrival:** the notes land first, then the pins go in one by one (110ms stagger).
+  - **Tidy up / Mess it up:** every pin pops out, the notes move, then the pins go back in one by one (90ms stagger).
+  - **Phone stack:** a flicked note loses its pin and is re-pinned once it's tucked in at the back.
+- **No tape.**
 - **Visitor's note and pad:** off-white paper `#fdfcf7`, so a visitor's own note is clearly theirs and never mistaken for a testimonial.
 
 ## Desktop behaviour (board 640px wide and up)
@@ -108,7 +119,7 @@ The visitor's note is a small `<form>`. Notes are emailed to Ayo from the site; 
 
 - The note POSTs JSON to `/api/note`: `{ message, email, website, ms }`, where `ms` is the time since the note was opened.
 - While sending, the fields are read-only and the button says "Sending…".
-- **Success:** the footer is replaced by "Stuck to Ayo's desk ✓". 1.5s later the note flies up and away off the board and is removed. The pad then reads "Sent. Thank you." for 5 seconds.
+- **Success:** the footer is replaced by "Pinned to Ayo's board ✓". 1.5s later its pin pops out and the note flies up and away off the board, then is removed. The pad then reads "Sent. Thank you." for 5 seconds.
 - **Failure** (network error or non-200): the text is kept, the button becomes "Try again ↗", and a red line reads "Didn't send. Email me instead ↗". That link is a `mailto:` with the note pre-filled, as a fallback.
 
 **The API route** (`source/api-note-route.ts` → `app/api/note/route.ts`)
@@ -139,7 +150,7 @@ The visitor's note is a small `<form>`. Notes are emailed to Ayo from the site; 
   - Phone: left and right send the top note to the back.
   - Hidden notes in the stack get `tabindex="-1"` and `aria-hidden`.
 - **Instructions:** a visually hidden paragraph explains dragging and the arrow keys. The board points to it with `aria-describedby`.
-- **Reduced motion:** no arrival animation, no tilt, no throw momentum and no eased transitions. Notes still move, just directly.
+- **Reduced motion:** no arrival animation, no tilt, no throw momentum, no pin pop or drop, and no eased transitions. Notes still move, just directly.
 - **The visitor's note:** both fields have visually hidden labels. The status line is `role="status"` with `aria-live="polite"`, so "Sending", the success message and errors are announced. The honeypot has `tabindex="-1"` and `aria-hidden`.
 - **Hidden attributes must really hide:** keep the `[hidden]{display:none}` rules for `.kw-tidy` and `.kw-n`, because `all:unset` overrides the browser default.
 
@@ -150,6 +161,7 @@ The visitor's note is a small `<form>`. Notes are emailed to Ayo from the site; 
 - [ ] Sending, with `RESEND_API_KEY` in `.env.local`: a note arrives in Ayo's inbox, and "reply" goes to the visitor's email when one was given. An invalid email keeps Send disabled. With the key removed, the failure state and "Email me instead" fallback show. The honeypot and the 2-second check return success without sending. A 4th note within 10 minutes is rejected.
 - [ ] `data-demo` is gone from the production markup.
 - [ ] Phone: flicking works and the counter advances; vertical scrolling over the notes still works; no horizontal scroll at 390px.
-- [ ] Keyboard and reduced motion behave as described. No console errors.
+- [ ] The pins pop out and go back in on drag, tidy, mess, phone flick and arrival, and every note ends up pinned (no `.loose` left behind).
+- [ ] Keyboard and reduced motion behave as described (reduced motion: pins are just there, with no pop or drop). No console errors.
 - [ ] `git diff` touches only the testimonials section's files, the new `app/api/note/route.ts` (and `.env.example` if present), and the line that renders the section on the home page. Nothing else on the site changed, including the About page and its chess section.
 - [ ] Don't commit, push or deploy until Ayo has reviewed it locally.

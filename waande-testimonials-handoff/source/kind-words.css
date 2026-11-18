@@ -17,7 +17,7 @@
 /* no JS: a plain readable grid */
 .kw-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
 .note{margin:0;position:relative;outline:none}
-.paper{position:relative;z-index:1;background:var(--pc);color:var(--ink);padding:20px 20px 18px;border-radius:2px;display:grid;gap:14px;align-content:start;
+.paper{position:relative;z-index:1;transform-origin:50% 6px;background:var(--pc);color:var(--ink);padding:20px 20px 18px;border-radius:2px;display:grid;gap:14px;align-content:start;
   background-image:linear-gradient(180deg,rgba(255,255,255,.22),transparent 18%),linear-gradient(0deg,rgba(0,0,0,.045),transparent 22%);
   box-shadow:0 1px 1px rgba(0,0,0,.08),0 6px 10px -6px rgba(0,0,0,.28);
   transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s}
@@ -36,7 +36,7 @@
 .kw-board.js.deck{overflow-x:clip;overflow-clip-margin:24px}
 .kw-board.js.deck .note{touch-action:pan-y}
 .kw-board.js .note.ease{transition:transform .65s cubic-bezier(.2,.85,.25,1),opacity .4s}
-.kw-board.js .note:hover .paper{transform:translateY(-2px)}
+.kw-board.js .note:not(.held):hover .paper{transform:rotate(1.2deg)}
 .kw-board.js .note.held{cursor:grabbing}
 .kw-board.js .note.held .paper{transform:scale(1.04);box-shadow:0 1px 1px rgba(0,0,0,.08),0 22px 30px -14px rgba(0,0,0,.42)}
 .kw-board.js .note.held::before{box-shadow:0 26px 22px rgba(0,0,0,.22)}
@@ -84,3 +84,22 @@
 .kw-board.js.deck .pad{width:128px;height:112px;transform:rotate(-3deg)}
 
 @media (prefers-reduced-motion:reduce){.paper,.pad,.pad-top,.kw-board.js .note.ease{transition:none!important}}
+
+/* push pins: every note is pinned to the board. Pick one up and the pin pops out; drop it and it's pushed back in.
+   The pins are an SVG sprite (one symbol per colour) drawn as a 3/4-view thumbtack with its own shadow. */
+.pin-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.pin{--px:0px;--pr:-8deg;position:absolute;z-index:3;top:-19px;left:calc(50% + var(--px));width:30px;height:35.5px;overflow:visible;pointer-events:none;
+  transform:translate(-50%,0) rotate(var(--pr));transform-origin:50% 85%;transition:opacity .15s,transform .2s cubic-bezier(.2,.8,.2,1)}
+.note:nth-of-type(1) .pin{--px:-14px;--pr:-10deg}
+.note:nth-of-type(2) .pin{--px:10px;--pr:6deg}
+.note:nth-of-type(3) .pin{--px:-4px;--pr:-4deg}
+.note:nth-of-type(4) .pin{--px:16px;--pr:9deg}
+.note:nth-of-type(5) .pin{--px:-8px;--pr:-7deg}
+.note:nth-of-type(6) .pin{--px:6px;--pr:3deg}
+.note.mine .pin{--px:0px;--pr:-5deg}
+.note.loose .pin,.note.held .pin{opacity:0;transform:translate(-50%,-26px) rotate(var(--pr)) scale(1.2)}
+.note.repin .pin{animation:pinIn .42s cubic-bezier(.3,1.5,.5,1)}
+.note.repin .paper{animation:thunk .28s .22s ease-out}
+@keyframes pinIn{0%{opacity:0;transform:translate(-50%,-24px) rotate(var(--pr)) scale(1.3)}60%{opacity:1;transform:translate(-50%,1px) rotate(var(--pr)) scale(.94)}100%{opacity:1;transform:translate(-50%,0) rotate(var(--pr)) scale(1)}}
+@keyframes thunk{45%{transform:scale(.985)}}
+@media (prefers-reduced-motion:reduce){.pin{transition:none}.note.repin .pin,.note.repin .paper{animation:none}}
