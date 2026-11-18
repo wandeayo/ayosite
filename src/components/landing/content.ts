@@ -4,6 +4,8 @@
  * U+2011 non-breaking hyphen in the H1, curly quotes, em dashes in quotes.
  */
 
+import type { PinColour } from "./kind-words-pins";
+
 export const LANDING = {
   name: "Ayowande Olubo",
   url: "https://waande.com",
@@ -69,6 +71,8 @@ export interface KindWord {
   quote: string;
   /** Sticky-note paper: yellow, blue, green, pink, orange, lilac. */
   paper: "y" | "b" | "g" | "p" | "o" | "l";
+  /** The push pin holding the note to the board. */
+  pin: PinColour;
 }
 
 export const KIND_WORDS: readonly KindWord[] = [
@@ -78,6 +82,7 @@ export const KIND_WORDS: readonly KindWord[] = [
     quote:
       "“An outstanding UX designer who combines strong design thinking with the ability to execute quickly without compromising quality. He also designed our website: a polished, modern result that perfectly reflected our brand. Someone I’d happily recommend to any team.”",
     paper: "y",
+    pin: "red",
   },
   {
     name: "Hugo Rawlinson",
@@ -85,6 +90,7 @@ export const KIND_WORDS: readonly KindWord[] = [
     quote:
       "“He’s one of those rare people who combines strong technical ability with a real eye for user experience. He doesn’t simply build what’s asked. He thinks through the end user, the business goal, the flow, the design, and the long-term usability of the product.”",
     paper: "b",
+    pin: "yellow",
   },
   {
     name: "Tom McDonough",
@@ -92,6 +98,7 @@ export const KIND_WORDS: readonly KindWord[] = [
     quote:
       "“I had the pleasure of working with Ayo, and he is a standout team member. Beyond his technical abilities, Ayo is a collaborative and dependable teammate who fosters a positive work environment.”",
     paper: "g",
+    pin: "blue",
   },
   {
     name: "Ibrahim Bashir",
@@ -99,6 +106,7 @@ export const KIND_WORDS: readonly KindWord[] = [
     quote:
       "“Working with Ayowande has been awesome. He brought so much coolness to our project. Super creative, keen attention to details, our project even looks better than we imagined.”",
     paper: "p",
+    pin: "green",
   },
   {
     name: "Williams Balogun",
@@ -106,6 +114,7 @@ export const KIND_WORDS: readonly KindWord[] = [
     quote:
       "“Teaming up with Ayowande on various projects has been an easy job for my frontend development. His designs are not just visually sound but also done easy for implementation. Totally recommend.”",
     paper: "o",
+    pin: "blue",
   },
   {
     name: "Valeria Cuciniello",
@@ -113,6 +122,7 @@ export const KIND_WORDS: readonly KindWord[] = [
     quote:
       "“Had a great time working with Ayo. His design skills spiced up our team’s project. Easygoing, talented and always brought fresh ideas. He’s also always available for help and clarifying things.”",
     paper: "l",
+    pin: "red",
   },
 ];
 
