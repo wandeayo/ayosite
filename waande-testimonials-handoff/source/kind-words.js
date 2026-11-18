@@ -11,6 +11,8 @@
     notes=[...board.querySelectorAll('.note')].map(mk);
     const paint=n=>{n.el.style.transform=`translate3d(${n.x}px,${n.y}px,0) rotate(${n.r}deg)`};
     const front=n=>{n.el.style.zIndex=++Z};
+    const loose=n=>n.el.classList.add('loose');
+    function repin(n){const el=n.el;el.classList.remove('loose','repin');void el.offsetWidth;el.classList.add('repin');setTimeout(()=>el.classList.remove('repin'),700)}
     function ease(list,on){list.forEach(n=>n.el.classList.toggle('ease',on&&!reduce))}
     function measure(){W=board.clientWidth;deck=W<640;board.classList.toggle('deck',deck);count.hidden=!deck;tidyBtn.hidden=deck;
       const nw=deck?Math.min(320,W-28):Math.min(264,Math.floor((W-40)/3));board.style.setProperty('--nw',nw+'px');
@@ -48,7 +50,7 @@
           if(n.x<0||n.x>W-n.w){n.x=clamp(n.x,0,W-n.w);n.vx*=-.45}
           if(n.y<0||n.y>H-n.h){n.y=clamp(n.y,0,H-n.h);n.vy*=-.45}
           n.tr=n.base+clamp(n.vx*.8,-14,14);n.r+=(n.tr-n.r)*.2;paint(n);
-          if(Math.hypot(n.vx,n.vy)<.15&&Math.abs(n.r-n.base)<.05){n.moving=false;n.r=n.base;paint(n)}else busy=true}});
+          if(Math.hypot(n.vx,n.vy)<.15&&Math.abs(n.r-n.base)<.05){n.moving=false;n.r=n.base;paint(n);repin(n)}else busy=true}});
       raf=busy?requestAnimationFrame(loop):0}
     const kick=()=>{if(!raf)raf=requestAnimationFrame(loop)};
     const pt=e=>{const b=board.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
@@ -57,7 +59,7 @@
       const [px,py]=pt(e);drag={n,ox:px-n.x,oy:py-n.y,sx:px,lx:px,ly:py,lt:performance.now(),id:e.pointerId,moved:false};
       ease([n],false);n.moving=false;n.vx=n.vy=0;if(!deck)front(n)});
     board.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const n=drag.n,[px,py]=pt(e);
-      if(!drag.moved){if(Math.hypot(px-drag.lx,py-drag.ly)<4)return;drag.moved=true;n.drag=true;n.el.classList.add('held');try{n.el.setPointerCapture(e.pointerId)}catch(_){}
+      if(!drag.moved){if(Math.hypot(px-drag.lx,py-drag.ly)<4)return;drag.moved=true;n.drag=true;n.el.classList.add('held');loose(n);try{n.el.setPointerCapture(e.pointerId)}catch(_){}
         if(hint&&!hint.classList.contains('gone'))hint.classList.add('gone')}
       const t=performance.now(),dt=Math.max(8,t-drag.lt);
       n.vx=n.vx*.5+((px-drag.lx)/dt*16)*.5;n.vy=n.vy*.5+((py-drag.ly)/dt*16)*.5;drag.lx=px;drag.ly=py;drag.lt=t;
@@ -65,15 +67,15 @@
       else{n.x=clamp(px-drag.ox,0,W-n.w);n.y=clamp(py-drag.oy,0,H-n.h);n.tr=n.base+clamp(n.vx*.8,-14,14)}
       if(reduce){n.r=n.tr=deck?0:n.base;paint(n)}else kick()});
     function end(e){if(!drag||(e&&e.pointerId!==drag.id))return;const {n,moved,sx}=drag;drag=null;n.drag=false;n.el.classList.remove('held');if(!moved)return;
-      if(deck){const dx=n.x-(W-n.w)/2;if(Math.abs(dx)>W*.25||Math.abs(n.vx)>9)toss(n,Math.sign(dx||n.vx));else{ease([n],true);layoutDeck();paint(n)}return}
-      if(reduce){n.vx=n.vy=0;return}
+      if(deck){const dx=n.x-(W-n.w)/2;if(Math.abs(dx)>W*.25||Math.abs(n.vx)>9)toss(n,Math.sign(dx||n.vx));else{ease([n],true);layoutDeck();paint(n);setTimeout(()=>repin(n),300)}return}
+      if(reduce){n.vx=n.vy=0;repin(n);return}
       n.base=clamp(n.base+clamp(n.vx*.3,-4,4),-12,12);n.moving=true;kick()}
     board.addEventListener('pointerup',end);board.addEventListener('pointercancel',end);
 
     // phone: flick the top note away and it goes to the back of the pile
     function toss(n,dir){ease([n],true);n.x=(W-n.w)/2+dir*(W+40);n.r=dir*18;paint(n);
       setTimeout(()=>{order.push(order.shift());ease(notes,false);n.el.style.zIndex=0;n.x=(W-n.w)/2;n.y=14;n.r=0;paint(n);
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{ease(notes,true);layoutDeck();notes.forEach(paint)}))},reduce?0:320)}
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{ease(notes,true);layoutDeck();notes.forEach(paint);setTimeout(()=>repin(n),reduce?0:450)}))},reduce?0:320)}
 
     // keyboard: arrows nudge the focused note (or flip through the stack on a phone)
     board.addEventListener('keydown',e=>{const el=e.target.closest('.note');if(!el||e.target.closest('textarea,input'))return;const n=el._n;
@@ -83,8 +85,9 @@
     board.addEventListener('focusin',e=>{const el=e.target.closest('.note');if(el&&!deck&&el.style.zIndex<Z)front(el._n)});
 
     tidyBtn.addEventListener('click',()=>{mode=mode==='tidy'?'mess':'tidy';tidyBtn.textContent=mode==='tidy'?'Mess it up':'Tidy up';
-      notes.forEach((n,i)=>{n.moving=false;n.el.style.transitionDelay=reduce?'0ms':(i*45)+'ms'});layout(true);
-      setTimeout(()=>notes.forEach(n=>n.el.style.transitionDelay=''),900)});
+      notes.forEach((n,i)=>{n.moving=false;loose(n);n.el.style.transitionDelay=reduce?'0ms':(i*45)+'ms'});layout(true);
+      setTimeout(()=>notes.forEach(n=>n.el.style.transitionDelay=''),900);
+      notes.forEach((n,i)=>setTimeout(()=>repin(n),reduce?0:620+i*90))});
 
     // the pad: peel off a blank note and write Ayo something
     // the pad: peel off a blank note, write Ayo something, and it's sent from the site (no email app needed)
@@ -93,7 +96,7 @@
     function removeMine(){if(!mine)return;const el=mine.el;notes=notes.filter(n=>n!==mine);order=order.filter(n=>n!==mine);el.remove();mine=null;if(deck){ease(notes,true);layoutDeck();notes.forEach(paint)}}
     pad.addEventListener('click',()=>{if(mine){if(deck){order=[mine,...order.filter(n=>n!==mine)];ease(notes,true);layoutDeck();notes.forEach(paint)}else front(mine);mine.el.querySelector('textarea').focus();return}
       const el=document.createElement('figure');el.className='note mine';el.dataset.c='w';el.tabIndex=0;el.setAttribute('aria-label','Your note to Ayo');
-      el.innerHTML='<form class="paper" novalidate><label class="sr-only" for="kw-msg">Your note to Ayo</label><textarea id="kw-msg" name="message" maxlength="500" required placeholder="Hi Ayo, …"></textarea>'+
+      el.classList.add('loose');el.innerHTML='<svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-black"/></svg><form class="paper" novalidate><label class="sr-only" for="kw-msg">Your note to Ayo</label><textarea id="kw-msg" name="message" maxlength="500" required placeholder="Hi Ayo, …"></textarea>'+
         '<label class="sr-only" for="kw-from">Your email, if you want a reply</label><input class="mine-mail" id="kw-from" name="email" type="email" autocomplete="email" maxlength="120" placeholder="Your email, if you want a reply">'+
         '<input class="kw-trap" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'+
         '<div class="mine-foot"><b>You</b><span class="mine-btns"><button type="button" class="bin" aria-label="Throw your note away">Bin</button><button type="submit" class="send" disabled>Send ↗</button></span></div>'+
@@ -111,21 +114,21 @@
           sent(el)}
         catch(_){el.classList.remove('sending');ta.readOnly=mail.readOnly=false;send.disabled=false;send.textContent='Try again ↗';el.classList.add('err');
           msg.innerHTML=`Didn’t send. <a href="mailto:${EMAIL}?subject=${encodeURIComponent('A note from waande.com')}&body=${encodeURIComponent(ta.value)}">Email me instead ↗</a>`}});
-      if(deck){order=[mine,...order];ease(notes,false);layoutDeck();notes.forEach(paint);ta.focus({preventScroll:true});return}
+      if(deck){order=[mine,...order];ease(notes,false);layoutDeck();notes.forEach(paint);repin(mine);ta.focus({preventScroll:true});return}
       const px=parseFloat(pad.style.left),py=parseFloat(pad.style.top);mine.x=px-10;mine.y=py-20;mine.r=4;paint(mine);front(mine);
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{ease([mine],true);mine.x=clamp(W/2-mine.w/2+30,0,W-mine.w);mine.y=clamp(H-mine.h-110,0,H-mine.h);mine.base=mine.r=-2.5;paint(mine);
-        setTimeout(()=>ta.focus({preventScroll:true}),350)}))});
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{ease([mine],true);mine.x=clamp(W/2-mine.w/2+30,0,W-mine.w);mine.y=clamp(H-mine.h-110,0,H-mine.h);mine.base=mine.r=-2.5;paint(mine);const m=mine;
+        setTimeout(()=>{ta.focus({preventScroll:true});repin(m)},reduce?0:600)}))});
     // sent: a stamp lands on the note, then it flies off the desk to Ayo
     function sent(el){const n=el._n;el.classList.remove('sending');el.classList.add('sent');
-      el.querySelector('.mine-msg').textContent='Stuck to Ayo’s desk ✓';
-      setTimeout(()=>{if(!el.isConnected)return;ease([n],true);el.style.opacity=0;n.y-=deck?0:60;n.x+=deck?W:80;n.r+=12;paint(n);
+      el.querySelector('.mine-msg').textContent='Pinned to Ayo’s board ✓';
+      setTimeout(()=>{if(!el.isConnected)return;loose(n);ease([n],true);el.style.opacity=0;n.y-=deck?0:60;n.x+=deck?W:80;n.r+=12;paint(n);
         setTimeout(()=>{removeMine();padLabel.textContent='Sent. Thank you.';pad.focus({preventScroll:true});setTimeout(()=>padLabel.textContent='Your turn.',5000)},reduce?0:650)},reduce?600:1500)}
 
     // first time the board scrolls into view, the notes land one by one
     layout(false);
-    if(!reduce&&'IntersectionObserver' in window){notes.forEach(n=>{n.el.classList.add('pre');n.el.style.transform=`translate3d(${n.x}px,${n.y-28}px,0) rotate(${n.r*2}deg)`});
+    if(!reduce&&'IntersectionObserver' in window){notes.forEach(n=>{n.el.classList.add('pre','loose');n.el.style.transform=`translate3d(${n.x}px,${n.y-28}px,0) rotate(${n.r*2}deg)`});
       const io=new IntersectionObserver(es=>{if(!es[0].isIntersecting||dealt)return;dealt=true;io.disconnect();
-        notes.forEach((n,i)=>{n.el.style.transitionDelay=(i*80)+'ms';ease([n],true);n.el.classList.remove('pre');paint(n)});
+        notes.forEach((n,i)=>{n.el.style.transitionDelay=(i*80)+'ms';ease([n],true);n.el.classList.remove('pre');paint(n);setTimeout(()=>repin(n),560+i*110)});
         setTimeout(()=>notes.forEach(n=>{n.el.style.transitionDelay='';ease([n],false)}),1400)},{threshold:.25});io.observe(board)}
     let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const was=deck;measure();if(was!==deck||!deck)layout(false);else{layoutDeck();notes.forEach(paint)}},150)});
     document.fonts&&document.fonts.ready.then(()=>{if(!drag)layout(false)});

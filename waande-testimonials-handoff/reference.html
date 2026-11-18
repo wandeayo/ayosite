@@ -299,7 +299,7 @@ footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;paddin
 /* no JS: a plain readable grid */
 .kw-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
 .note{margin:0;position:relative;outline:none}
-.paper{position:relative;z-index:1;background:var(--pc);color:var(--ink);padding:20px 20px 18px;border-radius:2px;display:grid;gap:14px;align-content:start;
+.paper{position:relative;z-index:1;transform-origin:50% 6px;background:var(--pc);color:var(--ink);padding:20px 20px 18px;border-radius:2px;display:grid;gap:14px;align-content:start;
   background-image:linear-gradient(180deg,rgba(255,255,255,.22),transparent 18%),linear-gradient(0deg,rgba(0,0,0,.045),transparent 22%);
   box-shadow:0 1px 1px rgba(0,0,0,.08),0 6px 10px -6px rgba(0,0,0,.28);
   transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s}
@@ -318,7 +318,7 @@ footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;paddin
 .kw-board.js.deck{overflow-x:clip;overflow-clip-margin:24px}
 .kw-board.js.deck .note{touch-action:pan-y}
 .kw-board.js .note.ease{transition:transform .65s cubic-bezier(.2,.85,.25,1),opacity .4s}
-.kw-board.js .note:hover .paper{transform:translateY(-2px)}
+.kw-board.js .note:not(.held):hover .paper{transform:rotate(1.2deg)}
 .kw-board.js .note.held{cursor:grabbing}
 .kw-board.js .note.held .paper{transform:scale(1.04);box-shadow:0 1px 1px rgba(0,0,0,.08),0 22px 30px -14px rgba(0,0,0,.42)}
 .kw-board.js .note.held::before{box-shadow:0 26px 22px rgba(0,0,0,.22)}
@@ -367,6 +367,25 @@ footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;paddin
 
 @media (prefers-reduced-motion:reduce){.paper,.pad,.pad-top,.kw-board.js .note.ease{transition:none!important}}
 
+/* push pins: every note is pinned to the board. Pick one up and the pin pops out; drop it and it's pushed back in.
+   The pins are an SVG sprite (one symbol per colour) drawn as a 3/4-view thumbtack with its own shadow. */
+.pin-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.pin{--px:0px;--pr:-8deg;position:absolute;z-index:3;top:-19px;left:calc(50% + var(--px));width:30px;height:35.5px;overflow:visible;pointer-events:none;
+  transform:translate(-50%,0) rotate(var(--pr));transform-origin:50% 85%;transition:opacity .15s,transform .2s cubic-bezier(.2,.8,.2,1)}
+.note:nth-of-type(1) .pin{--px:-14px;--pr:-10deg}
+.note:nth-of-type(2) .pin{--px:10px;--pr:6deg}
+.note:nth-of-type(3) .pin{--px:-4px;--pr:-4deg}
+.note:nth-of-type(4) .pin{--px:16px;--pr:9deg}
+.note:nth-of-type(5) .pin{--px:-8px;--pr:-7deg}
+.note:nth-of-type(6) .pin{--px:6px;--pr:3deg}
+.note.mine .pin{--px:0px;--pr:-5deg}
+.note.loose .pin,.note.held .pin{opacity:0;transform:translate(-50%,-26px) rotate(var(--pr)) scale(1.2)}
+.note.repin .pin{animation:pinIn .42s cubic-bezier(.3,1.5,.5,1)}
+.note.repin .paper{animation:thunk .28s .22s ease-out}
+@keyframes pinIn{0%{opacity:0;transform:translate(-50%,-24px) rotate(var(--pr)) scale(1.3)}60%{opacity:1;transform:translate(-50%,1px) rotate(var(--pr)) scale(.94)}100%{opacity:1;transform:translate(-50%,0) rotate(var(--pr)) scale(1)}}
+@keyframes thunk{45%{transform:scale(.985)}}
+@media (prefers-reduced-motion:reduce){.pin{transition:none}.note.repin .pin,.note.repin .paper{animation:none}}
+
 /* ---------- live-site chrome: theme toggle + floating nav ---------- */
 .theme-t{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--fg);display:grid;place-items:center;cursor:pointer;transition:border-color .15s}
 .theme-t:hover{border-color:var(--faint)}
@@ -409,13 +428,84 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
       <div class="kw-ctl"><span class="kw-n mono" id="kw-n" hidden>01 / 06</span><button class="kw-tidy mono" id="kw-tidy" type="button">Tidy up</button></div>
     </div>
     <p class="sr-only" id="kw-help">Each note can be dragged around the board, or moved with the arrow keys once focused.</p>
+    <svg class="pin-sprite" width="0" height="0" aria-hidden="true" focusable="false"><defs><filter id="pin-blur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="1.3"/></filter></defs><symbol id="pin-red" viewBox="0 0 44 52">
+<defs>
+<radialGradient id="pn-red-top" cx="36%" cy="32%" r="80%"><stop offset="0" stop-color="#e99d97"/><stop offset=".38" stop-color="#d74b40"/><stop offset=".8" stop-color="#ba3429"/><stop offset="1" stop-color="#982a22"/></radialGradient>
+<linearGradient id="pn-red-side" x1="0" x2="1"><stop offset="0" stop-color="#be352a"/><stop offset=".25" stop-color="#dc6259"/><stop offset=".62" stop-color="#942921"/><stop offset="1" stop-color="#5f1b15"/></linearGradient>
+<linearGradient id="pn-red-neck" x1="0" x2="1"><stop offset="0" stop-color="#a92f26"/><stop offset=".32" stop-color="#da584e"/><stop offset=".7" stop-color="#89261f"/><stop offset="1" stop-color="#541813"/></linearGradient>
+</defs>
+<g filter="url(#pin-blur)"><ellipse cx="33" cy="40" rx="12" ry="5.5" fill="#000" opacity=".16"/><ellipse cx="28" cy="40.5" rx="8" ry="3.2" fill="#000" opacity=".3"/></g>
+<path d="M21.6 38.5 L22.3 42" stroke="#9fa3a8" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M12 31 a10 5.2 0 0 0 20 0 v-2.4 h-20 z" fill="url(#pn-red-side)"/>
+<ellipse cx="22" cy="28.6" rx="10" ry="5.2" fill="url(#pn-red-top)"/>
+<path d="M16.6 28.8 C17.2 25 17.2 21 16.8 17 h10.4 C26.8 21 26.8 25 27.4 28.8 a5.4 2.4 0 0 1 -10.8 0z" fill="url(#pn-red-neck)"/>
+<path d="M8 13.4 a14 7.6 0 0 0 28 0 v-3.6 h-28 z" fill="url(#pn-red-side)"/>
+<ellipse cx="22" cy="9.8" rx="14" ry="7.6" fill="url(#pn-red-top)"/>
+<ellipse cx="17" cy="7" rx="5" ry="2.2" fill="#fff" opacity=".5" transform="rotate(-12 17 7)"/>
+</symbol><symbol id="pin-yellow" viewBox="0 0 44 52">
+<defs>
+<radialGradient id="pn-yellow-top" cx="36%" cy="32%" r="80%"><stop offset="0" stop-color="#f2d68e"/><stop offset=".38" stop-color="#e8b42e"/><stop offset=".8" stop-color="#ca9819"/><stop offset="1" stop-color="#a67d14"/></radialGradient>
+<linearGradient id="pn-yellow-side" x1="0" x2="1"><stop offset="0" stop-color="#cf9c19"/><stop offset=".25" stop-color="#ebbd49"/><stop offset=".62" stop-color="#a17914"/><stop offset="1" stop-color="#674e0d"/></linearGradient>
+<linearGradient id="pn-yellow-neck" x1="0" x2="1"><stop offset="0" stop-color="#b88a16"/><stop offset=".32" stop-color="#eab93e"/><stop offset=".7" stop-color="#967012"/><stop offset="1" stop-color="#5c450b"/></linearGradient>
+</defs>
+<g filter="url(#pin-blur)"><ellipse cx="33" cy="40" rx="12" ry="5.5" fill="#000" opacity=".16"/><ellipse cx="28" cy="40.5" rx="8" ry="3.2" fill="#000" opacity=".3"/></g>
+<path d="M21.6 38.5 L22.3 42" stroke="#9fa3a8" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M12 31 a10 5.2 0 0 0 20 0 v-2.4 h-20 z" fill="url(#pn-yellow-side)"/>
+<ellipse cx="22" cy="28.6" rx="10" ry="5.2" fill="url(#pn-yellow-top)"/>
+<path d="M16.6 28.8 C17.2 25 17.2 21 16.8 17 h10.4 C26.8 21 26.8 25 27.4 28.8 a5.4 2.4 0 0 1 -10.8 0z" fill="url(#pn-yellow-neck)"/>
+<path d="M8 13.4 a14 7.6 0 0 0 28 0 v-3.6 h-28 z" fill="url(#pn-yellow-side)"/>
+<ellipse cx="22" cy="9.8" rx="14" ry="7.6" fill="url(#pn-yellow-top)"/>
+<ellipse cx="17" cy="7" rx="5" ry="2.2" fill="#fff" opacity=".5" transform="rotate(-12 17 7)"/>
+</symbol><symbol id="pin-blue" viewBox="0 0 44 52">
+<defs>
+<radialGradient id="pn-blue-top" cx="36%" cy="32%" r="80%"><stop offset="0" stop-color="#97b1e8"/><stop offset=".38" stop-color="#406fd5"/><stop offset=".8" stop-color="#2957b8"/><stop offset="1" stop-color="#224796"/></radialGradient>
+<linearGradient id="pn-blue-side" x1="0" x2="1"><stop offset="0" stop-color="#2a59bc"/><stop offset=".25" stop-color="#5982da"/><stop offset=".62" stop-color="#214592"/><stop offset="1" stop-color="#152d5e"/></linearGradient>
+<linearGradient id="pn-blue-neck" x1="0" x2="1"><stop offset="0" stop-color="#264fa7"/><stop offset=".32" stop-color="#4e7ad8"/><stop offset=".7" stop-color="#1f4088"/><stop offset="1" stop-color="#132854"/></linearGradient>
+</defs>
+<g filter="url(#pin-blur)"><ellipse cx="33" cy="40" rx="12" ry="5.5" fill="#000" opacity=".16"/><ellipse cx="28" cy="40.5" rx="8" ry="3.2" fill="#000" opacity=".3"/></g>
+<path d="M21.6 38.5 L22.3 42" stroke="#9fa3a8" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M12 31 a10 5.2 0 0 0 20 0 v-2.4 h-20 z" fill="url(#pn-blue-side)"/>
+<ellipse cx="22" cy="28.6" rx="10" ry="5.2" fill="url(#pn-blue-top)"/>
+<path d="M16.6 28.8 C17.2 25 17.2 21 16.8 17 h10.4 C26.8 21 26.8 25 27.4 28.8 a5.4 2.4 0 0 1 -10.8 0z" fill="url(#pn-blue-neck)"/>
+<path d="M8 13.4 a14 7.6 0 0 0 28 0 v-3.6 h-28 z" fill="url(#pn-blue-side)"/>
+<ellipse cx="22" cy="9.8" rx="14" ry="7.6" fill="url(#pn-blue-top)"/>
+<ellipse cx="17" cy="7" rx="5" ry="2.2" fill="#fff" opacity=".5" transform="rotate(-12 17 7)"/>
+</symbol><symbol id="pin-green" viewBox="0 0 44 52">
+<defs>
+<radialGradient id="pn-green-top" cx="36%" cy="32%" r="80%"><stop offset="0" stop-color="#96c6a6"/><stop offset=".38" stop-color="#3f955a"/><stop offset=".8" stop-color="#287b43"/><stop offset="1" stop-color="#216537"/></radialGradient>
+<linearGradient id="pn-green-side" x1="0" x2="1"><stop offset="0" stop-color="#297e44"/><stop offset=".25" stop-color="#58a370"/><stop offset=".62" stop-color="#206235"/><stop offset="1" stop-color="#153f22"/></linearGradient>
+<linearGradient id="pn-green-neck" x1="0" x2="1"><stop offset="0" stop-color="#25703d"/><stop offset=".32" stop-color="#4d9d67"/><stop offset=".7" stop-color="#1e5b31"/><stop offset="1" stop-color="#12381e"/></linearGradient>
+</defs>
+<g filter="url(#pin-blur)"><ellipse cx="33" cy="40" rx="12" ry="5.5" fill="#000" opacity=".16"/><ellipse cx="28" cy="40.5" rx="8" ry="3.2" fill="#000" opacity=".3"/></g>
+<path d="M21.6 38.5 L22.3 42" stroke="#9fa3a8" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M12 31 a10 5.2 0 0 0 20 0 v-2.4 h-20 z" fill="url(#pn-green-side)"/>
+<ellipse cx="22" cy="28.6" rx="10" ry="5.2" fill="url(#pn-green-top)"/>
+<path d="M16.6 28.8 C17.2 25 17.2 21 16.8 17 h10.4 C26.8 21 26.8 25 27.4 28.8 a5.4 2.4 0 0 1 -10.8 0z" fill="url(#pn-green-neck)"/>
+<path d="M8 13.4 a14 7.6 0 0 0 28 0 v-3.6 h-28 z" fill="url(#pn-green-side)"/>
+<ellipse cx="22" cy="9.8" rx="14" ry="7.6" fill="url(#pn-green-top)"/>
+<ellipse cx="17" cy="7" rx="5" ry="2.2" fill="#fff" opacity=".5" transform="rotate(-12 17 7)"/>
+</symbol><symbol id="pin-black" viewBox="0 0 44 52">
+<defs>
+<radialGradient id="pn-black-top" cx="36%" cy="32%" r="80%"><stop offset="0" stop-color="#959493"/><stop offset=".38" stop-color="#3c3b38"/><stop offset=".8" stop-color="#262522"/><stop offset="1" stop-color="#1f1e1c"/></radialGradient>
+<linearGradient id="pn-black-side" x1="0" x2="1"><stop offset="0" stop-color="#272623"/><stop offset=".25" stop-color="#555552"/><stop offset=".62" stop-color="#1e1d1b"/><stop offset="1" stop-color="#131312"/></linearGradient>
+<linearGradient id="pn-black-neck" x1="0" x2="1"><stop offset="0" stop-color="#22221f"/><stop offset=".32" stop-color="#4b4a47"/><stop offset=".7" stop-color="#1c1b19"/><stop offset="1" stop-color="#111110"/></linearGradient>
+</defs>
+<g filter="url(#pin-blur)"><ellipse cx="33" cy="40" rx="12" ry="5.5" fill="#000" opacity=".16"/><ellipse cx="28" cy="40.5" rx="8" ry="3.2" fill="#000" opacity=".3"/></g>
+<path d="M21.6 38.5 L22.3 42" stroke="#9fa3a8" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M12 31 a10 5.2 0 0 0 20 0 v-2.4 h-20 z" fill="url(#pn-black-side)"/>
+<ellipse cx="22" cy="28.6" rx="10" ry="5.2" fill="url(#pn-black-top)"/>
+<path d="M16.6 28.8 C17.2 25 17.2 21 16.8 17 h10.4 C26.8 21 26.8 25 27.4 28.8 a5.4 2.4 0 0 1 -10.8 0z" fill="url(#pn-black-neck)"/>
+<path d="M8 13.4 a14 7.6 0 0 0 28 0 v-3.6 h-28 z" fill="url(#pn-black-side)"/>
+<ellipse cx="22" cy="9.8" rx="14" ry="7.6" fill="url(#pn-black-top)"/>
+<ellipse cx="17" cy="7" rx="5" ry="2.2" fill="#fff" opacity=".5" transform="rotate(-12 17 7)"/>
+</symbol></svg>
     <div class="kw-board" id="kw-board" aria-describedby="kw-help" data-endpoint="/api/note" data-demo="true">
-      <figure class="note" data-c="y" tabindex="0"><div class="paper"><blockquote>“An outstanding UX designer who combines strong design thinking with the ability to execute quickly without compromising quality. He also designed our website: a polished, modern result that perfectly reflected our brand. Someone I’d happily recommend to any team.”</blockquote><figcaption><b>Max Edwards</b><span>Co-founder &amp; CEO · Airstride</span></figcaption></div></figure>
-      <figure class="note" data-c="b" tabindex="0"><div class="paper"><blockquote>“He’s one of those rare people who combines strong technical ability with a real eye for user experience. He doesn’t simply build what’s asked. He thinks through the end user, the business goal, the flow, the design, and the long-term usability of the product.”</blockquote><figcaption><b>Hugo Rawlinson</b><span>Co-founder &amp; CRO · Airstride</span></figcaption></div></figure>
-      <figure class="note" data-c="g" tabindex="0"><div class="paper"><blockquote>“I had the pleasure of working with Ayo, and he is a standout team member. Beyond his technical abilities, Ayo is a collaborative and dependable teammate who fosters a positive work environment.”</blockquote><figcaption><b>Tom McDonough</b><span>Co-founder &amp; CTO · Dexla</span></figcaption></div></figure>
-      <figure class="note" data-c="p" tabindex="0"><div class="paper"><blockquote>“Working with Ayowande has been awesome. He brought so much coolness to our project. Super creative, keen attention to details, our project even looks better than we imagined.”</blockquote><figcaption><b>Ibrahim Bashir</b><span>CEO · Techonstack</span></figcaption></div></figure>
-      <figure class="note" data-c="o" tabindex="0"><div class="paper"><blockquote>“Teaming up with Ayowande on various projects has been an easy job for my frontend development. His designs are not just visually sound but also done easy for implementation. Totally recommend.”</blockquote><figcaption><b>Williams Balogun</b><span>Full Stack Engineer · Airstride</span></figcaption></div></figure>
-      <figure class="note" data-c="l" tabindex="0"><div class="paper"><blockquote>“Had a great time working with Ayo. His design skills spiced up our team’s project. Easygoing, talented and always brought fresh ideas. He’s also always available for help and clarifying things.”</blockquote><figcaption><b>Valeria Cuciniello</b><span>Product Designer</span></figcaption></div></figure>
+      <figure class="note" data-c="y" tabindex="0"><svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-red"/></svg><div class="paper"><blockquote>“An outstanding UX designer who combines strong design thinking with the ability to execute quickly without compromising quality. He also designed our website: a polished, modern result that perfectly reflected our brand. Someone I’d happily recommend to any team.”</blockquote><figcaption><b>Max Edwards</b><span>Co-founder &amp; CEO · Airstride</span></figcaption></div></figure>
+      <figure class="note" data-c="b" tabindex="0"><svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-yellow"/></svg><div class="paper"><blockquote>“He’s one of those rare people who combines strong technical ability with a real eye for user experience. He doesn’t simply build what’s asked. He thinks through the end user, the business goal, the flow, the design, and the long-term usability of the product.”</blockquote><figcaption><b>Hugo Rawlinson</b><span>Co-founder &amp; CRO · Airstride</span></figcaption></div></figure>
+      <figure class="note" data-c="g" tabindex="0"><svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-blue"/></svg><div class="paper"><blockquote>“I had the pleasure of working with Ayo, and he is a standout team member. Beyond his technical abilities, Ayo is a collaborative and dependable teammate who fosters a positive work environment.”</blockquote><figcaption><b>Tom McDonough</b><span>Co-founder &amp; CTO · Dexla</span></figcaption></div></figure>
+      <figure class="note" data-c="p" tabindex="0"><svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-green"/></svg><div class="paper"><blockquote>“Working with Ayowande has been awesome. He brought so much coolness to our project. Super creative, keen attention to details, our project even looks better than we imagined.”</blockquote><figcaption><b>Ibrahim Bashir</b><span>CEO · Techonstack</span></figcaption></div></figure>
+      <figure class="note" data-c="o" tabindex="0"><svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-blue"/></svg><div class="paper"><blockquote>“Teaming up with Ayowande on various projects has been an easy job for my frontend development. His designs are not just visually sound but also done easy for implementation. Totally recommend.”</blockquote><figcaption><b>Williams Balogun</b><span>Full Stack Engineer · Airstride</span></figcaption></div></figure>
+      <figure class="note" data-c="l" tabindex="0"><svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-red"/></svg><div class="paper"><blockquote>“Had a great time working with Ayo. His design skills spiced up our team’s project. Easygoing, talented and always brought fresh ideas. He’s also always available for help and clarifying things.”</blockquote><figcaption><b>Valeria Cuciniello</b><span>Product Designer</span></figcaption></div></figure>
       <button class="pad" id="kw-pad" type="button" aria-label="Write Ayo a note"><span class="pad-top"><b>Your turn.</b><span class="mono">Leave a note +</span></span></button>
       <p class="kw-hint mono" id="kw-hint" aria-hidden="true">psst, they move.</p>
     </div>
@@ -461,6 +551,8 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
     notes=[...board.querySelectorAll('.note')].map(mk);
     const paint=n=>{n.el.style.transform=`translate3d(${n.x}px,${n.y}px,0) rotate(${n.r}deg)`};
     const front=n=>{n.el.style.zIndex=++Z};
+    const loose=n=>n.el.classList.add('loose');
+    function repin(n){const el=n.el;el.classList.remove('loose','repin');void el.offsetWidth;el.classList.add('repin');setTimeout(()=>el.classList.remove('repin'),700)}
     function ease(list,on){list.forEach(n=>n.el.classList.toggle('ease',on&&!reduce))}
     function measure(){W=board.clientWidth;deck=W<640;board.classList.toggle('deck',deck);count.hidden=!deck;tidyBtn.hidden=deck;
       const nw=deck?Math.min(320,W-28):Math.min(264,Math.floor((W-40)/3));board.style.setProperty('--nw',nw+'px');
@@ -498,7 +590,7 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
           if(n.x<0||n.x>W-n.w){n.x=clamp(n.x,0,W-n.w);n.vx*=-.45}
           if(n.y<0||n.y>H-n.h){n.y=clamp(n.y,0,H-n.h);n.vy*=-.45}
           n.tr=n.base+clamp(n.vx*.8,-14,14);n.r+=(n.tr-n.r)*.2;paint(n);
-          if(Math.hypot(n.vx,n.vy)<.15&&Math.abs(n.r-n.base)<.05){n.moving=false;n.r=n.base;paint(n)}else busy=true}});
+          if(Math.hypot(n.vx,n.vy)<.15&&Math.abs(n.r-n.base)<.05){n.moving=false;n.r=n.base;paint(n);repin(n)}else busy=true}});
       raf=busy?requestAnimationFrame(loop):0}
     const kick=()=>{if(!raf)raf=requestAnimationFrame(loop)};
     const pt=e=>{const b=board.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
@@ -507,7 +599,7 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
       const [px,py]=pt(e);drag={n,ox:px-n.x,oy:py-n.y,sx:px,lx:px,ly:py,lt:performance.now(),id:e.pointerId,moved:false};
       ease([n],false);n.moving=false;n.vx=n.vy=0;if(!deck)front(n)});
     board.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const n=drag.n,[px,py]=pt(e);
-      if(!drag.moved){if(Math.hypot(px-drag.lx,py-drag.ly)<4)return;drag.moved=true;n.drag=true;n.el.classList.add('held');try{n.el.setPointerCapture(e.pointerId)}catch(_){}
+      if(!drag.moved){if(Math.hypot(px-drag.lx,py-drag.ly)<4)return;drag.moved=true;n.drag=true;n.el.classList.add('held');loose(n);try{n.el.setPointerCapture(e.pointerId)}catch(_){}
         if(hint&&!hint.classList.contains('gone'))hint.classList.add('gone')}
       const t=performance.now(),dt=Math.max(8,t-drag.lt);
       n.vx=n.vx*.5+((px-drag.lx)/dt*16)*.5;n.vy=n.vy*.5+((py-drag.ly)/dt*16)*.5;drag.lx=px;drag.ly=py;drag.lt=t;
@@ -515,15 +607,15 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
       else{n.x=clamp(px-drag.ox,0,W-n.w);n.y=clamp(py-drag.oy,0,H-n.h);n.tr=n.base+clamp(n.vx*.8,-14,14)}
       if(reduce){n.r=n.tr=deck?0:n.base;paint(n)}else kick()});
     function end(e){if(!drag||(e&&e.pointerId!==drag.id))return;const {n,moved,sx}=drag;drag=null;n.drag=false;n.el.classList.remove('held');if(!moved)return;
-      if(deck){const dx=n.x-(W-n.w)/2;if(Math.abs(dx)>W*.25||Math.abs(n.vx)>9)toss(n,Math.sign(dx||n.vx));else{ease([n],true);layoutDeck();paint(n)}return}
-      if(reduce){n.vx=n.vy=0;return}
+      if(deck){const dx=n.x-(W-n.w)/2;if(Math.abs(dx)>W*.25||Math.abs(n.vx)>9)toss(n,Math.sign(dx||n.vx));else{ease([n],true);layoutDeck();paint(n);setTimeout(()=>repin(n),300)}return}
+      if(reduce){n.vx=n.vy=0;repin(n);return}
       n.base=clamp(n.base+clamp(n.vx*.3,-4,4),-12,12);n.moving=true;kick()}
     board.addEventListener('pointerup',end);board.addEventListener('pointercancel',end);
 
     // phone: flick the top note away and it goes to the back of the pile
     function toss(n,dir){ease([n],true);n.x=(W-n.w)/2+dir*(W+40);n.r=dir*18;paint(n);
       setTimeout(()=>{order.push(order.shift());ease(notes,false);n.el.style.zIndex=0;n.x=(W-n.w)/2;n.y=14;n.r=0;paint(n);
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{ease(notes,true);layoutDeck();notes.forEach(paint)}))},reduce?0:320)}
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{ease(notes,true);layoutDeck();notes.forEach(paint);setTimeout(()=>repin(n),reduce?0:450)}))},reduce?0:320)}
 
     // keyboard: arrows nudge the focused note (or flip through the stack on a phone)
     board.addEventListener('keydown',e=>{const el=e.target.closest('.note');if(!el||e.target.closest('textarea,input'))return;const n=el._n;
@@ -533,8 +625,9 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
     board.addEventListener('focusin',e=>{const el=e.target.closest('.note');if(el&&!deck&&el.style.zIndex<Z)front(el._n)});
 
     tidyBtn.addEventListener('click',()=>{mode=mode==='tidy'?'mess':'tidy';tidyBtn.textContent=mode==='tidy'?'Mess it up':'Tidy up';
-      notes.forEach((n,i)=>{n.moving=false;n.el.style.transitionDelay=reduce?'0ms':(i*45)+'ms'});layout(true);
-      setTimeout(()=>notes.forEach(n=>n.el.style.transitionDelay=''),900)});
+      notes.forEach((n,i)=>{n.moving=false;loose(n);n.el.style.transitionDelay=reduce?'0ms':(i*45)+'ms'});layout(true);
+      setTimeout(()=>notes.forEach(n=>n.el.style.transitionDelay=''),900);
+      notes.forEach((n,i)=>setTimeout(()=>repin(n),reduce?0:620+i*90))});
 
     // the pad: peel off a blank note and write Ayo something
     // the pad: peel off a blank note, write Ayo something, and it's sent from the site (no email app needed)
@@ -543,7 +636,7 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
     function removeMine(){if(!mine)return;const el=mine.el;notes=notes.filter(n=>n!==mine);order=order.filter(n=>n!==mine);el.remove();mine=null;if(deck){ease(notes,true);layoutDeck();notes.forEach(paint)}}
     pad.addEventListener('click',()=>{if(mine){if(deck){order=[mine,...order.filter(n=>n!==mine)];ease(notes,true);layoutDeck();notes.forEach(paint)}else front(mine);mine.el.querySelector('textarea').focus();return}
       const el=document.createElement('figure');el.className='note mine';el.dataset.c='w';el.tabIndex=0;el.setAttribute('aria-label','Your note to Ayo');
-      el.innerHTML='<form class="paper" novalidate><label class="sr-only" for="kw-msg">Your note to Ayo</label><textarea id="kw-msg" name="message" maxlength="500" required placeholder="Hi Ayo, …"></textarea>'+
+      el.classList.add('loose');el.innerHTML='<svg class="pin" aria-hidden="true" focusable="false"><use href="#pin-black"/></svg><form class="paper" novalidate><label class="sr-only" for="kw-msg">Your note to Ayo</label><textarea id="kw-msg" name="message" maxlength="500" required placeholder="Hi Ayo, …"></textarea>'+
         '<label class="sr-only" for="kw-from">Your email, if you want a reply</label><input class="mine-mail" id="kw-from" name="email" type="email" autocomplete="email" maxlength="120" placeholder="Your email, if you want a reply">'+
         '<input class="kw-trap" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'+
         '<div class="mine-foot"><b>You</b><span class="mine-btns"><button type="button" class="bin" aria-label="Throw your note away">Bin</button><button type="submit" class="send" disabled>Send ↗</button></span></div>'+
@@ -561,21 +654,21 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
           sent(el)}
         catch(_){el.classList.remove('sending');ta.readOnly=mail.readOnly=false;send.disabled=false;send.textContent='Try again ↗';el.classList.add('err');
           msg.innerHTML=`Didn’t send. <a href="mailto:${EMAIL}?subject=${encodeURIComponent('A note from waande.com')}&body=${encodeURIComponent(ta.value)}">Email me instead ↗</a>`}});
-      if(deck){order=[mine,...order];ease(notes,false);layoutDeck();notes.forEach(paint);ta.focus({preventScroll:true});return}
+      if(deck){order=[mine,...order];ease(notes,false);layoutDeck();notes.forEach(paint);repin(mine);ta.focus({preventScroll:true});return}
       const px=parseFloat(pad.style.left),py=parseFloat(pad.style.top);mine.x=px-10;mine.y=py-20;mine.r=4;paint(mine);front(mine);
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{ease([mine],true);mine.x=clamp(W/2-mine.w/2+30,0,W-mine.w);mine.y=clamp(H-mine.h-110,0,H-mine.h);mine.base=mine.r=-2.5;paint(mine);
-        setTimeout(()=>ta.focus({preventScroll:true}),350)}))});
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{ease([mine],true);mine.x=clamp(W/2-mine.w/2+30,0,W-mine.w);mine.y=clamp(H-mine.h-110,0,H-mine.h);mine.base=mine.r=-2.5;paint(mine);const m=mine;
+        setTimeout(()=>{ta.focus({preventScroll:true});repin(m)},reduce?0:600)}))});
     // sent: a stamp lands on the note, then it flies off the desk to Ayo
     function sent(el){const n=el._n;el.classList.remove('sending');el.classList.add('sent');
-      el.querySelector('.mine-msg').textContent='Stuck to Ayo’s desk ✓';
-      setTimeout(()=>{if(!el.isConnected)return;ease([n],true);el.style.opacity=0;n.y-=deck?0:60;n.x+=deck?W:80;n.r+=12;paint(n);
+      el.querySelector('.mine-msg').textContent='Pinned to Ayo’s board ✓';
+      setTimeout(()=>{if(!el.isConnected)return;loose(n);ease([n],true);el.style.opacity=0;n.y-=deck?0:60;n.x+=deck?W:80;n.r+=12;paint(n);
         setTimeout(()=>{removeMine();padLabel.textContent='Sent. Thank you.';pad.focus({preventScroll:true});setTimeout(()=>padLabel.textContent='Your turn.',5000)},reduce?0:650)},reduce?600:1500)}
 
     // first time the board scrolls into view, the notes land one by one
     layout(false);
-    if(!reduce&&'IntersectionObserver' in window){notes.forEach(n=>{n.el.classList.add('pre');n.el.style.transform=`translate3d(${n.x}px,${n.y-28}px,0) rotate(${n.r*2}deg)`});
+    if(!reduce&&'IntersectionObserver' in window){notes.forEach(n=>{n.el.classList.add('pre','loose');n.el.style.transform=`translate3d(${n.x}px,${n.y-28}px,0) rotate(${n.r*2}deg)`});
       const io=new IntersectionObserver(es=>{if(!es[0].isIntersecting||dealt)return;dealt=true;io.disconnect();
-        notes.forEach((n,i)=>{n.el.style.transitionDelay=(i*80)+'ms';ease([n],true);n.el.classList.remove('pre');paint(n)});
+        notes.forEach((n,i)=>{n.el.style.transitionDelay=(i*80)+'ms';ease([n],true);n.el.classList.remove('pre');paint(n);setTimeout(()=>repin(n),560+i*110)});
         setTimeout(()=>notes.forEach(n=>{n.el.style.transitionDelay='';ease([n],false)}),1400)},{threshold:.25});io.observe(board)}
     let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const was=deck;measure();if(was!==deck||!deck)layout(false);else{layoutDeck();notes.forEach(paint)}},150)});
     document.fonts&&document.fonts.ready.then(()=>{if(!drag)layout(false)});
