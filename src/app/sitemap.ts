@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 import { CASE_ORDER } from "@/components/case/cases";
 import { LANDING } from "@/components/landing/content";
 
-// The landing page, About and the case studies. /contact, /writing and the
+// The landing page, About, the case studies and the side quests. /contact, /writing and the
 // /work index are retired and deliberately left out.
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -14,5 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly" as const,
       priority: 0.8,
     })),
+    { url: `${LANDING.url}/side-quests/scents-by-biba`, changeFrequency: "yearly", priority: 0.7 },
   ];
 }

@@ -17,6 +17,7 @@ export const PAGES: readonly Page[] = [
   { href: "/work/airstride", keys: ["airstride"] },
   { href: "/work/arctic-edge", keys: ["arctic"] },
   { href: "/work/dexla-design-system", keys: ["dexla"] },
+  { href: "/side-quests/scents-by-biba", keys: ["scents", "biba", "perfume"] },
 ];
 
 /** Sections of the home page that old links may mean ("/contact-me", "/hire"). Suggested, never listed. */
